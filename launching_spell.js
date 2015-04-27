@@ -1,6 +1,9 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
-var fireball;
+var fireballs;
+var FIRERATE;
+var last_shot;
+var is_ready_to_fire;
 
 function preload() {
     game.load.spritesheet('fireball', 'assets/images/mario_fireball.png',
@@ -8,8 +11,9 @@ function preload() {
 }
 
 function create() {
-    fireball = game.add.sprite(-128, -128, 'fireball');
-    fireball.animations.add('fireball');
+    FIRERATE = 200;
+    is_ready_to_fire = true;
+    last_shot = 0;
 
     fireballs = game.add.group()
     fireballs.enableBody = true;
@@ -17,30 +21,28 @@ function create() {
     fireballs.createMultiple(30, 'fireball');
     fireballs.forEach(function(fireball){
         fireball.animations.add('fireball');
+        fireball.checkWorldBounds = true;
+        fireball.outOfBoundsKill = true;
     }, this);
     
-
+    
     fire_button = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 }
 
 function update() {
-    if(fire_button.isDown) {
-        projectile = fireballs.getFirstExists(false);
-        projectile.x = 128;
-        projectile.y = 128;
-        projectile.play('fireball', 10, true);
-        projectile.body.velocity.x = 5;
+    if(fire_button.isDown && is_ready_to_fire) {
+        if(fireballs.getFirstExists(false)) {
+            projectile = fireballs.getFirstExists(false);
+            projectile.reset(128, 128);
+            projectile.play('fireball', 10, true);
+            projectile.body.velocity.x = 500;
+
+            is_ready_to_fire = false;
+            last_shot = game.time.now;
+        }
+    }
+
+    if(game.time.now > last_shot + FIRERATE) {
+        is_ready_to_fire = true;
     }
 }
-
-
-/*
-this.bullets = this.add.group();
-this.bullets.enableBody = true;
-this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-this.bullets.createMultiple(30, 'player_shot');
-this.bullets.setAll('anchor.x', 0.5);
-this.bullets.setAll('anchor.y', 1);
-this.bullets.setAll('outOfBoundsKill', true);
-this.bullets.setAll('checkWorldBounds', true);
-*/
