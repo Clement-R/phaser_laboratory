@@ -8,15 +8,29 @@ function preload() {
 }
 
 function create() {
-    fireball = game.add.sprite(128, 128, 'fireball');
+    fireball = game.add.sprite(-128, -128, 'fireball');
     fireball.animations.add('fireball');
 
     fireballs = game.add.group()
+    fireballs.enableBody = true;
+    fireballs.physicsBodyType = Phaser.Physics.ARCADE;
+    fireballs.createMultiple(30, 'fireball');
+    fireballs.forEach(function(fireball){
+        fireball.animations.add('fireball');
+    }, this);
+    
+
+    fire_button = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 }
 
 function update() {
-    fireball.animations.play('fireball', 10, true);
-    fireball.x += 5;
+    if(fire_button.isDown) {
+        projectile = fireballs.getFirstExists(false);
+        projectile.x = 128;
+        projectile.y = 128;
+        projectile.play('fireball', 10, true);
+        projectile.body.velocity.x = 5;
+    }
 }
 
 
