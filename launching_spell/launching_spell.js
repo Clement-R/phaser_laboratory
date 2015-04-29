@@ -6,7 +6,7 @@ var last_shot;
 var is_ready_to_fire;
 
 function preload() {
-    game.load.spritesheet('fireball', 'assets/images/mario_fireball.png',
+    game.load.spritesheet('fireball', '../assets/images/mario_fireball.png',
                           64, 64, 4);
 }
 

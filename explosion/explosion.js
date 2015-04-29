@@ -1,7 +1,7 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
 
 function preload() {
-	game.load.spritesheet('kaboom', 'assets/images/explode.png', 128, 128);
+	game.load.spritesheet('kaboom', '../assets/images/explode.png', 128, 128);
 }
 
 var boom;

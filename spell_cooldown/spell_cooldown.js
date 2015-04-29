@@ -9,7 +9,7 @@ var tween;
 var crop_rect;
 
 function preload() {
-    game.load.image('spell', 'assets/images/spell_01.png');
+    game.load.image('spell', '../assets/images/spell_01.png');
 }
 
 function create() {
@@ -28,6 +28,12 @@ function create() {
 
     // Weird effect
     //tween = game.add.tween(spell_icon.scale).to({y: 1}, FIRERATE, Phaser.Easing.Linear.InOut, false, 0);
+
+    // Fading effect
+    // tween = game.add.tween(spell_icon).to({alpha: 1}, FIRERATE, Phaser.Easing.Linear.InOut, false, 0);
+
+    // Idea
+    // http://phaser.io/examples/v2/display/arc-details
 }
 
 function update() {
@@ -44,6 +50,7 @@ function fire() {
         last_shot = game.time.now;
         is_ready_to_fire = false;
         crop_rect.height = 0;
+        // spell_icon.alpha = 0;
         tween.start();
     }  
 }

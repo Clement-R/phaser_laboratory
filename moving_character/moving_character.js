@@ -4,7 +4,7 @@ var player;
 var cursors;
 
 function preload() {
-    game.load.spritesheet('player', 'assets/images/player.png', 30, 30, 12);
+    game.load.spritesheet('player', '../assets/images/player.png', 30, 30, 12);
 }
 
 function create() {
