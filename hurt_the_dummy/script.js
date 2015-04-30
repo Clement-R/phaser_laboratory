@@ -7,19 +7,7 @@ var HEALTH = 100;
 var FIREBALL_DAMAGE = 50;
 var LIFE_SCALE;
 
-function preload() {
-    game.load.atlas('bot', '../assets/images/running_bot.png',
-                    '../assets/images/running_bot.json');
-    game.load.spritesheet('fireball', '../assets/images/mario_fireball.png',
-                          64, 64, 4);
-    game.load.spritesheet('kaboom', '../assets/images/explode.png', 128, 128);
-}
-
-function create() {
-    // Start physic engine
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-
-    // Player and animation
+function create_player() {
     bot = game.add.sprite(game.world.centerX, game.world.centerY, 'bot');
     bot.enableBody = true;
     bot.health = HEALTH;
@@ -28,7 +16,20 @@ function create() {
 
     bot.animations.add('run');
 
-    // Fireballs
+    // Life bar
+    x = bot.x - bot.width / 2;
+    y = bot.y - bot.height / 2 - 10;
+    health_bar = game.add.graphics(x, y);
+    health_bar.lineStyle(3, 0x00ff00, 1);
+    health_bar.lineTo(bot.width, 0);
+
+    // Group
+    player = game.add.group();
+    player.add(bot);
+    player.add(health_bar);
+}
+
+function create_fireballs() {
     FIRERATE = 200;
     is_ready_to_fire = true;
     last_shot = 0;
@@ -43,34 +44,49 @@ function create() {
         fireball.scale.setTo(0.5);
         fireball.checkWorldBounds = true;
         fireball.outOfBoundsKill = true;
-    }, this);    
+    }, this);
+}
 
-    // EXPLOSIONS BITCH !
+function create_explosions() {
     explosions = game.add.group();
     explosions.createMultiple(25, 'kaboom');
     explosions.forEach(function(explosion){
         explosion.position.setTo(50, 50);
         explosion.animations.add('explode');
     });
+}
 
-    // Controls
+function create_controls() {
     up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
     left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+}
 
-    // Life bar
-    x = bot.x - bot.width / 2;
-    y = bot.y - bot.height / 2 - 10;
-    health_bar = game.add.graphics(x, y);
-    health_bar.lineStyle(3, 0x00ff00, 1);
-    health_bar.lineTo(bot.width, 0);
+function preload() {
+    game.load.atlas('bot', '../assets/images/running_bot.png',
+                    '../assets/images/running_bot.json');
+    game.load.spritesheet('fireball', '../assets/images/mario_fireball.png',
+                          64, 64, 4);
+    game.load.spritesheet('kaboom', '../assets/images/explode.png', 128, 128);
+}
 
-    // Group
-    player = game.add.group();
-    player.add(bot);
-    player.add(health_bar);
+function create() {
+    // Start physic engine
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    // Player and animation
+    create_player();
+
+    // Fireballs
+    create_fireballs();
+
+    // EXPLOSIONS BITCH !
+    create_explosions();
+
+    // Controls
+    create_controls();
 }
 
 function update() {
@@ -149,11 +165,11 @@ function life_down(life) {
     }
 
     if (bot.health <= 0) {
-        die_bitch_die();
+        kill_player();
     }
 }
 
-function die_bitch_die() {    
+function kill_player() {    
     var explosion = explosions.getFirstExists(false);
     if(explosion != null) {
         explosion.reset(bot.x, bot.y);
