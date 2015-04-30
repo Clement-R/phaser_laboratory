@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Laboratory</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="col-md-12" id="projects">
+                <h1>To the lab !</h1>
+                {% for project in projects %}
+                    <div class="col-md-3">
+                        <a href="{{ project['name'] }}">
+                            <img src="{{ project['logo'] }}" alt="Project's logo">
+                            {{ project['name'] }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Little projects ideas :</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>life bar</li>
+                            <li>tracking (turret, tower defense)</li>
+                            <li>extensive modal (take a text and display it page by page)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Bigger projects ideas :</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>random goblin generator</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
