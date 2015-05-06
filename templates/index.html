@@ -6,12 +6,14 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="icon" href="favicon.ico" />
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div class="container">
-            <div class="col-md-12" id="projects">
+        <div class="container-fluid">
+            <div class="col-md-8 col-md-offset-2" id="projects">
+                <img src="favicon.ico" alt="">
                 <h1>To the lab !</h1>
                 {% for project in projects %}
                     <div class="col-md-3">
@@ -22,28 +24,51 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Todo</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>Organize little projects into reusable modules</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Little projects ideas :</h3>
                     </div>
                     <div class="panel-body">
                         <ul>
-                            <li>life bar</li>
-                            <li>tracking (turret, tower defense)</li>
-                            <li>extensive modal (take a text and display it page by page)</li>
+                            <li class="done">Life bar</li>
+                            <li class="done">Parallax background (tileSprite)</li>
+                            <li>Parallax background (image destroyed when outOfBound)</li>
+                            <li>Tracking (turret, tower defense)</li>
+                            <li>Extensive modal (take a text and display it page by page)</li>
+                            <li>Missile with trail</li>
+                            <li>Not linear missile with trail</li>
+                            <li>Basic Socket IO</li>
+                            <li class="done">Basic particles</li>
+                            <li class="done">Knockback on hit</li>
+                            <li>Knockback in good direction on hit</li>
+                            <li class="done">Flash effect on hit (Need to understand 4x4 color matrix used in PIXI)</li>
+                            <li>Particles of Graphic ?</li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Bigger projects ideas :</h3>
                     </div>
                     <div class="panel-body">
                         <ul>
-                            <li>random goblin generator</li>
+                            <li>Random goblin generator</li>
+                            <li>Tool for adding datas into sprites (anchors, hotpoint, Sub AABB boxes, etc)</li>
                         </ul>
                     </div>
                 </div>

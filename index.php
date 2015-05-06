@@ -32,7 +32,4 @@
     // TODO :
     // Ajax call from index to create a new directory (project), and refresh
     // index projects div.
-
-    // life_bar:
-    //   - Move character with spritesheet
 ?>

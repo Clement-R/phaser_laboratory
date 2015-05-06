@@ -43,3 +43,9 @@ img {
     margin-bottom: 5px;
 }
 /* /PROJECTS PART */
+
+/* LIST */
+li.done{
+    text-decoration: line-through;
+}
+/* /LIST */
