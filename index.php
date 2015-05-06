@@ -28,8 +28,4 @@
         }
     }
     echo $twig->render('index.html', array('projects' => $projects));
-
-    // TODO :
-    // Ajax call from index to create a new directory (project), and refresh
-    // index projects div.
 ?>

@@ -68,26 +68,15 @@ function update() {
     if(left.isDown) {
         bot.animations.play('run', 10, true);
         bot.scale.x = 1;
-        player.forEach(function (graphic) {
-            graphic.x -= 2;
-        });
+        bot.x -= 2;
+        health_bar.x = bot.x - bot.width / 2;
     } else if (right.isDown) {
         bot.animations.play('run', 10, true);
         bot.scale.x = -1;
-        player.forEach(function (graphic) {
-            graphic.x += 2;
-        });
+        bot.x += 2;
+        health_bar.x = bot.x + bot.width / 2;
     } else {
         bot.animations.stop('run');
-    }
-
-    // Add life
-    if(up.isDown) {
-        life_up(FIREBALL_DAMAGE);
-    }
-    // Remove life
-    if(down.isDown) {
-        life_down(FIREBALL_DAMAGE);
     }
 
     // FIRE !
@@ -198,6 +187,7 @@ function create_player() {
     bot.health = HEALTH;
     game.physics.enable(bot, Phaser.Physics.ARCADE);
     bot.body.collideWorldBounds = true;
+    bot.checkWorldBounds = true;
     bot.anchor.setTo(0.5, 0.5);
 
     bot.animations.add('run');
