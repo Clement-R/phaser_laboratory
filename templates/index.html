@@ -12,11 +12,11 @@
     </head>
     <body>
         <div class="container-fluid">
-            <div class="col-md-8 col-md-offset-2" id="projects">
+            <div class="col-xs-8 col-xs-offset-2" id="projects">
                 <img src="favicon.ico" alt="">
                 <h1>To the lab !</h1>
                 {% for project in projects %}
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <a href="{{ project['name'] }}">
                             <img src="{{ project['logo'] }}" alt="Project's logo">
                             {{ project['name'] }}
@@ -24,7 +24,7 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="col-md-4">
+            <div class="col-xs-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Todo</h3>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-xs-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Little projects ideas :</h3>
@@ -47,7 +47,7 @@
                     <div class="panel-body">
                         <ul>
                             <li class="done">Life bar</li>
-                            <li>Grahphical ife bar (Zelda like)</li>
+                            <li>Grahphical life bar (Zelda like)</li>
                             <li class="done">Parallax background (tileSprite)</li>
                             <li>Parallax background (image destroyed when outOfBound)</li>
                             <li>Tracking (turret, tower defense)</li>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-xs-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Bigger projects ideas :</h3>
@@ -75,6 +75,7 @@
                         <ul>
                             <li>Random goblin generator</li>
                             <li>Tool for adding datas into sprites (anchors, hotpoint, Sub AABB boxes, etc)</li>
+                            <li>Git moto trial</li>
                         </ul>
                     </div>
                 </div>
