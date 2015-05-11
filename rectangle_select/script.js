@@ -3,6 +3,15 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
 var rect;
 var initial_point;
 
+// TODO ////////////////////////////////
+/* 
+   Graphics is not good, changing height
+   and width change the scale factor.
+
+   Maybe BitmapData worth a try.
+*/
+////////////////////////////////////////
+
 function preload() {
 }
 
@@ -13,8 +22,8 @@ function create() {
     last_point = new Phaser.Point();
 
     rect = game.add.graphics(0, 0);
-    rect.lineStyle(2, 0xFFFFFF, 1);
-    rect.drawRect(0, 0, 20, 20);
+    rect.lineStyle(1, 0xFFFFFF, 1);
+    rect.drawRect(0, 0, 10, 10);
     rect.visible = false;
 
     game.input.onDown.add(function(){
@@ -43,8 +52,8 @@ function update() {
     game.debug.text("Rect height : " + rect.height, 150, 60);
     game.debug.text("Rect width : " + rect.width, 150, 80);
 
-    rect.height = game.input.position.x - initial_point.x;
-    rect.width = game.input.position.y - initial_point.y;
+    rect.width = game.input.position.x - initial_point.x;
+    rect.height = game.input.position.y - initial_point.y;
 }
 
 function doSomething() {
