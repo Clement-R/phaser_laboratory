@@ -10,7 +10,6 @@ function create() {
 
     turret = game.add.sprite(game.world.centerX, game.world.centerY, 'ship');
     turret.anchor.setTo(0.5, 0.5);
-    turret.pivot.setTo(0.5, 0.5);
 }
 
 function update() {
