@@ -12,19 +12,19 @@
     </head>
     <body>
         <div class="container-fluid">
-            <div class="col-md-8 col-md-offset-2" id="projects">
+            <div class="col-xs-8 col-xs-offset-2" id="projects">
                 <img src="favicon.ico" alt="">
                 <h1>To the lab !</h1>
                 {% for project in projects %}
                     <div class="col-md-3">
-                        <a href="{{ project['name'] }}/">
+                        <a href="{{ project['name'] }}"/>
                             <img src="{{ project['logo'] }}" alt="Project's logo">
                             {{ project['name'] }}
                         </a>
                     </div>
                 {% endfor %}
             </div>
-            <div class="col-md-4">
+            <div class="col-xs-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Todo</h3>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-xs-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Little projects ideas :</h3>
@@ -47,7 +47,7 @@
                     <div class="panel-body">
                         <ul>
                             <li class="done">Life bar</li>
-                            <li>Grahphical ife bar (Zelda like)</li>
+                            <li class="done">Grahphical life bar (Zelda like)</li>
                             <li class="done">Parallax background (tileSprite)</li>
                             <li>Parallax background (image destroyed when outOfBound)</li>
                             <li>Tracking (turret, tower defense)</li>
@@ -58,15 +58,18 @@
                             <li class="done">Basic particles</li>
                             <li class="done">Knockback on hit</li>
                             <li>Knockback in good direction on hit</li>
-                            <li class="done">Flash effect on hit (Need to understand 4x4 color matrix used in PIXI)</li>
+                            <li class="done">Flash effect on hit</li>
                             <li>Particles of Graphic ?</li>
                             <li>Collide on world bounds (already done in hit the dummy)</li>
                             <li>Play a sound on action</li>
+                            <li>Attacking character</li>
+                            <li>Layered created character (RPG statical character with layered weapons/equipment)</li>
+                            <li>Base RTS - circle around selected unit</li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-xs-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Bigger projects ideas :</h3>
@@ -75,6 +78,10 @@
                         <ul>
                             <li>Random goblin generator</li>
                             <li>Tool for adding datas into sprites (anchors, hotpoint, Sub AABB boxes, etc)</li>
+                            <li>Git moto trial</li>
+                            <li>RTS base game</li>
+                            <li>Trading Card Game base game</li>
+                            <li>RPG inventory</li>
                         </ul>
                     </div>
                 </div>
