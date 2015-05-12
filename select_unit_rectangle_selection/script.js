@@ -95,6 +95,10 @@ function update() {
         Change selection method because actually you can select a sprite only
         on its precise position. Modify to accept all the body of the
         sprite maybe ?
+        Take y position (cause it's not the case actually), and the length
+        of the sprite.
+
+        And take -x ....
     */
     /////////////////////////////////////////////////////////
 }
