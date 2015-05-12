@@ -57,6 +57,10 @@ function create() {
     selection.visible = false;
 
     game.input.onDown.add(function(){
+        player_units.forEach(function(unit){
+            var sprite = unit.children[1];
+            deselect_unit(sprite);
+        });
         initial_point.x = game.input.position.x;
         initial_point.y = game.input.position.y;
         selection.visible = true;
@@ -73,6 +77,7 @@ function update() {
 
     // TODO /////////////////////////////////////////////////
     /*
+        1.
         Rectangle selection is working but now click selection
         is broken due to execute check_units_selection every tick.
 
@@ -81,10 +86,15 @@ function update() {
           Maybe a boolean would do the job. (Not working cause
           game.input.onDown override the onInputDown of the sprite)
 
-          // TO TRY
-        - Check if the pointer position in different from initial_point ?
+          // WORKING !
+        - Check if the pointer position is different from initial_point ?
           That would select sprite on click and if the selection is dragged
           others sprites must be selected.
+
+        2.
+        Change selection method because actually you can select a sprite only
+        on its precise position. Modify to accept all the body of the
+        sprite maybe ?
     */
     /////////////////////////////////////////////////////////
 }
@@ -109,7 +119,7 @@ function check_units_selection() {
 
     player_units.forEach(function(unit){
         var sprite = unit.children[1];
-        if(selection.visible == true) {
+        if(selection.visible == true && pointer.x != initial_point.x) {
             if(sprite.x <= pointer.x && sprite.x >= initial_point.x){
                 select_unit(sprite);
             } else {
