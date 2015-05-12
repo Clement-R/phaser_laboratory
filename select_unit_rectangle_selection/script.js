@@ -76,11 +76,15 @@ function update() {
         Rectangle selection is working but now click selection
         is broken due to execute check_units_selection every tick.
 
+          // NOT WORKING
         - The method should be called when the pointer is hold.
           Maybe a boolean would do the job. (Not working cause
           game.input.onDown override the onInputDown of the sprite)
 
-        - Idea ?
+          // TO TRY
+        - Check if the pointer position in different from initial_point ?
+          That would select sprite on click and if the selection is dragged
+          others sprites must be selected.
     */
     /////////////////////////////////////////////////////////
 }
