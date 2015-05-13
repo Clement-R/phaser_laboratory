@@ -1,6 +1,7 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
 var bird;
+var life = 3;
 var player;
 var score = 0;
 
@@ -42,7 +43,7 @@ function create() {
     // Create the controls
     create_controls();
 
-    // Make the bird move /////////////////////////////////////////////////////
+    // Make the bird move
     bird_movement = game.add.tween(bird).to({x: game.world.width - bird.width},
                                             TRAVEL_TIME, "Linear", true, 0,
                                             Number.MAX_VALUE, true);
@@ -50,6 +51,10 @@ function create() {
         DIRECTION = -DIRECTION;
     });
     bird_movement.start();
+
+    // Score text
+    score_text = game.add.text(10, 10, 'Score : ' + score,
+                               { font: '34px Arial', fill: '#fff' });
 
     timer = game.time.create(false);
     timer.loop(TRAVEL_TIME / EGGS_PER_TRAVEL, test_drop_egg, this);
@@ -64,6 +69,7 @@ function update() {
     }
 
     game.physics.arcade.overlap(player, eggs, catch_egg, null, this);
+
     //debug();
 }
 
@@ -88,10 +94,9 @@ function drop_egg() {
 }
 
 function catch_egg(player, egg) {
-    console.log("Catched !");
     egg.kill();
     score += 1;
-    console.log(score);
+    score_text.text = 'Score : ' + score;
 }
 
 function create_bird() {
@@ -137,7 +142,7 @@ function create_eggs() {
         game.physics.enable(egg, Phaser.Physics.ARCADE);
         egg.enableBody = true;
         egg.outOfBoundsKill = true;
-        //egg.checkWorldBounds = true;
+        egg.checkWorldBounds = true;
         egg.body.gravity.y = 200;
     }, this);
 }
