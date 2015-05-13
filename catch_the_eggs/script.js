@@ -11,28 +11,12 @@ var TRAVEL_TIME = 3000; // in ms
 var EGGS_PER_TRAVEL = 2;
 var DIRECTION = 1;
 
-// TODO ////////////////////////////////////////////////////////////////
-/*
-    Increment bird speed for curved difficulty
-
-    To do :
-      - Fix egg spwaning position
-
-    To try :
-      - Powers up
-
-    Juicy !
-      - Make eggs rotate while falling
-      - Nice crashing animation when falling on the ground
-*/
-////////////////////////////////////////////////////////////////////////
-
 function preload() {
     game.load.image('heart_full', '../assets/images/heart_full.png');
 }
 
 function create() {
-    game.stage.backgroundColor = 0x337799;
+    game.stage.backgroundColor = 0x3498db;
 
     // Start physic engine
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -181,6 +165,6 @@ function remove_life() {
 
     if(life == 0) {
         game.paused = true;
-        // game over
+        // Todo : Gameover menu
     }
 }
