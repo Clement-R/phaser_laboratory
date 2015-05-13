@@ -2,10 +2,28 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
 var bird;
 var player;
+var score = 0;
+
 var PLAYER_SPEED = 5;
-var TRAVEL_TIME = 2500; // in ms
+var TRAVEL_TIME = 3000; // in ms
 var EGGS_PER_TRAVEL = 2;
 var DIRECTION = 1;
+
+// TODO ////////////////////////////////////////////////////////////////
+/*
+    Increment bird speed for curved difficulty
+
+    To do :
+      - Fix egg spwaning position
+
+    To try :
+      - Powers up
+
+    Juicy !
+      - Make eggs rotate while falling
+      - Nice crashing animation when falling on the ground
+*/
+////////////////////////////////////////////////////////////////////////
 
 function preload() {
 }
@@ -30,19 +48,12 @@ function create() {
                                             Number.MAX_VALUE, true);
     bird_movement.onLoop.add(function(){
         DIRECTION = -DIRECTION;
-        console.log(DIRECTION);
     });
     bird_movement.start();
 
     timer = game.time.create(false);
     timer.loop(TRAVEL_TIME / EGGS_PER_TRAVEL, test_drop_egg, this);
     timer.start();
-
-    /*
-        For random drop, we should call a function instead of drop_egg,
-        this method will create a timer that will run one time and whose
-        time is between 0 and TRAVEL_TIME / EGG_PER_TRAVEL.
-    */
 }
 
 function update() {
@@ -51,25 +62,36 @@ function update() {
     } else if (left.isDown) {
         player.x -= PLAYER_SPEED;
     }
+
+    game.physics.arcade.overlap(player, eggs, catch_egg, null, this);
+    //debug();
+}
+
+function debug() {
+    game.debug.body(player);
+    eggs.forEach(function(egg){
+        game.debug.body(egg);
+    }, this);
 }
 
 function test_drop_egg() {
-    num = game.rnd.integerInRange(1, 2);
-    if(num == 1) {
-        var time = game.rnd.integerInRange(0, TRAVEL_TIME / EGGS_PER_TRAVEL);
-        console.log('Egg in :' + time + 'ms');
-        game.time.events.add(time, drop_egg, this);
-    }
+    var time = game.rnd.integerInRange(0, TRAVEL_TIME / EGGS_PER_TRAVEL);
+    game.time.events.add(time, drop_egg, this);
 }
 
 function drop_egg() {
     egg = eggs.getFirstExists(false);
     if (egg) {
-        console.log('drop egg');
-        egg.reset(bird.x + (bird.width * DIRECTION),
-                  bird.y + bird.height);
-        // bulletTime = game.time.now + 200;
+        egg.reset(bird.x + (bird.width - egg.width) * DIRECTION,
+                  bird.y + (bird.height - egg.height));
     }
+}
+
+function catch_egg(player, egg) {
+    console.log("Catched !");
+    egg.kill();
+    score += 1;
+    console.log(score);
 }
 
 function create_bird() {
@@ -86,7 +108,7 @@ function create_player() {
     var player_texture = game.add.bitmapData(64, 64);
     player_texture.ctx.beginPath();
     player_texture.ctx.rect(0,0,128,128);
-    player_texture.ctx.fillStyle = '#009900';
+    player_texture.ctx.fillStyle = '#0000ff';
     player_texture.ctx.fill();
 
     // Create the player and put him in the middle of the screen
@@ -105,7 +127,7 @@ function create_eggs() {
     var egg_texture = game.add.bitmapData(16, 16);
     egg_texture.ctx.beginPath();
     egg_texture.ctx.rect(0,0,128,128);
-    egg_texture.ctx.fillStyle = '#009900';
+    egg_texture.ctx.fillStyle = '#ff00ff';
     egg_texture.ctx.fill();
 
     eggs = game.add.group();
@@ -113,8 +135,9 @@ function create_eggs() {
 
     eggs.forEach(function(egg){
         game.physics.enable(egg, Phaser.Physics.ARCADE);
+        egg.enableBody = true;
         egg.outOfBoundsKill = true;
-        egg.checkWorldBounds = true;
+        //egg.checkWorldBounds = true;
         egg.body.gravity.y = 200;
     }, this);
 }
