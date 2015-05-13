@@ -1,6 +1,7 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
 var bird;
+var life_bar;
 var life = 3;
 var player;
 var score = 0;
@@ -27,6 +28,7 @@ var DIRECTION = 1;
 ////////////////////////////////////////////////////////////////////////
 
 function preload() {
+    game.load.image('heart_full', '../assets/images/heart_full.png');
 }
 
 function create() {
@@ -43,6 +45,9 @@ function create() {
     // Create the controls
     create_controls();
 
+    // Create life bar
+    show_life();
+
     // Make the bird move
     bird_movement = game.add.tween(bird).to({x: game.world.width - bird.width},
                                             TRAVEL_TIME, "Linear", true, 0,
@@ -53,8 +58,8 @@ function create() {
     bird_movement.start();
 
     // Score text
-    score_text = game.add.text(10, 10, 'Score : ' + score,
-                               { font: '34px Arial', fill: '#fff' });
+    score_text = game.add.text(10, 80, 'Score : ' + score,
+                               { font: '26px Arial', fill: '#fff' });
 
     timer = game.time.create(false);
     timer.loop(TRAVEL_TIME / EGGS_PER_TRAVEL, test_drop_egg, this);
@@ -91,6 +96,15 @@ function drop_egg() {
         egg.reset(bird.x + (bird.width - egg.width) * DIRECTION,
                   bird.y + (bird.height - egg.height));
     }
+}
+
+function show_life() {
+    life_bar = game.add.group();
+    life_bar.create(85, 100, 'heart_full');
+    life_bar.create(45, 100, 'heart_full');
+    life_bar.create(5, 100, 'heart_full');
+    life_bar.setAll('scale.x', 0.30);
+    life_bar.setAll('scale.y', 0.30);
 }
 
 function catch_egg(player, egg) {
@@ -144,6 +158,7 @@ function create_eggs() {
         egg.outOfBoundsKill = true;
         egg.checkWorldBounds = true;
         egg.body.gravity.y = 200;
+        egg.events.onOutOfBounds.add(remove_life, this);
     }, this);
 }
 
@@ -153,4 +168,19 @@ function create_controls() {
     left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+}
+
+function remove_life() {
+    heart = life_bar.getFirstAlive();
+
+    if(heart) {
+        heart.kill();
+    }
+
+    life -= 1;
+
+    if(life == 0) {
+        game.paused = true;
+        // game over
+    }
 }
