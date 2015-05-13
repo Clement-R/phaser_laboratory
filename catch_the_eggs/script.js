@@ -35,8 +35,14 @@ function create() {
     bird_movement.start();
 
     timer = game.time.create(false);
-    timer.loop(TRAVEL_TIME / EGGS_PER_TRAVEL, drop_egg, this);
+    timer.loop(TRAVEL_TIME / EGGS_PER_TRAVEL, test_drop_egg, this);
     timer.start();
+
+    /*
+        For random drop, we should call a function instead of drop_egg,
+        this method will create a timer that will run one time and whose
+        time is between 0 and TRAVEL_TIME / EGG_PER_TRAVEL.
+    */
 }
 
 function update() {
@@ -47,16 +53,22 @@ function update() {
     }
 }
 
-function drop_egg() {
+function test_drop_egg() {
     num = game.rnd.integerInRange(1, 2);
     if(num == 1) {
-        egg = eggs.getFirstExists(false);
-        if (egg) {
-            console.log('drop egg');
-            egg.reset(bird.x + (bird.width * DIRECTION),
-                      bird.y + bird.height);
-            // bulletTime = game.time.now + 200;
-        }
+        var time = game.rnd.integerInRange(0, TRAVEL_TIME / EGGS_PER_TRAVEL);
+        console.log('Egg in :' + time + 'ms');
+        game.time.events.add(time, drop_egg, this);
+    }
+}
+
+function drop_egg() {
+    egg = eggs.getFirstExists(false);
+    if (egg) {
+        console.log('drop egg');
+        egg.reset(bird.x + (bird.width * DIRECTION),
+                  bird.y + bird.height);
+        // bulletTime = game.time.now + 200;
     }
 }
 
