@@ -1,14 +1,17 @@
-function Mole(x, y) {
+function Mole(x, y, time_staying) {
     x = x || 100;
     y = y || 100;
 
     this.base_x = x;
     this.base_y = y;
+    this.time_staying = time_staying;
     this.default_height = game.cache.getImage("diglett").height;
 
     this.sprite = game.add.sprite(x, y + 120, "diglett");
+
     this.sprite.inputEnabled = true;
     this.sprite.events.onInputDown.add(this.whack, this);
+
     this.sprite.visible = false;
     this.sprite.height = 0;
 
@@ -16,13 +19,13 @@ function Mole(x, y) {
 }
 
 Mole.prototype.disapear = function() {
-    this.sprite.visible = true;
     this.is_moving = true;
 
     var mole_h = game.add.tween(this.sprite).to({y: this.base_y + 120}, 150);
     var mole_x = game.add.tween(this.sprite).to({height: 0}, 150);
     mole_x.onComplete.add(function(){
         this.is_moving = false;
+        this.sprite.visible = false;
     }, this);
 
     mole_x.start();
@@ -32,6 +35,7 @@ Mole.prototype.disapear = function() {
 Mole.prototype.appear = function() {
     this.sprite.visible = true;
     this.is_moving = true;
+
     var mole_h = game.add.tween(this.sprite).to({y: this.base_y}, 250);
     var mole_x = game.add.tween(this.sprite).to({height: this.default_height}, 250);
     mole_x.onComplete.add(function(){
@@ -40,6 +44,9 @@ Mole.prototype.appear = function() {
 
     mole_x.start();
     mole_h.start();
+
+    this.timer = game.time.create(false);
+    this.timer.add(this.time_staying, this.disapear, this);
 };
 
 Mole.prototype.whack = function() {
