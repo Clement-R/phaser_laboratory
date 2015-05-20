@@ -21,5 +21,6 @@ function update() {
 }
 
 function on_click() {
+    console.log('Clicked');
     socket.emit('button_click', 'Button clicked !');
 }
