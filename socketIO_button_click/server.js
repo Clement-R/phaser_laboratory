@@ -11,9 +11,15 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
     console.log('Connection of a client.');
+    var clicked = 0;
+
+    socket.broadcast.emit('player_connection');
+
     socket.on('button_click', function(msg){
         console.log(msg);
-        //io.emit('chat message', msg);
+        clicked += 1;
+        console.log(clicked);
+        io.emit('update_counter', clicked);
     });
 });
 

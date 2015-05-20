@@ -1,6 +1,7 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
 var socket;
+var num;
 function preload() {
     game.load.image('button', '../assets/images/boxItem.png');
 }
@@ -13,8 +14,18 @@ function create() {
     sprite.inputEnabled = true;
     sprite.events.onInputDown.add(on_click, this);
 
-    /*socket.on('chat message', function(msg){
-    });*/
+    var style = { font: "45px Arial", fill: "#ffffff", align: "center" };
+    num = game.add.text(game.world.centerX, 550, "Clicked : 0", style);
+    num.anchor.setTo(0.5, 0.5);
+
+    // socket.on('update_counter', update_counter(clicked));
+    socket.on('update_counter', function(clicked){
+        update_counter(clicked);
+    });
+
+    socket.on('player_connection', function(){
+        console.log("A new player has connect");
+    });
 }
 
 function update() {
@@ -23,4 +34,8 @@ function update() {
 function on_click() {
     console.log('Clicked');
     socket.emit('button_click', 'Button clicked !');
+}
+
+function update_counter(clicked) {
+    num.text = "Clicked : " + clicked;
 }
