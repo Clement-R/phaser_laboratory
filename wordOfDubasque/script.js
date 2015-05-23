@@ -7,8 +7,13 @@ var key;
 var keyReset = false;
 var cnt = 0;
 
-var words_l = [
+var b_words_l = [
     "FUCK",
+];
+
+var g_words_l = [
+    "PEACE",
+    "LOVE",
 ];
 
 function preload() {
@@ -37,23 +42,25 @@ function create() {
 }
 
 function update() {
-    /*words.forEach(function(word){
-        //word.y += 0.5;
-    });*/
+    words.forEach(function(word){
+        word.y += 0.5;
+    });
 
     // Get closest word
     var ii = 0;
-    var word = words.children[ii];
-    var word_value = words_l[cnt];
-    var letter = word_value.charCodeAt(cnt);
+    var word = words.children[0];
+    var letter = word.children[cnt].text.charCodeAt(0);
     /*console.log("a".charCodeAt(0));
     console.log(letter);*/
 
     if (key.isDown(letter + 32) || key.isDown(letter)) {
-        console.log(letter);
         // We remove the letter from the word
-        word.children[ii].alpha = 0;
-        console.log(word);
+        word.children[cnt].alpha = 0;
+        if(cnt + 1 < word.children.length) {
+            cnt += 1;    
+        } else {
+            console.log('Word killed');
+        }
         // If word is completely writted we remove it
     } else if (!key.isDown(letter - 32)){
         keyReset = false;
