@@ -9,6 +9,7 @@ var cnt = 0;
 
 var b_words_l = [
     "FUCK",
+    "SACREBLEU",
 ];
 
 var g_words_l = [
@@ -27,31 +28,21 @@ function create() {
 
     key = game.input.keyboard;
 
-    words = game.add.group();
-    //bmpText = game.add.bitmapText(350, 10, 'carrier_command', 'Fuck', 17);
-    var word = game.add.group();
-    word.add(game.add.bitmapText(350, 10, 'carrier_command', 'F', 17));
-    word.add(game.add.bitmapText(370, 10, 'carrier_command', 'U', 17));
-    word.add(game.add.bitmapText(390, 10, 'carrier_command', 'C', 17));
-    word.add(game.add.bitmapText(410, 10, 'carrier_command', 'K', 17));
-
-    //words.add(bmpText);
-    words.add(word);
-
+    g_words = game.add.group();
+    add_word(b_words_l[0], 350, 10);
+    add_word(g_words_l[0], 350, 400);
     create_player();
 }
 
 function update() {
-    words.forEach(function(word){
-        word.y += 0.5;
+    g_words.forEach(function(word){
+        //word.y += 0.5;
     });
 
     // Get closest word
     var ii = 0;
-    var word = words.children[0];
+    var word = g_words.children[0];
     var letter = word.children[cnt].text.charCodeAt(0);
-    /*console.log("a".charCodeAt(0));
-    console.log(letter);*/
 
     if (key.isDown(letter + 32) || key.isDown(letter)) {
         // We remove the letter from the word
@@ -67,9 +58,14 @@ function update() {
     }
 }
 
-function add_word() {
-    //word = game.add.sprite();
-    //words.add(word);
+function add_word(word_s, x, y) {
+    var word = game.add.group();
+
+    for (var i = 0; i < word_s.length; i++) {
+        var letter = word_s[i];
+        word.add(game.add.bitmapText(x + (20 * i), y, 'carrier_command', letter, 17));    
+    };
+    g_words.add(word);
 }
 
 function create_player() {
@@ -79,7 +75,6 @@ function create_player() {
     player_texture.ctx.fillStyle = '#0000ff';
     player_texture.ctx.fill();
 
-    // Create the player and put him in the middle of the screen
     player = game.add.sprite(game.world.width / 2,
                              game.world.height - (player_texture.height + 10),
                              player_texture);

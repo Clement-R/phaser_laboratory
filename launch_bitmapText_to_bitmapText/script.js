@@ -28,11 +28,10 @@ function update() {
         g_word.kill();
     });
 
-    b_word.body.velocity.setTo(0, 20);
+    b_word.body.velocity.setTo(0, 100);
 
     if(g_word.is_launched) {
-        // g_word.body.velocity.setTo();
-        game.physics.moveToObject(g_word, b_word, 100, 2000);
+        game.physics.arcade.moveToObject(g_word, b_word, 5, 100);
     }
 
     if(spacebar.isDown){
