@@ -7,12 +7,12 @@ var key;
 var keyReset = false;
 var cnt = 0;
 
-var b_words_l = [
+var bad_words_list = [
     "FUCK",
     "SACREBLEU",
 ];
 
-var g_words_l = [
+var good_words_list = [
     "PEACE",
     "LOVE",
 ];
@@ -28,44 +28,58 @@ function create() {
 
     key = game.input.keyboard;
 
-    g_words = game.add.group();
-    add_word(b_words_l[0], 350, 10);
-    add_word(g_words_l[0], 350, 400);
+    bad_words = game.add.group();
+    good_words = game.add.group();
+
+    add_word(bad_words_list[0], 350, 10, bad_words);
+    add_word(good_words_list[0], 350, 400, good_words);
+
     create_player();
 }
 
 function update() {
-    g_words.forEach(function(word){
+    good_words.forEach(function(word){
         //word.y += 0.5;
     });
 
-    // Get closest word
+    // TODO : Get closest word
+
     var ii = 0;
-    var word = g_words.children[0];
+    var word = bad_words.children[0];
     var letter = word.children[cnt].text.charCodeAt(0);
 
     if (key.isDown(letter + 32) || key.isDown(letter)) {
-        // We remove the letter from the word
+        // TODO : Change typing effect //////
         word.children[cnt].alpha = 0;
+        /////////////////////////////////////
         if(cnt + 1 < word.children.length) {
             cnt += 1;    
         } else {
+            launch_word();
             console.log('Word killed');
         }
-        // If word is completely writted we remove it
     } else if (!key.isDown(letter - 32)){
         keyReset = false;
     }
+
+    /*if(g_word.is_launched) {
+        game.physics.arcade.moveToObject(g_word, b_word, 1, 75);
+    }*/
 }
 
-function add_word(word_s, x, y) {
+function add_word(word_s, x, y, words_group) {
     var word = game.add.group();
 
     for (var i = 0; i < word_s.length; i++) {
         var letter = word_s[i];
         word.add(game.add.bitmapText(x + (20 * i), y, 'carrier_command', letter, 17));    
     };
-    g_words.add(word);
+    words_group.add(word);
+}
+
+function launch_word(word_to_send, word_to_explode) {
+    var word = word_to_send;
+    word.is_launched = true;
 }
 
 function create_player() {

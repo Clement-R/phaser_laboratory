@@ -28,10 +28,10 @@ function update() {
         g_word.kill();
     });
 
-    b_word.body.velocity.setTo(0, 100);
+    b_word.body.velocity.setTo(0, 50);
 
     if(g_word.is_launched) {
-        game.physics.arcade.moveToObject(g_word, b_word, 5, 100);
+        game.physics.arcade.moveToObject(g_word, b_word, 1, 75);
     }
 
     if(spacebar.isDown){
@@ -40,8 +40,6 @@ function update() {
 }
 
 function launch_word(word) {
-    // Calculate distance between the two words
-    g_word.body.velocity.setTo(0, -500);
     g_word.is_launched = true;
 }
 
