@@ -5,7 +5,7 @@ function preload() {
 }
 
 function create() {
-    game.stage.backgroundColor = 0x337799;
+    game.stage.backgroundColor = 0x2c3e50;
 }
 
 function update() {

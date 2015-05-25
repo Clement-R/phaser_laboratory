@@ -24,9 +24,12 @@ function preload() {
 }
 
 function create() {
-    game.stage.backgroundColor = 0x95a5a6;
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.stage.backgroundColor = 0x2c3e50;
 
     key = game.input.keyboard;
+
+    create_player();
 
     bad_words = game.add.group();
     good_words = game.add.group();
@@ -34,17 +37,24 @@ function create() {
     add_word(bad_words_list[0], 350, 10, bad_words);
     add_word(good_words_list[0], 350, 400, good_words);
 
-    create_player();
+    create_controls();
+
+    s = game.add.sprite(200, 10);
+    s_1 = game.add.sprite(350, 450);
+
+    game.physics.arcade.enable([s, s_1]);
+
+    add_word('FUCK', s);
+    add_word('PEACE', s_1);
 }
 
 function update() {
     good_words.forEach(function(word){
-        //word.y += 0.5;
     });
 
     // TODO : Get closest word
-
-    var word = bad_words.children[0];
+    /* WORKING PART */
+    /*var word = bad_words.children[0];
     var letter = word.children[cnt].text.charCodeAt(0);
 
     if (key.isDown(letter + 32) || key.isDown(letter)) {
@@ -59,7 +69,8 @@ function update() {
         }
     } else if (!key.isDown(letter - 32)){
         keyReset = false;
-    }
+    }*/
+    /* / WORKING PART / */
 
     /*if(g_word.is_launched) {
         game.physics.arcade.moveToObject(g_word, b_word, 1, 75);

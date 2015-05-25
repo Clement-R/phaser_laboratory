@@ -10,24 +10,19 @@ function preload() {
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    create_controls();
-
     game.stage.backgroundColor = 0x337799;
+    create_controls();
 
     good_words_g = game.add.group();
     bad_words_g = game.add.group();
+    
+    good_word = game.add.sprite(350, 400);
+    bad_word = game.add.sprite(200, 10);
 
-    /*b_word = game.add.bitmapText(150, 10, 'carrier_command', '', 17);
-    g_word = game.add.bitmapText(350, 400, 'carrier_command', '', 17);*/
+    game.physics.arcade.enable([good_word, bad_word]);
 
-    /*g_word.is_launched = false;
-    game.physics.arcade.enable([b_word, g_word]);
-
-    b_word.body.collideWorldBounds = true;
-    g_word.body.collideWorldBounds = true;*/
-
-    add_word('PEACE', 350, 400, good_words_g);
-    add_word('FUCK', 200, 10, bad_words_g);
+    add_word('PEACE', good_word);
+    add_word('FUCK', bad_word);
 }
 
 function update() {
@@ -70,16 +65,19 @@ function launch_word(word) {
     word.is_launched = true;
 }
 
-function add_word(word_s, x, y, words_group) {
-    var word = game.add.group();
+function add_word(word, sprite) {
+    var font_size = 17;
+    var width = 0;
 
-    for(var i = 0; i < word_s.length; i++) {
-        var letter = word_s[i];
-        word.add(game.add.bitmapText(x + (20 * i), y, 'carrier_command', letter, 17));    
+    for(var i = 0; i < word.length; i++) {
+        var letter = word[i];
+        width += 20;
+        sprite.addChild(game.add.bitmapText((20 * i), 0,
+                       'carrier_command', letter, font_size));
     };
-    word.is_launched = false;
 
-    words_group.add(word);
+    sprite.is_launched = false;
+    sprite.body.setSize(width, font_size, 0, 0);
 }
 
 function create_controls() {
