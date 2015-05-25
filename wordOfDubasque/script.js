@@ -44,7 +44,6 @@ function update() {
 
     // TODO : Get closest word
 
-    var ii = 0;
     var word = bad_words.children[0];
     var letter = word.children[cnt].text.charCodeAt(0);
 

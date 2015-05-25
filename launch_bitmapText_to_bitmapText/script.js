@@ -31,55 +31,63 @@ function create() {
 }
 
 function update() {
-    /*game.physics.arcade.collide(b_word, g_word, function(){
-        b_word.kill();
-        g_word.kill();
-    });*/
+    bad_words_g.forEach(function(b_word){
+        // b_word.y += 3;
+    });
 
-    // game.physics.arcade.overlap(bullets, veggies, collisionHandler, null, this);
+    good_words_g.forEach(function(g_word){
+        if(g_word.is_launched) {
+            /*
+                Although this is a good time to point out - do you realise
+                you can add children to a Sprite too? So you could have
+                a parent sprite, that has a physics body, and then just
+                add children to it (Sprite.addChild) that will move quite
+                happily along with their parent. Note that should you collide
+                the parent sprite it's children will be ignored in that check.
+            */
+
+            // TODO : get closest b_word
+            var b_word = bad_words_g.getFirstAlive();
+            // game.physics.arcade.moveToObject(g_word, b_word, 1, 90);
+        }
+    });
 
     bad_words_g.forEach(function(b_word){
-        b_word.y += 3;
         good_words_g.forEach(function(g_word){
-            if (checkOverlap(b_word, g_word)) {
-                b_word.destroy();
-                g_word.destroy();
-            } else {
-                //
+            if(checkOverlap(b_word, g_word)) {
+                if(game.time.totalElapsedSeconds() > 0.5) {
+                    b_word.destroy();
+                    g_word.destroy();
+                }
             }
         });
     });
-    
 
-    /*bad_words_g.forEach(function(b_word){
-        b_word.body.velocity.setTo(0, 50);
-    });*/
+    //game.physics.arcade.moveToObject(g_word, b_word, 1, 90);
 
-    /*if(g_word.is_launched) {
-        game.physics.arcade.moveToObject(g_word, b_word, 1, 90);
-    }
+    // if(g_word.is_launched) {
+    //     game.physics.arcade.moveToObject(g_word, b_word, 1, 90);
+    // }
 
     if(spacebar.isDown){
-        launch_word(g_word);
-    }*/
+        var w = good_words_g.getFirstAlive();
+        launch_word(w);
+    }
 }
 
-/*function collisionHandler (bullet, veg) {
-    bullet.kill();
-    veg.kill();
-}*/
-
 function launch_word(word) {
-    g_word.is_launched = true;
+    word.is_launched = true;
 }
 
 function add_word(word_s, x, y, words_group) {
     var word = game.add.group();
 
-    for (var i = 0; i < word_s.length; i++) {
+    for(var i = 0; i < word_s.length; i++) {
         var letter = word_s[i];
         word.add(game.add.bitmapText(x + (20 * i), y, 'carrier_command', letter, 17));    
     };
+    word.is_launched = false;
+
     words_group.add(word);
 }
 
@@ -91,9 +99,9 @@ function create_controls() {
     spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 }
 
-function checkOverlap(sprite_a, sprite_b) {
-    var bounds_a = sprite_a.getBounds();
-    var bounds_b = sprite_b.getBounds();
+function checkOverlap(entity_a, entity_b) {
+    var bounds_a = entity_a.getBounds();
+    var bounds_b = entity_b.getBounds();
 
     return Phaser.Rectangle.intersects(bounds_a, bounds_b);
 }
