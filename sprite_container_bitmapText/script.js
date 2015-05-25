@@ -18,8 +18,8 @@ function create() {
 
     game.physics.arcade.enable([s, s_1]);
 
-    add_word('PEACE', s);
-    add_word('FUCK', s_1);
+    add_word('FUCK', s);
+    add_word('PEACE', s_1);
 }
 
 function update() {
@@ -31,7 +31,7 @@ function update() {
     }
 
     if(spacebar.isDown){
-        game.physics.arcade.moveToObject(s_1, s, 1, 90);    
+        game.physics.arcade.moveToObject(s_1, s, 1, 80);    
     }
 }
 
