@@ -26,8 +26,8 @@ function create() {
     b_word.body.collideWorldBounds = true;
     g_word.body.collideWorldBounds = true;*/
 
-    add_word('PEACE', 350, 400, good_words_g)
-    add_word('FUCK', 350, 10, bad_words_g)
+    add_word('PEACE', 350, 400, good_words_g);
+    add_word('FUCK', 350, 10, bad_words_g);
 }
 
 function update() {
