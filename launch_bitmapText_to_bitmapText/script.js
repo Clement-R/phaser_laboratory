@@ -27,7 +27,7 @@ function create() {
     g_word.body.collideWorldBounds = true;*/
 
     add_word('PEACE', 350, 400, good_words_g);
-    add_word('FUCK', 350, 10, bad_words_g);
+    add_word('FUCK', 200, 10, bad_words_g);
 }
 
 function update() {
@@ -37,15 +37,6 @@ function update() {
 
     good_words_g.forEach(function(g_word){
         if(g_word.is_launched) {
-            /*
-                Although this is a good time to point out - do you realise
-                you can add children to a Sprite too? So you could have
-                a parent sprite, that has a physics body, and then just
-                add children to it (Sprite.addChild) that will move quite
-                happily along with their parent. Note that should you collide
-                the parent sprite it's children will be ignored in that check.
-            */
-
             // TODO : get closest b_word
             var b_word = bad_words_g.getFirstAlive();
             // game.physics.arcade.moveToObject(g_word, b_word, 1, 90);
@@ -55,7 +46,7 @@ function update() {
     bad_words_g.forEach(function(b_word){
         good_words_g.forEach(function(g_word){
             if(checkOverlap(b_word, g_word)) {
-                if(game.time.totalElapsedSeconds() > 0.5) {
+                if(game.time.totalElapsedSeconds() > 1) {
                     b_word.destroy();
                     g_word.destroy();
                 }
