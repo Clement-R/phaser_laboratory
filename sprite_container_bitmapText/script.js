@@ -4,6 +4,7 @@ var s;
 var keyReset = false;
 var min_y = 0;
 var closest_word;
+var counter = 0;
 
 function preload() {
     game.load.bitmapFont('carrier_command',
@@ -48,16 +49,23 @@ function update() {
     var good_word = good_words.getFirstAlive();
 
     if(good_word && bad_word) {
-        // game.physics.arcade.moveToObject(good_word, bad_word, 1, 80);    
+        // game.physics.arcade.moveToObject(good_word, bad_word, 1, 80);
     }
     
     bad_words.forEach(function(word){
         if(word.y > min_y) {
             min_y = word.y;
             closest_word = word;
+            // Debug the text fo the closest bad word
             /*var word_text = "";
             word.children.forEach(function(text){ word_text += text.text; });
             console.log(word_text);*/
+        }
+    });
+
+    good_words.forEach(function(good_word){
+        if(good_word.is_launched) {
+            game.physics.arcade.moveToObject(good_word, closest_word, 1, 80);
         }
     });
 
@@ -72,21 +80,23 @@ function update() {
     */
 
     var good_word = good_words.getFirstAlive();
-
-    /*
-    if (key.isDown(letter + 32) || key.isDown(letter)) {
-        // TODO : Change typing effect //////
-        word.children[cnt].alpha = 0;
-        /////////////////////////////////////
-        if(cnt + 1 < word.children.length) {
-            cnt += 1;    
-        } else {
-            launch_word();
-            console.log('Word killed');
+    if(good_word) {
+        var letter = good_word.children[counter].text.charCodeAt(0);
+        if (key.isDown(letter + 32) || key.isDown(letter)) {
+            console.log('Typed');
+            // TODO : Change typing effect /
+            //good_word.children[counter].alpha = 0;
+            good_word.children[counter].tint = "0xFF0000";
+            ////////////////////////////////
+            if(counter + 1 < good_word.children.length) {
+                counter += 1;    
+            } else {
+                good_word.is_launched = true;
+            }
+        } else if (!key.isDown(letter - 32)){
+            keyReset = false;
         }
-    } else if (!key.isDown(letter - 32)){
-        keyReset = false;
-    }*/
+    }
 }
 
 function add_word(word, x, y, group) {
