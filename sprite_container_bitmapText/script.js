@@ -6,6 +6,16 @@ var min_y = 0;
 var closest_word;
 var counter = 0;
 
+var bad_words_list = [
+    "FUCK",
+    "SACREBLEU",
+];
+
+var good_words_list = [
+    "PEACE",
+    "LOVE",
+];
+
 function preload() {
     game.load.bitmapFont('carrier_command',
                          '../assets/fonts/carrier_command.png',
@@ -21,45 +31,23 @@ function create() {
     bad_words = game.add.group();
     good_words = game.add.group();
 
-    add_word('FUCK', 200, 10, bad_words);
-    add_word('TA RACE', 400, 100, bad_words);
-    add_word('PEACE', 350, 450, good_words);
+    add_word(get_random_word(bad_words_list), 200, 10, bad_words, true);
+    add_word(get_random_word(bad_words_list), 400, 100, bad_words, true);
+    add_word(get_random_word(good_words_list), 350, 550, good_words);
 }
 
-/*
-    TODO :
-
-    What would be great, is to create a Word class and set attributes like
-    word_text (containing the word), next_letter and extending sprite for
-    all the physic part.
-*/
-
 function update() {
-    bad_words.forEach(function(bad_word){
-        // bad_word.body.velocity.y = 50;
-        good_words.forEach(function(good_word){
-            if(checkOverlap(bad_word, good_word)) {
-                bad_word.destroy();
-                good_word.destroy();
-            }
-        });
-    });
-
     var bad_word = bad_words.getFirstAlive();
     var good_word = good_words.getFirstAlive();
-
-    if(good_word && bad_word) {
-        // game.physics.arcade.moveToObject(good_word, bad_word, 1, 80);
-    }
     
     bad_words.forEach(function(word){
         if(word.y > min_y) {
             min_y = word.y;
             closest_word = word;
             // Debug the text fo the closest bad word
-            /*var word_text = "";
-            word.children.forEach(function(text){ word_text += text.text; });
-            console.log(word_text);*/
+            // var word_text = "";
+            // word.children.forEach(function(text){ word_text += text.text; });
+            // console.log(word_text);
         }
     });
 
@@ -69,18 +57,8 @@ function update() {
         }
     });
 
-    /*
-    // Work and kill the sprite one by one (kill the two instantly but it's
-    // because the second word is set as closest_word at the next frame,
-    // a timer can solve this problem).
-    if(game.time.totalElapsedSeconds() > 3) {
-        closest_word.destroy();
-        min_y = 0;
-    }
-    */
-
     var good_word = good_words.getFirstAlive();
-    if(good_word) {
+    if(good_word && bad_words.length > 0) {
         var letter = good_word.children[counter].text.charCodeAt(0);
         if (key.isDown(letter + 32) || key.isDown(letter)) {
             console.log('Typed');
@@ -92,14 +70,20 @@ function update() {
                 counter += 1;    
             } else {
                 good_word.is_launched = true;
+                counter = 0;
+                min_y = 0;
+                add_word(get_random_word(good_words_list), 350, 550, good_words);
             }
         } else if (!key.isDown(letter - 32)){
             keyReset = false;
         }
     }
+
+    game.physics.arcade.overlap(good_words, bad_words, collision_handler, null, this);
 }
 
-function add_word(word, x, y, group) {
+function add_word(word, x, y, group, movement) {
+    var movement = movement || false;
     var font_size = 17;
     var width = 0;
 
@@ -116,11 +100,18 @@ function add_word(word, x, y, group) {
     sprite.is_launched = false;
     game.physics.arcade.enable(sprite, Phaser.Physics.ARCADE);
     sprite.body.setSize(width, font_size, 0, 0);
+
+    if(movement) {
+        sprite.body.velocity.y = 50;
+    }
 }
 
-function checkOverlap(entity_a, entity_b) {
-    var bounds_a = entity_a.getBounds();
-    var bounds_b = entity_b.getBounds();
+function collision_handler(entity_a, entity_b) {
+    entity_a.destroy();
+    entity_b.destroy();
+}
 
-    return Phaser.Rectangle.intersects(bounds_a, bounds_b);
+function get_random_word(words_list) {
+    var rnd_int = game.rnd.integerInRange(0, words_list.length - 1);
+    return words_list[rnd_int];
 }
