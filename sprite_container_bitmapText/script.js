@@ -7,13 +7,19 @@ var closest_word;
 var counter = 0;
 
 var bad_words_list = [
-    "FUCK",
+    "ANDOUILLE",
     "SACREBLEU",
+    "ABRUTI",
+    "AVORTON",
+    "STAGIAIRE",
+    "DIANTRE",
 ];
 
 var good_words_list = [
-    "PEACE",
-    "LOVE",
+    "HARDI",
+    "PAIX",
+    "AMOUR",
+    "IMPRESSIONNANT",
 ];
 
 function preload() {
@@ -33,7 +39,7 @@ function create() {
 
     add_word(get_random_word(bad_words_list), 200, 10, bad_words, true);
     add_word(get_random_word(bad_words_list), 400, 100, bad_words, true);
-    add_word(get_random_word(good_words_list), 350, 550, good_words);
+    add_word(get_random_word(good_words_list), game.world.centerX, 550, good_words);
 }
 
 function update() {
@@ -41,14 +47,15 @@ function update() {
     var good_word = good_words.getFirstAlive();
     
     bad_words.forEach(function(word){
+        if (word.y > 450) {
+            word.destroy();
+        }
+
+        // Get closest word
         if(word.y > min_y) {
             min_y = word.y;
             closest_word = word;
-            // Debug the text fo the closest bad word
-            // var word_text = "";
-            // word.children.forEach(function(text){ word_text += text.text; });
-            // console.log(word_text);
-        }
+        } 
     });
 
     good_words.forEach(function(good_word){
@@ -60,19 +67,16 @@ function update() {
     var good_word = good_words.getFirstAlive();
     if(good_word && bad_words.length > 0) {
         var letter = good_word.children[counter].text.charCodeAt(0);
+
         if (key.isDown(letter + 32) || key.isDown(letter)) {
-            console.log('Typed');
-            // TODO : Change typing effect /
-            //good_word.children[counter].alpha = 0;
             good_word.children[counter].tint = "0xFF0000";
-            ////////////////////////////////
             if(counter + 1 < good_word.children.length) {
-                counter += 1;    
+                counter += 1;
             } else {
                 good_word.is_launched = true;
                 counter = 0;
                 min_y = 0;
-                add_word(get_random_word(good_words_list), 350, 550, good_words);
+                add_word(get_random_word(good_words_list), game.world.centerX, 550, good_words);
             }
         } else if (!key.isDown(letter - 32)){
             keyReset = false;
@@ -103,6 +107,8 @@ function add_word(word, x, y, group, movement) {
 
     if(movement) {
         sprite.body.velocity.y = 50;
+    } else {
+        sprite.anchor.setTo(0.5, 0.5);
     }
 }
 
