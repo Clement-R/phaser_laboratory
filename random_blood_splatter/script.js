@@ -28,6 +28,15 @@ function create() {
     emitter = game.add.emitter(circle.x, circle.y, 100);
     emitter.makeParticles('star');
     emitter.gravity = 0; 
+
+    emitter.minParticleScale = 0.1;
+    emitter.maxParticleScale = 0.5;
+
+    emitter.setYSpeed(100, 200);
+    emitter.setXSpeed(-5, 5);
+
+    emitter.minRotation = 0;
+    emitter.maxRotation = 1;
 }
 
 function update() {
@@ -42,7 +51,7 @@ function update() {
     }
 
     if(spacebar.isDown && effect_ready) {
-        emitter.start(true, 2000, null, 10);
+        emitter.start(true, 0, null, 10);
         effect_ready = false;
         start_time = game.time.totalElapsedSeconds();
     }
