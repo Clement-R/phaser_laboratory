@@ -1,5 +1,7 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
+var distance = 50;
+var rotation_speed = 0.1;
 function preload() {
 }
 
@@ -12,7 +14,7 @@ function create() {
     circle.drawCircle(0, 0, 100);
 
 
-    cursor = game.add.graphics(game.world.centerX - 150, game.world.centerY);
+    cursor = game.add.graphics(game.world.centerX - distance, game.world.centerY);
     cursor.beginFill(0xFFFFFF, 1);
     cursor.drawCircle(0, 0, 10);
     cursor.inputEnabled = true;
@@ -21,15 +23,14 @@ function create() {
 }
 
 function update() {
-    
-    cursor.x = circle.x + (50 + 150) * Math.cos(cursor.rotation);
-    cursor.y = circle.y + (50 + 150) * Math.sin(cursor.rotation);
-    
-    //cursor.rotation = game.physics.arcade.angleBetween(cursor, circle);
+
+    cursor.x = circle.x + (50 + distance) * Math.cos(cursor.rotation);
+    cursor.y = circle.y + (50 + distance) * Math.sin(cursor.rotation);
+
     if(up.isDown) {
-        cursor.rotation += 0.05;
+        cursor.rotation += rotation_speed;
     } else if (down.isDown) {
-        cursor.rotation -= 0.05;
+        cursor.rotation -= rotation_speed;
     }
 }
 
