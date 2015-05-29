@@ -4,6 +4,8 @@ var distance = 50;
 var rotation_speed = 0.1;
 var effect_ready = true;
 var start_time;
+var next_shot = 3;
+
 function preload() {
     game.load.image('star', '../assets/images/starGold.png');
 }
@@ -25,7 +27,7 @@ function create() {
 
     emitter = game.add.emitter(circle.x, circle.y, 100);
     emitter.makeParticles('star');
-    emitter.gravity = 0;
+    emitter.gravity = 0; 
 }
 
 function update() {
@@ -42,7 +44,11 @@ function update() {
     if(spacebar.isDown && effect_ready) {
         emitter.start(true, 2000, null, 10);
         effect_ready = false;
-        // start_time = this.game.time.totalElapsedSeconds();
+        start_time = game.time.totalElapsedSeconds();
+    }
+
+    if(game.time.totalElapsedSeconds() - start_time >= next_shot) {
+        effect_ready = true;
     }
 }
 
