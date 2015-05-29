@@ -2,7 +2,10 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
 var distance = 50;
 var rotation_speed = 0.1;
+var effect_ready = true;
+var start_time;
 function preload() {
+    game.load.image('star', '../assets/images/starGold.png');
 }
 
 function create() {
@@ -13,13 +16,16 @@ function create() {
     circle.beginFill(0xFFFFFF, 1);
     circle.drawCircle(0, 0, 100);
 
-
     cursor = game.add.graphics(game.world.centerX - distance, game.world.centerY);
     cursor.beginFill(0xFFFFFF, 1);
     cursor.drawCircle(0, 0, 10);
     cursor.inputEnabled = true;
     cursor.input.enableDrag(true);
     cursor.rotation = game.physics.arcade.angleBetween(cursor, circle);
+
+    emitter = game.add.emitter(circle.x, circle.y, 100);
+    emitter.makeParticles('star');
+    emitter.gravity = 0;
 }
 
 function update() {
@@ -31,6 +37,12 @@ function update() {
         cursor.rotation += rotation_speed;
     } else if (down.isDown) {
         cursor.rotation -= rotation_speed;
+    }
+
+    if(spacebar.isDown && effect_ready) {
+        emitter.start(true, 2000, null, 10);
+        effect_ready = false;
+        // start_time = this.game.time.totalElapsedSeconds();
     }
 }
 
