@@ -32,8 +32,8 @@ function create() {
     emitter.minParticleScale = 0.1;
     emitter.maxParticleScale = 0.5;
 
-    emitter.setYSpeed(100, 200);
-    emitter.setXSpeed(-5, 5);
+    emitter.setYSpeed(300, 400);
+    emitter.setXSpeed(-10, 10);
 
     emitter.minRotation = 0;
     emitter.maxRotation = 1;
@@ -59,6 +59,25 @@ function update() {
     if(game.time.totalElapsedSeconds() - start_time >= next_shot) {
         effect_ready = true;
     }
+
+    emitter.forEachExists(function(particle){
+        if(particle.body.velocity.y > 0) {
+            particle.body.velocity.y -= 5;
+        }
+
+        if(particle.body.velocity.x > 0) {
+            particle.body.velocity.x -= 1;
+        }
+
+        if (particle.body.velocity.y < 0) {
+            particle.body.velocity.y = 0;
+        }
+
+        if(particle.body.velocity.x < 0) {
+            particle.body.velocity.x = 0;
+        }
+        
+    });
 }
 
 function create_controls() {
