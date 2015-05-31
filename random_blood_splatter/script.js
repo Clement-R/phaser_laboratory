@@ -27,16 +27,22 @@ function create() {
 
     emitter = game.add.emitter(circle.x, circle.y, 100);
     emitter.makeParticles('star');
-    emitter.gravity = 0; 
+    emitter.gravity = 0;
 
     emitter.minParticleScale = 0.1;
     emitter.maxParticleScale = 0.5;
 
-    emitter.setYSpeed(300, 400);
-    emitter.setXSpeed(-10, 10);
+    /*emitter.setYSpeed(300, 400);
+    emitter.setXSpeed(-10, 10);*/
+
+    /*emitter.setYSpeed(-250, 250);
+    emitter.setXSpeed(-250, 250);*/
+
+    emitter.minParticleSpeed.setTo(-50, -50);
+    emitter.maxParticleSpeed.setTo(50, 50);
 
     emitter.minRotation = 0;
-    emitter.maxRotation = 1;
+    emitter.maxRotation = 0;
 }
 
 function update() {
@@ -62,19 +68,15 @@ function update() {
 
     emitter.forEachExists(function(particle){
         if(particle.body.velocity.y > 0) {
-            particle.body.velocity.y -= 5;
+            particle.body.velocity.y -= 0.02;
+        } else {
+            particle.body.velocity.y += 0.02;
         }
 
         if(particle.body.velocity.x > 0) {
-            particle.body.velocity.x -= 1;
-        }
-
-        if (particle.body.velocity.y < 0) {
-            particle.body.velocity.y = 0;
-        }
-
-        if(particle.body.velocity.x < 0) {
-            particle.body.velocity.x = 0;
+            particle.body.velocity.x -= 0.02;
+        } else {
+            particle.body.velocity.x += 0.02;
         }
         
     });
