@@ -13,13 +13,11 @@ function create() {
 }
 
 function update() {
-    turret.rotation = game.physics.arcade.angleToPointer(turret);
-    //turret.rotation += 0.025;
+    // Need to add 1.5 offset because rotation at 0 make the sprite look up
+    turret.rotation = game.physics.arcade.angleToPointer(turret) + 1.5;
     debug();
 }
 
 function debug() {
-    // game.debug.spriteBounds(turret);
-    // console.log(game.physics.arcade.angleToPointer(turret));
-    // console.log(turret.rotation);
+    game.debug.spriteInfo(turret, 32, 32);
 }
