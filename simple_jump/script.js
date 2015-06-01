@@ -1,9 +1,11 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
+var game = new Phaser.Game(800, 400, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
 
 var player;
 var jumpTimer = 0;
 var jumpButton;
+var jump = 0;
+var maxJump = 2;
 
 function preload() {
 }
@@ -41,10 +43,22 @@ function update() {
         player.body.velocity.x = 150;
     }
     
-    if(jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer) {
+    if(jumpButton.isDown && game.time.now > jumpTimer && jump < maxJump - 1) {
+        player.body.velocity.y = -500;
+        jumpTimer = game.time.now + 500;
+        jump += 1;
+    }
+
+    console.log(jump);
+
+    if(player.body.onFloor()) {
+        jump = 0;
+    }
+
+    /*if(jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer) {
         player.body.velocity.y = -500;
         jumpTimer = game.time.now + 750;
-    }
+    }*/
 }
 
 function render () {
