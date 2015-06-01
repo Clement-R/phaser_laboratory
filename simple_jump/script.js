@@ -18,7 +18,7 @@ function create() {
     var player_texture = game.add.bitmapData(64, 64);
     player_texture.ctx.beginPath();
     player_texture.ctx.rect(0,0,32,32);
-    player_texture.ctx.fillStyle = '#00eeee';
+    player_texture.ctx.fillStyle = '#00eeff';
     player_texture.ctx.fill();
 
     player = game.add.sprite(32, 320, player_texture);
