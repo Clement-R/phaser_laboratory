@@ -35,15 +35,8 @@ function create() {
     sprintButton = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
 
     jumpButton.onDown.add(function(){
-        if(/* game.time.now > jumpTimer && */ jump < maxJump){
-            if(jump == 0) {
-                console.log('JUMP');
-            } else {
-                console.log('DOUBLE JUMP');
-            }
-            
+        if(jump < maxJump){
             player.body.velocity.y = -500;
-            // jumpTimer = game.time.now + 350;
             jump += 1;
         }
     });
