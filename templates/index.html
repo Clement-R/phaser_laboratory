@@ -16,7 +16,7 @@
                 <img src="favicon.ico" alt="">
                 <h1>To the lab !</h1>
                 {% for project in projects %}
-                    <div class="col-md-3">
+                    <div class="col-xs-12 col-sm-6 col-md-3 project">
                         <a href="{{ project['name'] }}/">
                             <img src="{{ project['logo'] }}" alt="Project's logo">
                             {{ project['name'] }}
