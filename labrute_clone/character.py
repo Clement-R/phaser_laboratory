@@ -2,16 +2,20 @@ class Character:
     def __init__(self, name, weapon):
         self.name = name
         self.weapon = weapon
+        self.health = 10
         self.head_armor_slot = None
 
     def hit(self, target):
-        target.loseHealth(self.weapon.damage)
+        target.lose_health(self.weapon.damage)
 
     def equip_weapon(self):
         pass
 
     def lose_health(self, amount):
-        self.health -= amount
+        if self.health - amount <= 0:
+            self.health = 0
+        else:
+            self.health -= amount
 
 
 class Weapon:
