@@ -4,27 +4,33 @@ class Character:
         self.weapon = weapon
         self.head_armor_slot = None
 
-    def hit(self):
+    def hit(self, target):
+        target.loseHealth(self.weapon.damage)
+
+    def equip_weapon(self):
         pass
 
-    def equipWeapon(self):
-        pass
+    def lose_health(self, amount):
+        self.health -= amount
 
 
 class Weapon:
-    def __init__(self, name, damage = 1):
+    def __init__(self, name, damage=1):
         self.name = name
         self.damage = damage
 
+
 class Armor:
-    def __init__(self, name, armor = 1):
+    def __init__(self, name, armor=1):
         self.name = name
         self.armor = armor
 
+
 class HeadArmor(Armor):
-    def __init__(self, name, armor = 1):
+    def __init__(self, name, armor=1):
         super().__init__(name, armor)
 
+
 class TorsoArmor(Armor):
-    def __init__(self, name, armor = 1):
+    def __init__(self, name, armor=1):
         super().__init__(name, armor)

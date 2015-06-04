@@ -8,3 +8,4 @@ if __name__ == '__main__':
 
     character_1 = Character('character_1', hands)
     character_2 = Character('character_2', hands)
+ 
