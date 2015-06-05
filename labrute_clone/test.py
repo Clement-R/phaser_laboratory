@@ -15,8 +15,12 @@ if __name__ == '__main__':
     """
  
     i = 1
+    turn = 1
     fight_ended = False
     while fight_ended is not True:
+        atk = 1 if turn % 2 == 0 else 0
+        dfn = 0 if turn % 2 == 0 esle 1
+        # groups[atk].attack(groups[dfn])
         if i == 1:
             character_1.hit(character_2)
             if character_2.health <= 0:
