@@ -8,6 +8,7 @@ if __name__ == '__main__':
 
     character_1 = Character('character_1', hands)
     character_2 = Character('character_2', hands)
+    characters = [character_1, character_2]
 
     """
     Make group fight, scalable for later ideas, even if each group is
@@ -19,17 +20,15 @@ if __name__ == '__main__':
     fight_ended = False
     while fight_ended is not True:
         atk = 1 if turn % 2 == 0 else 0
-        dfn = 0 if turn % 2 == 0 esle 1
+        dfn = 0 if turn % 2 == 0 else 1
+
+        characters[atk].hit(characters[dfn])
+        print(characters[atk].name)
+        print(characters[atk].health)
+        print(characters[dfn].health)
+        if characters[dfn].health <= 0:
+            print('Character {} win'.format(atk + 1))
+            fight_ended = True
+
+        turn += 1
         # groups[atk].attack(groups[dfn])
-        if i == 1:
-            character_1.hit(character_2)
-            if character_2.health <= 0:
-                print('Character 1 win')
-                fight_ended = True
-            i += 1
-        else :
-            character_2.hit(character_1)
-            if character_1.health <= 0:
-                print('Character 2 win')
-                fight_ended = True
-            i = 1
