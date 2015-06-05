@@ -8,6 +8,11 @@ if __name__ == '__main__':
 
     character_1 = Character('character_1', hands)
     character_2 = Character('character_2', hands)
+
+    """
+    Make group fight, scalable for later ideas, even if each group is
+    made of one character.
+    """
  
     i = 1
     fight_ended = False
