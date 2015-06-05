@@ -13,9 +13,15 @@ if __name__ == '__main__':
     """
     Make group fight, scalable for later ideas, even if each group is
     made of one character.
+
+    groups = [group1, group2]
+
+    group1 -> one attack
+    group2 -> one attack
+    ...
+    one group win !
     """
- 
-    i = 1
+
     turn = 1
     fight_ended = False
     while fight_ended is not True:
