@@ -1,4 +1,5 @@
 from character import Character
+from character import Group
 from character import Weapon
 from character import HeadArmor
 
@@ -8,18 +9,28 @@ if __name__ == '__main__':
 
     character_1 = Character('character_1', hands)
     character_2 = Character('character_2', hands)
-    characters = [character_1, character_2]
+    # characters = [character_1, character_2]
+    group_1 = Group()
+    group_2 = Group()
+
+    group_1.add(character_1)
+    group_2.add(character_2)
+
+    groups = [group_1, group_2]
 
     """
     Make group fight, scalable for later ideas, even if each group is
     made of one character.
 
-    groups = [group1, group2]
+    groups = [group_1, group_2]
 
-    group1 -> one attack
-    group2 -> one attack
+    group_1 -> one attack
+    group_2 -> one attack
     ...
     one group win !
+
+    Need a boolean for each characters to know if they have already
+    played or not.
     """
 
     turn = 1
@@ -28,13 +39,13 @@ if __name__ == '__main__':
         atk = 1 if turn % 2 == 0 else 0
         dfn = 0 if turn % 2 == 0 else 1
 
-        characters[atk].hit(characters[dfn])
-        print(characters[atk].name)
-        print(characters[atk].health)
-        print(characters[dfn].health)
-        if characters[dfn].health <= 0:
-            print('Character {} win'.format(atk + 1))
-            fight_ended = True
+        # characters[atk].hit(characters[dfn])
+        # print(characters[atk].name)
+        # print(characters[atk].health)
+        # print(characters[dfn].health)
+        # if characters[dfn].health <= 0:
+        #     print('Character {} win'.format(atk + 1))
+        #     fight_ended = True
 
-        turn += 1
+        # turn += 1
         # groups[atk].attack(groups[dfn])

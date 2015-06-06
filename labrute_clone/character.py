@@ -12,6 +12,7 @@ class Character:
         self.weapon = weapon
         self.health = 10
         self.head_armor_slot = None
+        self.played_this_turn = False
 
     def hit(self, target):
         target.lose_health(self.weapon.damage)
