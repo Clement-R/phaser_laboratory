@@ -5,6 +5,11 @@ class Group:
     def add(self, character):
         self.characters.append(character)
 
+    def get_next_ready(self):
+        for character in self.characters:
+            if character.ready:
+                return character
+
 
 class Character:
     def __init__(self, name, weapon):
@@ -12,7 +17,14 @@ class Character:
         self.weapon = weapon
         self.health = 10
         self.head_armor_slot = None
-        self.played_this_turn = False
+        self.ready = True
+
+    def attack(self):
+        """
+        Attack logic
+        Find opponent, choose best strategy, action !
+        """
+        pass
 
     def hit(self, target):
         target.lose_health(self.weapon.damage)

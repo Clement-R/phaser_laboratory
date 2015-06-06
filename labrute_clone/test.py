@@ -39,6 +39,8 @@ if __name__ == '__main__':
         atk = 1 if turn % 2 == 0 else 0
         dfn = 0 if turn % 2 == 0 else 1
 
+        groups[atk].get_next_ready()
+
         # characters[atk].hit(characters[dfn])
         # print(characters[atk].name)
         # print(characters[atk].health)
@@ -48,4 +50,3 @@ if __name__ == '__main__':
         #     fight_ended = True
 
         # turn += 1
-        # groups[atk].attack(groups[dfn])
