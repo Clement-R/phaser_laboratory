@@ -6,9 +6,16 @@ class Group:
         self.characters.append(character)
 
     def get_next_ready(self):
+        # Reset charachters if needed
+        if len([c for c in self.characters if c.ready]) == 0:
+            self.reset_characters()
+        # Get all ready characters
         for character in self.characters:
             if character.ready:
                 return character
+
+    def reset_characters(self):
+        pass
 
 
 class Character:
@@ -29,8 +36,8 @@ class Character:
     def hit(self, target):
         target.lose_health(self.weapon.damage)
 
-    def equip_weapon(self):
-        pass
+    def equip_weapon(self, weapon):
+        self.weapon = weapon
 
     def lose_health(self, amount):
         if self.health - amount <= 0:

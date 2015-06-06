@@ -29,8 +29,8 @@ if __name__ == '__main__':
     ...
     one group win !
 
-    Need a boolean for each characters to know if they have already
-    played or not.
+    Once each character has attack one time, we need to reset the ready
+    attribute of all characters
     """
 
     turn = 1
