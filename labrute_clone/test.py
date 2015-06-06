@@ -39,7 +39,8 @@ if __name__ == '__main__':
         atk = 1 if turn % 2 == 0 else 0
         dfn = 0 if turn % 2 == 0 else 1
 
-        groups[atk].get_next_ready()
+        attacker = groups[atk].get_next_ready()
+        attacker.attack()
 
         # characters[atk].hit(characters[dfn])
         # print(characters[atk].name)
