@@ -1,3 +1,11 @@
+class Group:
+    def __init__(self):
+        self.characters = []
+
+    def add(self, character):
+        self.characters.append(character)
+
+
 class Character:
     def __init__(self, name, weapon):
         self.name = name
