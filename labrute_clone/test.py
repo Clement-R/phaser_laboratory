@@ -35,12 +35,12 @@ if __name__ == '__main__':
 
     turn = 1
     fight_ended = False
-    while fight_ended is not True:
+    while not fight_ended:
         atk = 1 if turn % 2 == 0 else 0
         dfn = 0 if turn % 2 == 0 else 1
 
         attacker = groups[atk].get_next_ready()
-        attacker.attack()
+        attacker.attack(groups[dfn])
 
         # characters[atk].hit(characters[dfn])
         # print(characters[atk].name)
@@ -50,4 +50,4 @@ if __name__ == '__main__':
         #     print('Character {} win'.format(atk + 1))
         #     fight_ended = True
 
-        # turn += 1
+        turn += 1

@@ -6,10 +6,11 @@ class Group:
         self.characters.append(character)
 
     def get_next_ready(self):
-        # Reset charachters if needed
+        # Reset characters if needed
         if len([c for c in self.characters if c.ready]) == 0:
             self.reset_characters()
-        # Get all ready characters
+
+        # Return first ready character
         for character in self.characters:
             if character.ready:
                 return character
@@ -26,12 +27,12 @@ class Character:
         self.head_armor_slot = None
         self.ready = True
 
-    def attack(self):
+    def attack(self, group):
         """
         Attack logic
         Find opponent, choose best strategy, action !
         """
-        pass
+        print(self.name)
 
     def hit(self, target):
         target.lose_health(self.weapon.damage)
