@@ -18,21 +18,6 @@ if __name__ == '__main__':
 
     groups = [group_1, group_2]
 
-    """
-    Make group fight, scalable for later ideas, even if each group is
-    made of one character.
-
-    groups = [group_1, group_2]
-
-    group_1 -> one attack
-    group_2 -> one attack
-    ...
-    one group win !
-
-    Once each character has attack one time, we need to reset the ready
-    attribute of all characters
-    """
-
     turn = 1
     fight_ended = False
     while not fight_ended:
@@ -42,12 +27,11 @@ if __name__ == '__main__':
         attacker = groups[atk].get_next_ready()
         attacker.attack(groups[dfn])
 
-        # characters[atk].hit(characters[dfn])
-        # print(characters[atk].name)
-        # print(characters[atk].health)
-        # print(characters[dfn].health)
-        # if characters[dfn].health <= 0:
-        #     print('Character {} win'.format(atk + 1))
-        #     fight_ended = True
-
         turn += 1
+        if not groups[dfn].alive:
+            fight_ended = True
+            print("Win")
+        elif not groups[atk].alive: 
+            fight_ended = True
+            print("Win")
+

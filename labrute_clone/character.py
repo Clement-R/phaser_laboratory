@@ -16,7 +16,18 @@ class Group:
                 return character
 
     def reset_characters(self):
-        pass
+        for character in self.characters:
+            character.ready = True
+
+    def check_characters_alive(self):
+        """
+        Return True if at least one character is alive,
+        else it returns False.
+        """
+        for character in self.characters:
+            if character.health > 0:
+                return True
+        return False
 
 
 class Character:
@@ -33,6 +44,8 @@ class Character:
         Find opponent, choose best strategy, action !
         """
         print(self.name)
+        opponent = group[0]
+        self.hit(opponent)
 
     def hit(self, target):
         target.lose_health(self.weapon.damage)
@@ -67,3 +80,4 @@ class HeadArmor(Armor):
 class TorsoArmor(Armor):
     def __init__(self, name, armor=1):
         super().__init__(name, armor)
+
