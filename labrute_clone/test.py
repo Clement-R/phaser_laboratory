@@ -9,11 +9,13 @@ if __name__ == '__main__':
 
     character_1 = Character('character_1', hands)
     character_2 = Character('character_2', hands)
+    character_3 = Character('character_3', hands)
 
     group_1 = Group()
     group_2 = Group()
 
     group_1.add(character_1)
+    group_1.add(character_3)
     group_2.add(character_2)
 
     groups = [group_1, group_2]

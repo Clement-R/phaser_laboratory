@@ -1,3 +1,6 @@
+import random
+
+
 class Group:
 
     def __init__(self):
@@ -14,6 +17,7 @@ class Group:
         # Return first ready character
         for character in self.characters:
             if character.ready:
+                character.ready = False
                 return character
 
     def reset_characters(self):
@@ -39,25 +43,30 @@ class Character:
         self.health = 10
         self.head_armor_slot = None
         self.ready = True
+        self.dead = False
 
     def attack(self, group):
         """
         Attack logic
         Find opponent, choose best strategy, action !
         """
-        print(self.name)
-        opponent = group.characters[0]
+        ran = random.randint(0, len(group.characters) - 1)
+        opponent = group.characters[ran]
+        print("{} hit {} with {} for {} hit points".format(
+              self.name, opponent.name, self.weapon.name, self.weapon.damage))
         self.hit(opponent)
+        print('-' * 50)
 
     def hit(self, target):
-        target.lose_health(self.weapon.damage)
+        target.get_hit(self.weapon.damage)
 
     def equip_weapon(self, weapon):
         self.weapon = weapon
 
-    def lose_health(self, amount):
+    def get_hit(self, amount):
         if self.health - amount <= 0:
             self.health = 0
+            self.dead = True
         else:
             self.health -= amount
 
