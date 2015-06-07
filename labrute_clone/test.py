@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     character_1 = Character('character_1', hands)
     character_2 = Character('character_2', hands)
-    # characters = [character_1, character_2]
+
     group_1 = Group()
     group_2 = Group()
 
@@ -28,10 +28,9 @@ if __name__ == '__main__':
         attacker.attack(groups[dfn])
 
         turn += 1
-        if not groups[dfn].alive:
+        if not groups[dfn].alive():
             fight_ended = True
             print("Win")
-        elif not groups[atk].alive: 
+        elif not groups[atk].alive():
             fight_ended = True
             print("Win")
-

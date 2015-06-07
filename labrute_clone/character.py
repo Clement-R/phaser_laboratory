@@ -1,4 +1,5 @@
 class Group:
+
     def __init__(self):
         self.characters = []
 
@@ -19,7 +20,7 @@ class Group:
         for character in self.characters:
             character.ready = True
 
-    def check_characters_alive(self):
+    def alive(self):
         """
         Return True if at least one character is alive,
         else it returns False.
@@ -31,6 +32,7 @@ class Group:
 
 
 class Character:
+
     def __init__(self, name, weapon):
         self.name = name
         self.weapon = weapon
@@ -44,7 +46,7 @@ class Character:
         Find opponent, choose best strategy, action !
         """
         print(self.name)
-        opponent = group[0]
+        opponent = group.characters[0]
         self.hit(opponent)
 
     def hit(self, target):
@@ -61,23 +63,26 @@ class Character:
 
 
 class Weapon:
+
     def __init__(self, name, damage=1):
         self.name = name
         self.damage = damage
 
 
 class Armor:
+
     def __init__(self, name, armor=1):
         self.name = name
         self.armor = armor
 
 
 class HeadArmor(Armor):
+
     def __init__(self, name, armor=1):
         super().__init__(name, armor)
 
 
 class TorsoArmor(Armor):
+
     def __init__(self, name, armor=1):
         super().__init__(name, armor)
-
