@@ -13,7 +13,6 @@ def get_viewers_number(user):
     infos = json.loads(r.text)
     return infos['stream']['viewers']
 
-user = "imaqtpie"
 url_base = 'https://api.twitch.tv/kraken/'
 print(get_viewers_number('imaqtpie'))
 print(get_viewers_number('Voyboy'))
