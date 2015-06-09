@@ -11,8 +11,20 @@ def get_viewers_number(user):
     url_user_stream = '{}/streams/{}'.format(url_base, user)
     r = requests.get(url_user_stream)
     infos = json.loads(r.text)
-    return infos['stream']['viewers']
+    if infos['stream']:
+        return infos['stream']['viewers']
+    else:
+        return False
 
 url_base = 'https://api.twitch.tv/kraken/'
-print(get_viewers_number('imaqtpie'))
-print(get_viewers_number('Voyboy'))
+viewers = get_viewers_number('imaqtpie')
+if viewers:
+    print(viewers)
+else:
+    print('Stream is offline')
+
+viewers = get_viewers_number('lachhhandfriends')
+if viewers:
+    print(viewers)
+else:
+    print('Stream is offline')
