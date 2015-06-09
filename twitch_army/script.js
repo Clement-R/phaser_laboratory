@@ -10,10 +10,10 @@ function create() {
     game.time.advancedTiming = true;
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    var player_texture = game.add.bitmapData(16, 16);
+    var player_texture = game.add.bitmapData(4, 4);
     player_texture.ctx.beginPath();
-    player_texture.ctx.rect(0,0,8,8);
-    player_texture.ctx.fillStyle = '#0000ff';
+    player_texture.ctx.rect(0,0,4,4);
+    player_texture.ctx.fillStyle = '#eedd00';
     player_texture.ctx.fill();
 
     game.cache.addBitmapData('player_texture', player_texture);
@@ -24,8 +24,8 @@ function create() {
 function update() {
     game.debug.text(game.time.fps, 15, 15);
     sprites.forEach(function(sprite){
-        sprite.x += game.rnd.integerInRange(-10, 10);
-        sprite.y += game.rnd.integerInRange(-10, 10);
+        sprite.x += game.rnd.integerInRange(-50, 50);
+        sprite.y += game.rnd.integerInRange(-50, 50);
     });
 }
 
