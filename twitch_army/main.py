@@ -7,6 +7,13 @@ import requests
 import json
 
 
+"""
+Need to add an IRC bot, working on a security challenge that I cannot push for
+the moment.
+I have to wait that NDH 2015 start to put my solution online. Sad story.
+"""
+
+
 def get_viewers_number(user):
     url_user_stream = '{}/streams/{}'.format(url_base, user)
     r = requests.get(url_user_stream)
