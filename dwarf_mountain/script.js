@@ -3,8 +3,9 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
 var copper = 0;
 var silver = 0;
 var gold = 0;
+
 var money = 0;
-var base = 5;
+var money_per_second = 0;
 
 function preload() {
 }
@@ -17,7 +18,7 @@ function create() {
     timer.start();
 
     timer_1 = game.time.create(false);
-    timer_1.loop(10000, function(){base += 10;}, this);
+    timer_1.loop(10000, function(){money_per_second += 10;}, this);
     timer_1.start();
 
     score_text = game.add.text(10, 80, 'Money : ' + money,
@@ -30,7 +31,7 @@ function update() {
 }
 
 function update_money() {
-    money += base;
+    money += money_per_second;
 }
 
 /*function Personne(nom) {
