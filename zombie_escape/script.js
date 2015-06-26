@@ -38,6 +38,9 @@ function update() {
         baddy.body.velocity.x = 0;
         baddy.body.velocity.y = 0;
     }
+
+    baddy_radius.x = baddy.x + (baddy.width / 2);
+    baddy_radius.y = baddy.y + (baddy.height / 2);
 }
 
 function add_safe_zone() {
@@ -68,6 +71,13 @@ function add_player() {
 }
 
 function add_enemies() {
+
+    var radius = game.add.bitmapData(300, 300);
+    radius.circle(150, 150, 100, 'rgb(0,200,0)');
+
+    baddy_radius = game.add.sprite(0, 0, radius);
+    baddy_radius.anchor.setTo(0.5, 0.5);
+
     var baddies_texture = game.add.bitmapData(32, 32);
     baddies_texture.ctx.beginPath();
     baddies_texture.ctx.rect(0,0,32,32);
@@ -79,8 +89,6 @@ function add_enemies() {
     baddy.body.collideWorldBounds = true;
     baddy.body.maxVelocity.y = 500;
 
-
-    var bmd = game.add.bitmapData(300, 300);
-    bmd.circle(150, 150, 150, 'rgb(0,200,0)');
-    var sprite = game.add.sprite(200, 0, bmd);
+    baddy_radius.x = baddy.x + (baddy.width / 2);
+    baddy_radius.y = baddy.y + (baddy.height / 2);
 }
