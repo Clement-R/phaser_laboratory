@@ -20,12 +20,23 @@ function update() {
 
     if (cursors.left.isDown) {
         player.body.velocity.x = -150;
-    } else if (cursors.right.isDown) {
+    }
+    if (cursors.right.isDown) {
         player.body.velocity.x = 150;
-    } else if (cursors.up.isDown) {
+    }
+    if (cursors.up.isDown) {
         player.body.velocity.y = -150;
-    } else if (cursors.down.isDown) {
+    }
+    if (cursors.down.isDown) {
         player.body.velocity.y = 150;
+    }
+
+    // Player not in safe zone
+    if (!game.physics.arcade.overlap(player, safe_zone)) {
+        game.physics.arcade.moveToObject(baddy, player);
+    } else {
+        baddy.body.velocity.x = 0;
+        baddy.body.velocity.y = 0;
     }
 }
 
@@ -36,6 +47,8 @@ function add_safe_zone() {
     safe_texture.ctx.fillStyle = '#ffffff';
     safe_texture.ctx.fill();
     safe_zone = game.add.sprite(500, 320, safe_texture);
+
+    game.physics.enable(safe_zone, Phaser.Physics.ARCADE);
 }
 
 function add_player() {
@@ -65,4 +78,9 @@ function add_enemies() {
     game.physics.enable(baddy, Phaser.Physics.ARCADE);
     baddy.body.collideWorldBounds = true;
     baddy.body.maxVelocity.y = 500;
+
+
+    var bmd = game.add.bitmapData(300, 300);
+    bmd.circle(150, 150, 150, 'rgb(0,200,0)');
+    var sprite = game.add.sprite(200, 0, bmd);
 }
