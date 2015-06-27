@@ -10,8 +10,8 @@ function create() {
     game.stage.backgroundColor = 0x2c3e50;
 
     add_safe_zone();
-    add_player();
     add_enemies();
+    add_player();
 }
 
 function update() {
@@ -31,8 +31,8 @@ function update() {
         player.body.velocity.y = 150;
     }
 
-    // Player not in safe zone
-    if (!game.physics.arcade.overlap(player, safe_zone)) {
+    // Player in enemy radius
+    if (game.physics.arcade.overlap(player, baddy_radius)) {
         game.physics.arcade.moveToObject(baddy, player);
     } else {
         baddy.body.velocity.x = 0;
@@ -76,7 +76,9 @@ function add_enemies() {
     radius.circle(150, 150, 100, 'rgb(0,200,0)');
 
     baddy_radius = game.add.sprite(0, 0, radius);
+    game.physics.enable(baddy_radius, Phaser.Physics.ARCADE);
     baddy_radius.anchor.setTo(0.5, 0.5);
+
 
     var baddies_texture = game.add.bitmapData(32, 32);
     baddies_texture.ctx.beginPath();
