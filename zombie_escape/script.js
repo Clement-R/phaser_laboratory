@@ -32,25 +32,33 @@ function create() {
     game.physics.p2.enable(baddy_radius);
     baddy_radius.body.setCircle(45);
     baddy_radius.body.fixedRotation = true;
+
+    game.physics.p2.setPostBroadphaseCallback(checkOverlap, this);
+}
+
+function checkOverlap(body1, body2) {
+    /*console.log(body1);
+    console.log(body2);*/
+    if ((body1.sprite.name === 'player' && body2.sprite.name === 'baddy_radius')){
+        return false;
+    }
+    return true;
 }
 
 function update() {
-    // throw new Error("Something went badly wrong!");
-
-    player.body.velocity.x = 0;
-    player.body.velocity.y = 0;
+    player.body.setZeroVelocity();
 
     if (cursors.left.isDown) {
-        player.body.velocity.x = -150;
+        player.body.moveLeft(400);
     }
     if (cursors.right.isDown) {
-        player.body.velocity.x = 150;
+        player.body.moveRight(400);
     }
     if (cursors.up.isDown) {
-        player.body.velocity.y = -150;
+        player.body.moveUp(400);
     }
     if (cursors.down.isDown) {
-        player.body.velocity.y = 150;
+        player.body.moveDown(400);
     }
 }
 
