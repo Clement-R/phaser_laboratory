@@ -26,20 +26,29 @@ function create() {
 
     game.physics.p2.enable(player);
     player.body.fixedRotation = true;
+    player.name = "player";
+
     game.physics.p2.enable(baddy);
     baddy.body.fixedRotation = true;
+    baddy.name = "baddy";
 
     game.physics.p2.enable(baddy_radius);
-    baddy_radius.body.setCircle(45);
+    baddy_radius.name = "baddy_radius";
+    baddy_radius.body.setCircle(90);
     baddy_radius.body.fixedRotation = true;
 
     game.physics.p2.setPostBroadphaseCallback(checkOverlap, this);
 }
 
 function checkOverlap(body1, body2) {
-    /*console.log(body1);
-    console.log(body2);*/
     if ((body1.sprite.name === 'player' && body2.sprite.name === 'baddy_radius')){
+        console.log(body1.sprite.name);
+        console.log(body2.sprite.name);
+        return false;
+    }
+    if ((body1.sprite.name === 'player' && body2.sprite.name === 'baddy')){
+        console.log(body1.sprite.name);
+        console.log(body2.sprite.name);
         return false;
     }
     return true;
