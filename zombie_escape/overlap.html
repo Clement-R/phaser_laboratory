@@ -1,0 +1,80 @@
+<doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>hello phaser 1.2</title>
+        <style>
+            body{background-color:#333;}
+            #gamediv{width:800px;margin:20px auto auto;border:1px solid black;border-radius:15px;}
+        </style>
+        <script src="../phaser.min.js"></script>
+    </head>
+<body>
+<div id=gamediv></div>
+<script type="text/javascript">
+
+var bullet;
+var cursors;
+var ship;
+
+var GameState1 = {
+
+    preload: function () {
+        game.load.image('bulletup', 'bullet-up.png');
+        game.load.image('bomb', 'bomb.png');
+    },
+    create: function () {
+        game.physics.startSystem(Phaser.Physics.P2JS);
+
+        bullet = game.add.sprite(100, 150, 'bulletup');
+        game.physics.p2.enable(bullet);
+        bullet.name = 'bullet';
+
+        ship = game.add.sprite(32, game.world.height - 150, 'bulletup');
+        game.physics.p2.enable(ship);
+        ship.name = 'ship';
+
+        cursors = game.input.keyboard.createCursorKeys();
+
+        game.physics.p2.setPostBroadphaseCallback(checkOverlap, this);   //this is used to start the check
+
+    },
+    update: function () {
+        if (cursors.left.isDown) {ship.body.rotateLeft(100);}
+        else if (cursors.right.isDown){ship.body.rotateRight(100);}
+        else {ship.body.setZeroRotation();}
+        if (cursors.up.isDown){ship.body.thrust(400);}
+        else if (cursors.down.isDown){ship.body.reverse(400);}
+
+        ship.body.debug = true;
+        ship.body.debugBody.x = ship.body.x;
+        ship.body.debugBody.y = ship.body.y;
+
+        bullet.body.debug = true;
+        bullet.body.debugBody.x = bullet.body.x;
+        bullet.body.debugBody.y = bullet.body.y;
+    }
+}
+
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gamediv');
+game.state.add('start', GameState1, true);
+
+
+
+// if this returns true a collision could happen.. if false it will not collide
+function checkOverlap(body1, body2) {
+    if ((body1.sprite.name === 'ship' && body2.sprite.name === 'bullet') || (body2.sprite.name === 'ship' && body1.sprite.name === 'bullet')){
+        dosomething();  //whatever you need on overlap
+        return false;
+    }
+    return true;
+}
+
+function dosomething(){
+    bullet.loadTexture('bomb');
+}
+
+
+</script>
+</body>
+</html>

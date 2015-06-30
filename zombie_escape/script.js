@@ -41,14 +41,16 @@ function create() {
 }
 
 function checkOverlap(body1, body2) {
-    if ((body1.sprite.name === 'player' && body2.sprite.name === 'baddy_radius')){
-        console.log(body1.sprite.name);
-        console.log(body2.sprite.name);
+    if ((body1.sprite.name === 'player' && body2.sprite.name === 'baddy_radius') ||
+        (body1.sprite.name === 'baddy_radius' && body2.sprite.name === 'player')){
         return false;
     }
-    if ((body1.sprite.name === 'player' && body2.sprite.name === 'baddy')){
-        console.log(body1.sprite.name);
-        console.log(body2.sprite.name);
+    if ((body1.sprite.name === 'baddy' && body2.sprite.name === 'baddy_radius') ||
+        (body1.sprite.name === 'baddy_radius' && body2.sprite.name === 'baddy')){
+        return false;
+    }
+    if ((body1.sprite.name === 'baddy' && body2.sprite.name === 'player') ||
+        (body1.sprite.name === 'player' && body2.sprite.name === 'baddy')){
         return false;
     }
     return true;
@@ -57,17 +59,29 @@ function checkOverlap(body1, body2) {
 function update() {
     player.body.setZeroVelocity();
 
+    player.body.debug = true;
+    player.body.debugBody.x = player.body.x;
+    player.body.debugBody.y = player.body.y;
+
+    baddy.body.debug = true;
+    baddy.body.debugBody.x = baddy.body.x;
+    baddy.body.debugBody.y = baddy.body.y;
+
+    baddy_radius.body.debug = true;
+    baddy_radius.body.debugBody.x = baddy_radius.body.x;
+    baddy_radius.body.debugBody.y = baddy_radius.body.y;
+
     if (cursors.left.isDown) {
-        player.body.moveLeft(400);
+        player.body.moveLeft(300);
     }
     if (cursors.right.isDown) {
-        player.body.moveRight(400);
+        player.body.moveRight(300);
     }
     if (cursors.up.isDown) {
-        player.body.moveUp(400);
+        player.body.moveUp(300);
     }
     if (cursors.down.isDown) {
-        player.body.moveDown(400);
+        player.body.moveDown(300);
     }
 }
 
