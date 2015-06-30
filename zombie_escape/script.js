@@ -3,6 +3,14 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
 
 var collisionCircle;
 
+/*
+    Aggro zone of zombies
+    Zombie motion path
+    Map imported from Tiled (object containing data ? like key)
+    (One item at a time, picked up on overlap)
+    Transition between maps like Zelda
+*/
+
 function preload() {
 }
 
@@ -44,8 +52,6 @@ function update() {
     if (cursors.down.isDown) {
         player.body.velocity.y = 150;
     }
-
-
 }
 
 function add_safe_zone() {
@@ -73,12 +79,9 @@ function add_player() {
 }
 
 function add_enemies() {
-
     var radius = game.add.bitmapData(300, 300);
-
     baddy_radius = game.add.sprite(0, 0, radius);
     baddy_radius.anchor.setTo(0.5, 0.5);
-
 
     var baddies_texture = game.add.bitmapData(32, 32);
     baddies_texture.ctx.beginPath();
