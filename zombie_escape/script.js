@@ -4,6 +4,14 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
 var collisionCircle;
 
 /*
+    TO DO :
+    Move to player whean player enter in aggro
+    http://www.html5gamedevs.com/topic/4826-help-arcade-physics-with-p2-objects/?p=29613
+
+
+    Set cricle position to center of baddy
+    Create generic baddy class
+
     Aggro zone of zombies
     Zombie motion path
     Map imported from Tiled (object containing data ? like key)
@@ -43,6 +51,7 @@ function create() {
 function checkOverlap(body1, body2) {
     if ((body1.sprite.name === 'player' && body2.sprite.name === 'baddy_radius') ||
         (body1.sprite.name === 'baddy_radius' && body2.sprite.name === 'player')){
+
         return false;
     }
     if ((body1.sprite.name === 'baddy' && body2.sprite.name === 'baddy_radius') ||
