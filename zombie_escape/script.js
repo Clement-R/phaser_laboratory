@@ -5,11 +5,10 @@ var collisionCircle;
 
 /*
     TO DO :
-    Set cricle position to center of baddy
-
     Move to player whean player enter in aggro
     http://www.html5gamedevs.com/topic/4826-help-arcade-physics-with-p2-objects/?p=29613
 
+    Move radius with baddy
     Create generic baddy class
 
     Aggro zone of zombies
@@ -24,7 +23,6 @@ function preload() {
 
 function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
-    game.physics.p2.updateBoundsCollisionGroup();
 
     game.physics.p2.gravity.y = 0;
 
@@ -37,10 +35,12 @@ function create() {
     game.physics.p2.enable(player, true);
     player.body.fixedRotation = true;
     player.name = "player";
+    player.body.collideWorldBounds = true;
 
     game.physics.p2.enable(baddy, true);
     baddy.body.fixedRotation = true;
     baddy.name = "baddy";
+    baddy.body.collideWorldBounds = true;
 
     game.physics.p2.enable(baddy_radius, true);
     baddy_radius.name = "baddy_radius";
@@ -123,8 +123,6 @@ function add_enemies() {
     baddies_texture.ctx.fill();
 
     baddy = game.add.sprite(150, 150, baddies_texture);
-    /*baddy.body.collideWorldBounds = true;
-    baddy.body.maxVelocity.y = 500;*/
 
     baddy_radius.x = baddy.x;
     baddy_radius.y = baddy.y;
