@@ -5,11 +5,11 @@ var collisionCircle;
 
 /*
     TO DO :
+    Set cricle position to center of baddy
+
     Move to player whean player enter in aggro
     http://www.html5gamedevs.com/topic/4826-help-arcade-physics-with-p2-objects/?p=29613
 
-
-    Set cricle position to center of baddy
     Create generic baddy class
 
     Aggro zone of zombies
@@ -24,6 +24,8 @@ function preload() {
 
 function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.p2.updateBoundsCollisionGroup();
+
     game.physics.p2.gravity.y = 0;
 
     game.stage.backgroundColor = 0x2c3e50;
@@ -32,17 +34,17 @@ function create() {
     add_enemies();
     add_player();
 
-    game.physics.p2.enable(player);
+    game.physics.p2.enable(player, true);
     player.body.fixedRotation = true;
     player.name = "player";
 
-    game.physics.p2.enable(baddy);
+    game.physics.p2.enable(baddy, true);
     baddy.body.fixedRotation = true;
     baddy.name = "baddy";
 
-    game.physics.p2.enable(baddy_radius);
+    game.physics.p2.enable(baddy_radius, true);
     baddy_radius.name = "baddy_radius";
-    baddy_radius.body.setCircle(90);
+    baddy_radius.body.setCircle(140);
     baddy_radius.body.fixedRotation = true;
 
     game.physics.p2.setPostBroadphaseCallback(checkOverlap, this);
@@ -60,7 +62,7 @@ function checkOverlap(body1, body2) {
     }
     if ((body1.sprite.name === 'baddy' && body2.sprite.name === 'player') ||
         (body1.sprite.name === 'player' && body2.sprite.name === 'baddy')){
-        return false;
+        return true;
     }
     return true;
 }
@@ -68,17 +70,8 @@ function checkOverlap(body1, body2) {
 function update() {
     player.body.setZeroVelocity();
 
-    player.body.debug = true;
-    player.body.debugBody.x = player.body.x;
-    player.body.debugBody.y = player.body.y;
-
-    baddy.body.debug = true;
-    baddy.body.debugBody.x = baddy.body.x;
-    baddy.body.debugBody.y = baddy.body.y;
-
-    baddy_radius.body.debug = true;
-    baddy_radius.body.debugBody.x = baddy_radius.body.x;
-    baddy_radius.body.debugBody.y = baddy_radius.body.y;
+    baddy_radius.x = baddy.x;
+    baddy_radius.y = baddy.y;
 
     if (cursors.left.isDown) {
         player.body.moveLeft(300);
@@ -133,6 +126,6 @@ function add_enemies() {
     /*baddy.body.collideWorldBounds = true;
     baddy.body.maxVelocity.y = 500;*/
 
-    baddy_radius.x = baddy.x + (baddy.width / 2);
-    baddy_radius.y = baddy.y + (baddy.height / 2);
+    baddy_radius.x = baddy.x;
+    baddy_radius.y = baddy.y;
 }
