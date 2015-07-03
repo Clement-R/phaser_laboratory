@@ -32,19 +32,22 @@ function create() {
     add_enemies();
     add_player();
 
-    game.physics.p2.enable(player, true);
+    // game.physics.p2.enable(player, true);
+    game.physics.p2.enable(player);
     player.body.fixedRotation = true;
     player.name = "player";
     player.body.collideWorldBounds = true;
 
-    game.physics.p2.enable(baddy, true);
+    // game.physics.p2.enable(baddy, true);
+    game.physics.p2.enable(baddy);
     baddy.body.fixedRotation = true;
     baddy.name = "baddy";
     baddy.body.collideWorldBounds = true;
 
-    game.physics.p2.enable(baddy_radius, true);
+    // game.physics.p2.enable(baddy_radius, true);
+    game.physics.p2.enable(baddy_radius);
     baddy_radius.name = "baddy_radius";
-    baddy_radius.body.setCircle(140);
+    baddy_radius.body.setCircle(200);
     baddy_radius.body.fixedRotation = true;
 
     game.physics.p2.setPostBroadphaseCallback(checkOverlap, this);
@@ -69,9 +72,11 @@ function checkOverlap(body1, body2) {
 
 function update() {
     player.body.setZeroVelocity();
+    baddy.body.setZeroVelocity();
+    baddy_radius.body.setZeroVelocity();
 
-    baddy_radius.x = baddy.x;
-    baddy_radius.y = baddy.y;
+    baddy_radius.body.x = baddy.body.x;
+    baddy_radius.body.y = baddy.body.y;
 
     if (cursors.left.isDown) {
         player.body.moveLeft(300);
