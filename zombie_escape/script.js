@@ -40,12 +40,12 @@ function create() {
 
     // game.physics.p2.enable(baddy, true);
     game.physics.p2.enable(baddy);
-    baddy.body.fixedRotation = true;
+    //baddy.body.fixedRotation = true;
     baddy.name = "baddy";
     baddy.body.collideWorldBounds = true;
 
     // game.physics.p2.enable(baddy_radius, true);
-    game.physics.p2.enable(baddy_radius);
+    game.physics.p2.enable(baddy_radius, true);
     baddy_radius.name = "baddy_radius";
     baddy_radius.body.setCircle(200);
     baddy_radius.body.fixedRotation = true;
@@ -54,9 +54,12 @@ function create() {
 }
 
 function checkOverlap(body1, body2) {
-    if ((body1.sprite.name === 'player' && body2.sprite.name === 'baddy_radius') ||
-        (body1.sprite.name === 'baddy_radius' && body2.sprite.name === 'player')){
-
+    if (body1.sprite.name === 'player' && body2.sprite.name === 'baddy_radius') {
+        moveBaddy(baddy);
+        return false;
+    }
+    if (body1.sprite.name === 'baddy_radius' && body2.sprite.name === 'player') {
+        moveBaddy(baddy);
         return false;
     }
     if ((body1.sprite.name === 'baddy' && body2.sprite.name === 'baddy_radius') ||
@@ -72,8 +75,6 @@ function checkOverlap(body1, body2) {
 
 function update() {
     player.body.setZeroVelocity();
-    baddy.body.setZeroVelocity();
-    baddy_radius.body.setZeroVelocity();
 
     baddy_radius.body.x = baddy.body.x;
     baddy_radius.body.y = baddy.body.y;
@@ -90,6 +91,19 @@ function update() {
     if (cursors.down.isDown) {
         player.body.moveDown(300);
     }
+}
+
+function moveBaddy (baddy) {
+     accelerateToObject(baddy, player, 100);
+}
+
+function accelerateToObject(obj1, obj2, speed) {
+    console.log(obj1);
+    if (typeof speed === 'undefined') { speed = 60; }
+    var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x);
+    obj1.body.rotation = angle + game.math.degToRad(90);
+    obj1.body.force.x = Math.cos(angle) * speed;
+    obj1.body.force.y = Math.sin(angle) * speed;
 }
 
 function add_safe_zone() {
