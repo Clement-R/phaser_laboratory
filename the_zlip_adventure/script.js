@@ -20,6 +20,7 @@ function preload() {
 */
 
 function create() {
+    game.world.setBounds(0, 0, 1900, 400);
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     game.stage.backgroundColor = 0x2c3e50;
@@ -96,6 +97,8 @@ function create() {
             jump += 1;
         }
     });
+
+    game.camera.follow(player);
 }
 
 function update() {
@@ -128,10 +131,7 @@ function update() {
         game.physics.arcade.collide(player, power_up_3, getPowerUp);
     }
 
-    console.log(player.body.touching);
-
     if(player.body.touching.down) {
-        console.log("Touching bottom");
         jump = 0;
     }
 
