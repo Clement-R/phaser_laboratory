@@ -22,24 +22,21 @@ function create() {
     game.physics.arcade.gravity.y = 200;
 
     player = game.add.sprite(150, 383, 'body');
-    arm = game.add.sprite(player.x + (player.width / 2),
-                             player.y + (player.height / 3),
-                             'arm');
-    arm.anchor.setTo(0.5, 0);
 
-    gun = game.add.sprite(arm.x,
-                          arm.y,
+    gun = game.add.sprite(player.x + (player.width / 2),
+                          player.y + (player.height / 3),
                           'gun');
-    //gun.anchor.setTo(0.5, 0);
-    gun.rotation = arm.rotation;
+
+    gun.pivot.setTo(-12, 13);
+
+    arm = game.add.sprite(player.x + (player.width / 2),
+                          player.y + (player.height / 3),
+                          'arm');
+    arm.anchor.setTo(0.5, 0);
 }
 
 function update() {
     game.debug.spriteInfo(arm, 32, 32);
     arm.rotation = game.physics.arcade.angleToPointer(arm) - 1.5;
     gun.rotation = arm.rotation + 1.5;
-
-    /*
-    gun.x = arm.bounds.x + (arm.width / 2);
-    gun.y = arm.bounds.y + (arm.height / 1);*/
 }
