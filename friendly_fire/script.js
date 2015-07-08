@@ -6,6 +6,7 @@ RESSOURCES :
 
 http://rotates.org/phaser/xv/
 */
+var PI = 3.14159265359;
 
 function preload() {
     game.load.image('body', '../assets/images/friendly_fire/body.png');
@@ -41,8 +42,12 @@ function create() {
 
 function update() {
     game.debug.spriteInfo(arm, 32, 32);
-    arm.rotation = game.physics.arcade.angleToPointer(arm) - 1.5;
-    gun.rotation = arm.rotation + 1.5;
+
+    mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/PI)) - 86;
+    if(mouse_angle < 10 && mouse_angle > -180) {
+        arm.angle = mouse_angle;
+        gun.angle = arm.angle + 86;
+    }
 
     if(spacebar.isDown && is_ready_to_fire) {
         if(bullets.getFirstExists(false)) {
