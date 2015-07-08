@@ -7,6 +7,7 @@ RESSOURCES :
 http://rotates.org/phaser/xv/
 */
 var PI = 3.14159265359;
+var BULLET_SPEED = 1200;
 
 function preload() {
     game.load.image('body', '../assets/images/friendly_fire/body.png');
@@ -25,17 +26,16 @@ function create() {
 
     player = game.add.sprite(150, 383, 'body');
 
-    gun = game.add.sprite(player.x + (player.width / 2),
-                          player.y + (player.height / 3),
-                          'gun');
-
-    gun.pivot.setTo(-12, 13);
-    gun.enableBody = true;
-
     arm = game.add.sprite(player.x + (player.width / 2),
                           player.y + (player.height / 3),
                           'arm');
     arm.anchor.setTo(0.5, 0);
+
+    gun = game.add.sprite(player.x + (player.width / 2),
+                          player.y + (player.height / 3),
+                          'gun');
+    gun.pivot.setTo(-12, 8);
+    gun.enableBody = true;
 
     create_controls();
     create_bullets();
@@ -46,6 +46,9 @@ function create() {
 function update() {
     game.debug.spriteInfo(gun, 32, 32);
     game.debug.pixel(gun.x, gun.y, 'rgba(0,255,255,1)');
+    game.debug.pixel(player.x + (player.width / 2),
+                                 player.y + (player.height / 3),
+                                 'rgba(0,255,0,1)');
     game.debug.body(gun);
 
     // arm rotation
@@ -55,14 +58,25 @@ function update() {
         gun.angle = arm.angle + 86;
     }
 
-    if(spacebar.isDown && is_ready_to_fire) {
+    fire();
+}
+
+function fire() {
+    if(game.input.activePointer.isDown && is_ready_to_fire) {
         if(bullets.getFirstExists(false)) {
             bullet = bullets.getFirstExists(false);
-            bullet.anchor.setTo(0.5, 0.5);
-            bullet.reset(gun.x + gun.width,
-                         gun.y);
-            bullet.body.velocity.x = 1400;
-            bullet.rotation = game.physics.arcade.angleBetween(bullet, gun);
+            // bullet.anchor.setTo(0.5, 0.5);
+
+            // Set the bullet position to the gun position.
+            /*next_x = gun.x + 5 * Math.cos(gun.rotation);
+            next_y = gun.y + 5 * Math.sin(gun.rotation);
+            bullet.reset(next_x, next_y);*/
+            bullet.reset(gun.x, gun.y);
+            bullet.rotation = gun.rotation;
+
+            // Shoot it in the right direction
+            bullet.body.velocity.x = Math.cos(bullet.rotation) * BULLET_SPEED;
+            bullet.body.velocity.y = Math.sin(bullet.rotation) * BULLET_SPEED;
 
             is_ready_to_fire = false;
             last_shot = game.time.now;
@@ -75,7 +89,7 @@ function update() {
 }
 
 function create_bullets() {
-    FIRERATE = 200;
+    FIRERATE = 400;
     bullet_DAMAGE = 10;
     is_ready_to_fire = true;
     last_shot = 0;
