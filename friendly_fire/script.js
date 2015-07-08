@@ -21,7 +21,7 @@ function create() {
     game.world.setBounds(0, 0, 992, 480);
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 200;
+    game.physics.arcade.gravity.y = 0;
 
     player = game.add.sprite(150, 383, 'body');
 
@@ -30,6 +30,7 @@ function create() {
                           'gun');
 
     gun.pivot.setTo(-12, 13);
+    gun.enableBody = true;
 
     arm = game.add.sprite(player.x + (player.width / 2),
                           player.y + (player.height / 3),
@@ -38,11 +39,16 @@ function create() {
 
     create_controls();
     create_bullets();
+
+    gun.angle = arm.angle + 86;
 }
 
 function update() {
-    game.debug.spriteInfo(arm, 32, 32);
+    game.debug.spriteInfo(gun, 32, 32);
+    game.debug.pixel(gun.x, gun.y, 'rgba(0,255,255,1)');
+    game.debug.body(gun);
 
+    // arm rotation
     mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/PI)) - 86;
     if(mouse_angle < 10 && mouse_angle > -180) {
         arm.angle = mouse_angle;
@@ -55,8 +61,8 @@ function update() {
             bullet.anchor.setTo(0.5, 0.5);
             bullet.reset(gun.x + gun.width,
                          gun.y);
-            bullet.body.gravity = 20;
-            bullet.body.velocity.x = 500;
+            bullet.body.velocity.x = 1400;
+            bullet.rotation = game.physics.arcade.angleBetween(bullet, gun);
 
             is_ready_to_fire = false;
             last_shot = game.time.now;
@@ -81,6 +87,7 @@ function create_bullets() {
 
     bullets.forEach(function(bullet){
         bullet.damage = bullet_DAMAGE;
+        bullet.body.gravity.allowGravity = false;
         bullet.checkWorldBounds = true;
         bullet.outOfBoundsKill = true;
     }, this);

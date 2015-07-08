@@ -133,7 +133,7 @@ function life_down(life) {
     }
 }
 
-function kill_player() {    
+function kill_player() {
     var explosion = explosions.getFirstExists(false);
     if(explosion != null) {
         explosion.reset(bot.x, bot.y);
