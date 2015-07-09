@@ -24,38 +24,62 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 0;
 
+    g_player = game.add.group();
+
     player = game.add.sprite(150, 383, 'body');
 
     arm = game.add.sprite(player.x + (player.width / 2),
                           player.y + (player.height / 3),
                           'arm');
-    arm.anchor.setTo(0.5, 0);
+    arm.anchor.set(0.5, 0);
 
-    gun = game.add.sprite(player.x + (player.width / 2),
-                          player.y + (player.height / 3),
+    gun = game.add.sprite(arm.x,
+                          arm.y + arm.height,
                           'gun');
-    gun.pivot.setTo(-12, 8);
     gun.enableBody = true;
+    gun.anchor.set(0, 0.65);
+    // gun.visible = false;
+
+    g_player.add(player);
+    g_player.add(gun);
+    g_player.add(arm);
 
     create_controls();
     create_bullets();
 
-    gun.angle = arm.angle + 86;
+    arm.angle = -90;
+    gun.angle = arm.angle + 88.5;
+    var p = new Phaser.Point(arm.x, arm.y);
+    p.rotate(p.x, p.y, gun.rotation, false, 13);
+    gun.x = p.x;
+    gun.y = p.y;
 }
 
 function update() {
     game.debug.spriteInfo(gun, 32, 32);
-    game.debug.pixel(gun.x, gun.y, 'rgba(0,255,255,1)');
-    game.debug.pixel(player.x + (player.width / 2),
-                                 player.y + (player.height / 3),
-                                 'rgba(0,255,0,1)');
-    game.debug.body(gun);
+    game.debug.pixel(gun.x, gun.y, 'green');
+
+    next_x = gun.x + 16 * Math.cos(gun.rotation);
+    next_y = gun.y + 10 * Math.sin(gun.rotation);
+    game.debug.pixel(next_x, next_y, 'pink');
+
+    // console.log(next_x - gun.x, next_y - gun.y);
 
     // arm rotation
     mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/PI)) - 86;
     if(mouse_angle < 10 && mouse_angle > -180) {
         arm.angle = mouse_angle;
-        gun.angle = arm.angle + 86;
+        var p = new Phaser.Point(arm.x, arm.y);
+        p.rotate(p.x, p.y, gun.rotation, false, 13);
+        gun.x = p.x;
+        gun.y = p.y;
+        gun.angle = arm.angle + 88.5;
+    } else {
+        var p = new Phaser.Point(arm.x, arm.y);
+        p.rotate(p.x, p.y, gun.rotation, false, 13);
+        gun.x = p.x;
+        gun.y = p.y;
+        gun.angle = arm.angle + 88.5;
     }
 
     fire();
@@ -67,11 +91,12 @@ function fire() {
             bullet = bullets.getFirstExists(false);
             // bullet.anchor.setTo(0.5, 0.5);
 
-            // Set the bullet position to the gun position.
-            /*next_x = gun.x + 5 * Math.cos(gun.rotation);
-            next_y = gun.y + 5 * Math.sin(gun.rotation);
-            bullet.reset(next_x, next_y);*/
-            bullet.reset(gun.x, gun.y);
+            next_x = gun.x + 16 * Math.cos(gun.rotation);
+            next_y = gun.y + 10 * Math.sin(gun.rotation);
+
+            // Set the bullet position to the gun position
+            // bullet.reset(gun.x + 14, gun.y - 6);
+            bullet.reset(next_x, next_y);
             bullet.rotation = gun.rotation;
 
             // Shoot it in the right direction
