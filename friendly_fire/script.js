@@ -24,8 +24,6 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 0;
 
-    g_player = game.add.group();
-
     player = game.add.sprite(150, 383, 'body');
 
     arm = game.add.sprite(player.x + (player.width / 2),
@@ -40,9 +38,8 @@ function create() {
     gun.anchor.set(0, 0.65);
     // gun.visible = false;
 
-    g_player.add(player);
-    g_player.add(gun);
-    g_player.add(arm);
+    /*player.addChild(gun);
+    player.addChild(arm);*/
 
     create_controls();
     create_bullets();
@@ -56,6 +53,7 @@ function create() {
 }
 
 function update() {
+    // player.x += 1;
     game.debug.spriteInfo(gun, 32, 32);
     game.debug.pixel(gun.x, gun.y, 'green');
 
@@ -96,7 +94,7 @@ function fire() {
 
             // Set the bullet position to the gun position
             // bullet.reset(gun.x + 14, gun.y - 6);
-            bullet.reset(next_x, next_y);
+            bullet.reset(next_x + 5, next_y - 6);
             bullet.rotation = gun.rotation;
 
             // Shoot it in the right direction
