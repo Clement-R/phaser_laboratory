@@ -7,7 +7,7 @@ RESSOURCES :
 http://rotates.org/phaser/xv/
 */
 var PI = 3.14159265359;
-var BULLET_SPEED = 1200;
+var BULLET_SPEED = 100;
 
 function preload() {
     game.load.image('body', '../assets/images/friendly_fire/body.png');
@@ -17,9 +17,7 @@ function preload() {
 }
 
 function create() {
-    game.renderer.renderSession.roundPixels = true;
     game.stage.backgroundColor = 0x2c3e50;
-    game.world.setBounds(0, 0, 992, 480);
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 0;
