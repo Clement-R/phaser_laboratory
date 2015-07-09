@@ -55,7 +55,7 @@ function update() {
     game.debug.spriteInfo(gun, 32, 32);
     game.debug.pixel(gun.x, gun.y, 'green');
 
-    next_x = gun.x + 16 * Math.cos(gun.rotation);
+    next_x = gun.x + 14 * Math.cos(gun.rotation);
     next_y = gun.y + 10 * Math.sin(gun.rotation);
     game.debug.pixel(next_x, next_y, 'pink');
 
