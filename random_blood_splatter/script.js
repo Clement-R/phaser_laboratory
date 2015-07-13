@@ -5,6 +5,7 @@ var rotation_speed = 0.1;
 var effect_ready = true;
 var start_time;
 var next_shot = 3;
+var PI = 3.14159265359;
 
 function preload() {
     game.load.image('star', '../assets/images/starGold.png');
@@ -56,6 +57,8 @@ function update() {
         cursor.rotation -= rotation_speed;
     }
 
+    // cursor.angle = (game.physics.arcade.angleToPointer(cursor) * (180/PI)) - 0.01;
+
     if(spacebar.isDown && effect_ready) {
         emitter.start(true, 0, null, 10);
         effect_ready = false;
@@ -78,7 +81,7 @@ function update() {
         } else {
             particle.body.velocity.x += 0.02;
         }
-        
+
     });
 }
 
