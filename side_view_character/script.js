@@ -7,6 +7,11 @@ http://rotates.org/phaser/xv/
 http://stackoverflow.com/questions/2259476/rotating-a-point-about-another-point-2d
 */
 
+/*
+IDEAS :
+Flip character when angle is blocked
+*/
+
 var PI = 3.14159265359;
 var BULLET_SPEED = 50;
 
@@ -77,6 +82,10 @@ function update() {
     cannon_x = gun.x + gun.height * Math.cos(arm.rotation + 1.57);
     cannon_y = gun.y + gun.height * Math.sin(arm.rotation + 1.57);
     game.debug.pixel(cannon_x, cannon_y, 'white');
+
+    x = gun.x + 2 * (gun.height / 3) * Math.cos(arm.rotation + 1.57);
+    y = gun.y + 2 * (gun.height / 3) * Math.sin(arm.rotation + 1.57);
+    game.debug.pixel(x, y, 'gray');
     /* ** DEBUG ** */
 }
 
@@ -109,6 +118,7 @@ function create_bullets() {
         bullet.body.gravity.allowGravity = false;
         bullet.checkWorldBounds = true;
         bullet.outOfBoundsKill = true;
+        bullet.anchor.set(0.5, 0.5);
     }, this);
 }
 
