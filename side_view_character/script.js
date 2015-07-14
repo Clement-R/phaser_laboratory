@@ -128,16 +128,15 @@ function fire() {
             bullet = bullets.getFirstExists(false);
 
             // Place bullet
-            cannon_x = gun.x + gun.height * Math.cos(arm.rotation + 1.57);
-            cannon_y = gun.y + gun.height * Math.sin(arm.rotation + 1.57);
+            x = gun.x + 2 * (gun.height / 3) * Math.cos(arm.rotation + 1.57);
+            y = gun.y + 2 * (gun.height / 3) * Math.sin(arm.rotation + 1.57);
 
             // Set the bullet position to the gun position
-            bullet.reset(cannon_x - bullet.height, cannon_y);
-            bullet.rotation = gun.rotation;
+            bullet.reset(x , y);
+            // bullet.rotation = gun.rotation;
 
             // Shoot it in the right direction
-            bullet.body.velocity.x = Math.cos(bullet.rotation) * BULLET_SPEED;
-            bullet.body.velocity.y = Math.sin(bullet.rotation) * BULLET_SPEED;
+            game.physics.arcade.velocityFromRotation(gun.rotation, BULLET_SPEED, bullet.body.velocity);
 
             is_ready_to_fire = false;
             last_shot = game.time.now;
