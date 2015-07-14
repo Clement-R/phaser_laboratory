@@ -133,7 +133,7 @@ function fire() {
 
             // Set the bullet position to the gun position
             bullet.reset(cannon_x - bullet.height, cannon_y);
-            bullet.angle = gun.angle;
+            bullet.rotation = gun.rotation;
 
             // Shoot it in the right direction
             bullet.body.velocity.x = Math.cos(bullet.rotation) * BULLET_SPEED;
