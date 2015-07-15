@@ -13,7 +13,7 @@ Flip character when angle is blocked
 */
 
 var PI = 3.14159265359;
-var BULLET_SPEED = 50;
+var BULLET_SPEED = 3000;
 
 function preload() {
 }
@@ -102,9 +102,9 @@ function create_bullets() {
     is_ready_to_fire = true;
     last_shot = 0;
 
-    var bullet_texture = game.add.bitmapData(16, 32);
+    var bullet_texture = game.add.bitmapData(32, 16);
     bullet_texture.ctx.beginPath();
-    bullet_texture.ctx.rect(0, 0, 16, 32);
+    bullet_texture.ctx.rect(0, 0, 32, 16);
     bullet_texture.ctx.fillStyle = "#f1c40f";
     bullet_texture.ctx.fill();
 
@@ -133,10 +133,10 @@ function fire() {
 
             // Set the bullet position to the gun position
             bullet.reset(x , y);
-            // bullet.rotation = gun.rotation;
+            bullet.rotation = gun.rotation + 1.57;
 
             // Shoot it in the right direction
-            game.physics.arcade.velocityFromRotation(gun.rotation, BULLET_SPEED, bullet.body.velocity);
+            game.physics.arcade.velocityFromRotation(gun.rotation + 1.57, BULLET_SPEED, bullet.body.velocity);
 
             is_ready_to_fire = false;
             last_shot = game.time.now;
