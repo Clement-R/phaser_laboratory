@@ -96,8 +96,10 @@ function fire() {
             bullet.rotation = gun.rotation;
 
             // Shoot it in the right direction
-            bullet.body.velocity.x = Math.cos(bullet.rotation) * BULLET_SPEED;
-            bullet.body.velocity.y = Math.sin(bullet.rotation) * BULLET_SPEED;
+            // bullet.body.velocity.x = Math.cos(bullet.rotation) * BULLET_SPEED;
+            // bullet.body.velocity.y = Math.sin(bullet.rotation) * BULLET_SPEED;
+
+            game.physics.arcade.velocityFromRotation(gun.rotation, BULLET_SPEED, bullet.body.velocity);
 
             is_ready_to_fire = false;
             last_shot = game.time.now;
