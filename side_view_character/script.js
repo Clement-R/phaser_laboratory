@@ -13,7 +13,7 @@ Flip character when angle is blocked
 */
 
 var PI = 3.14159265359;
-var BULLET_SPEED = 3000;
+var BULLET_SPEED = 3500;
 
 function preload() {
 }
@@ -38,8 +38,8 @@ function create() {
     arm_texture.ctx.rect(0, 0, 64, 128);
     arm_texture.ctx.fillStyle = "#27ae60";
     arm_texture.ctx.fill();
-    arm = game.add.sprite(player.x + (player.width / 2),
-                          player.y + (player.height / 3),
+    arm = game.add.sprite(player.width / 2,
+                          player.height / 3,
                           arm_texture);
     arm.anchor.set(0.5, 0);
 
@@ -57,6 +57,8 @@ function create() {
     gun.angle = arm.angle;
     gun.anchor.set(0.5, 0);
 
+    player.addChild(arm);
+    player.addChild(gun);
 }
 
 function update() {
@@ -76,17 +78,17 @@ function update() {
 
     /* ** DEBUG ** */
     // gun position and rotation
-    game.debug.pixel(arm.x, arm.y, 'yellow');
+    game.debug.pixel(player.x + arm.x, player.y + arm.y, 'yellow');
     // placing gun in the hand
-    game.debug.pixel(p.x, p.y, 'red');
+    game.debug.pixel(player.x + p.x, player.y + p.y, 'red');
     // Place bullet
     cannon_x = gun.x + gun.height * Math.cos(arm.rotation + 1.57);
     cannon_y = gun.y + gun.height * Math.sin(arm.rotation + 1.57);
-    game.debug.pixel(cannon_x, cannon_y, 'white');
+    game.debug.pixel(player.x + cannon_x, player.y + cannon_y, 'white');
 
     x = gun.x + 2 * (gun.height / 3) * Math.cos(arm.rotation + 1.57);
     y = gun.y + 2 * (gun.height / 3) * Math.sin(arm.rotation + 1.57);
-    game.debug.pixel(x, y, 'gray');
+    game.debug.pixel(player.x + x, player.y + y, 'gray');
     /* ** DEBUG ** */
 }
 
@@ -129,8 +131,8 @@ function fire() {
             bullet = bullets.getFirstExists(false);
 
             // Place bullet
-            x = gun.x + 2 * (gun.height / 3) * Math.cos(arm.rotation + 1.57);
-            y = gun.y + 2 * (gun.height / 3) * Math.sin(arm.rotation + 1.57);
+            x = player.x + gun.x + 2 * (gun.height / 3) * Math.cos(arm.rotation + 1.57);
+            y = player.y + gun.y + 2 * (gun.height / 3) * Math.sin(arm.rotation + 1.57);
 
             // Set the bullet position to the gun position
             bullet.reset(x , y);
