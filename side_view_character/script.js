@@ -24,6 +24,8 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 0;
 
+    create_bullets();
+
     var body_texture = game.add.bitmapData(128, 256);
     body_texture.ctx.beginPath();
     body_texture.ctx.rect(0,0,128,256);
@@ -55,7 +57,6 @@ function create() {
     gun.angle = arm.angle;
     gun.anchor.set(0.5, 0);
 
-    create_bullets();
 }
 
 function update() {
