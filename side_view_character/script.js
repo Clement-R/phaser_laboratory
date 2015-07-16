@@ -64,9 +64,9 @@ function create() {
 function update() {
     // arm rotation
     mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/PI)) - 86;
-    if(mouse_angle < 10 && mouse_angle > -180) {
-        arm.angle = mouse_angle;
-    }
+    // if(mouse_angle < 10 && mouse_angle > -180) {
+    arm.angle = mouse_angle;
+    // }
 
     // Place gun and make it rotate to follow the arm
     var p = get_hand_anchor();
