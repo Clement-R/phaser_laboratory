@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
+var game = new Phaser.Game(1200, 800, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
 
 /*
@@ -26,16 +26,16 @@ function create() {
 
     create_bullets();
 
-    var body_texture = game.add.bitmapData(128, 256);
+    var body_texture = game.add.bitmapData(64, 128);
     body_texture.ctx.beginPath();
-    body_texture.ctx.rect(0,0,128,256);
+    body_texture.ctx.rect(0,0,64,128);
     body_texture.ctx.fillStyle = "#2980b9";
     body_texture.ctx.fill();
     player = game.add.sprite(150, 200, body_texture);
 
-    var arm_texture = game.add.bitmapData(64, 128);
+    var arm_texture = game.add.bitmapData(32, 64);
     arm_texture.ctx.beginPath();
-    arm_texture.ctx.rect(0, 0, 64, 128);
+    arm_texture.ctx.rect(0, 0, 32, 64);
     arm_texture.ctx.fillStyle = "#27ae60";
     arm_texture.ctx.fill();
     arm = game.add.sprite(player.width / 2,
@@ -45,9 +45,9 @@ function create() {
 
     arm.angle = -90;
 
-    var gun_texture = game.add.bitmapData(32, 96);
+    var gun_texture = game.add.bitmapData(16, 48);
     gun_texture.ctx.beginPath();
-    gun_texture.ctx.rect(0, 0, 32, 96);
+    gun_texture.ctx.rect(0, 0, 16, 48);
     gun_texture.ctx.fillStyle = "#f39c12";
     gun_texture.ctx.fill();
     var hand_anchor = get_hand_anchor();
@@ -59,18 +59,12 @@ function create() {
 
     player.addChild(arm);
     player.addChild(gun);
-
-    text = game.add.text(10, 20, "", {
-        font: "20px Arial",
-        fill: "#ff0044",
-        align: "center"
-    });
 }
 
 function update() {
     // arm rotation
     mouse_angle = (game.physics.arcade.angleToPointer(player) * (180/PI)) - 86;
-    if(mouse_angle < 10 && mouse_angle > -180) {
+    if(mouse_angle < 15 && mouse_angle > -195) {
         arm.angle = mouse_angle;
     }
 
@@ -111,9 +105,9 @@ function create_bullets() {
     is_ready_to_fire = true;
     last_shot = 0;
 
-    var bullet_texture = game.add.bitmapData(32, 16);
+    var bullet_texture = game.add.bitmapData(16, 8);
     bullet_texture.ctx.beginPath();
-    bullet_texture.ctx.rect(0, 0, 32, 16);
+    bullet_texture.ctx.rect(0, 0, 16, 8);
     bullet_texture.ctx.fillStyle = "#f1c40f";
     bullet_texture.ctx.fill();
 
