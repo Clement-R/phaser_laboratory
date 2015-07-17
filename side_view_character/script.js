@@ -59,6 +59,12 @@ function create() {
 
     player.addChild(arm);
     player.addChild(gun);
+
+    text = game.add.text(10, 20, "", {
+        font: "20px Arial",
+        fill: "#ff0044",
+        align: "center"
+    });
 }
 
 function update() {
@@ -66,6 +72,7 @@ function update() {
     mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/PI)) - 86;
     // if(mouse_angle < 10 && mouse_angle > -180) {
     arm.angle = mouse_angle;
+    text.setText("Mouse : " + mouse_angle + "\n" + "Arm : " + arm.angle)
     // }
 
     // Place gun and make it rotate to follow the arm
