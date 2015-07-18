@@ -24,6 +24,8 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 0;
 
+    cursors = game.input.keyboard.createCursorKeys();
+
     create_bullets();
 
     var body_texture = game.add.bitmapData(64, 128);
@@ -66,6 +68,12 @@ function update() {
     mouse_angle = (game.physics.arcade.angleToPointer(player) * (180/PI)) - 86;
     if(mouse_angle < 15 && mouse_angle > -195) {
         arm.angle = mouse_angle;
+    }
+
+    if (cursors.left.isDown) {
+        player.x -= 2;
+    } else if (cursors.right.isDown) {
+        player.x += 2;
     }
 
     // Place gun and make it rotate to follow the arm
