@@ -13,7 +13,7 @@ Flip character when angle is blocked
 */
 
 var PI = 3.14159265359;
-var BULLET_SPEED = 3500;
+var BULLET_SPEED = 2000;
 
 function preload() {
 }
@@ -28,7 +28,7 @@ function create() {
 
     create_bullets();
 
-
+    group = game.add.group();
 
     var body_texture = game.add.bitmapData(64, 128);
     body_texture.ctx.beginPath();
@@ -42,12 +42,10 @@ function create() {
     arm_texture.ctx.rect(0, 0, 32, 64);
     arm_texture.ctx.fillStyle = "#27ae60";
     arm_texture.ctx.fill();
-    arm = game.add.sprite(p_body.width / 2,
-                          p_body.height / 3,
+    arm = game.add.sprite(p_body.x + p_body.width / 2,
+                          p_body.y + p_body.height / 3,
                           arm_texture);
     arm.anchor.set(0.5, 0);
-
-    arm.angle = -90;
 
     var gun_texture = game.add.bitmapData(16, 48);
     gun_texture.ctx.beginPath();
@@ -61,26 +59,33 @@ function create() {
     gun.angle = arm.angle;
     gun.anchor.set(0.5, 0);
 
-    p_body.addChild(arm);
-    p_body.addChild(gun);
+    group.add(p_body)
+    group.add(gun);
+    group.add(arm);
 
     pointer = game.input.position;
-    line1 = new Phaser.Line(pointer.x, pointer.y, arm.x, arm.y);
+    line1 = new Phaser.Line(arm.x, arm.y, pointer.x, pointer.y);
 }
 
 function update() {
-    line1.fromSprite(pointer, arm, false);
+    line1.setTo(arm.x, arm.y, pointer.x, pointer.y);
+    // game.debug.geom(line1);
 
     // arm rotation
-    mouse_angle = (game.physics.arcade.angleToPointer(p_body) * (180/PI)) - 95;
+    mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/PI)) - 90;
+
     if(mouse_angle < 15 && mouse_angle > -195) {
         arm.angle = mouse_angle;
     }
 
     if (cursors.left.isDown) {
-        p_body.x -= 2;
+        group.forEach(function(child){
+            child.x -= 2;
+        });
     } else if (cursors.right.isDown) {
-        p_body.x += 2;
+        group.forEach(function(child){
+            child.x += 2;
+        });
     }
 
     // Place gun and make it rotate to follow the arm
@@ -91,20 +96,20 @@ function update() {
 
     fire();
 
-    /* ** DEBUG ** */
     // gun position and rotation
-    game.debug.pixel(p_body.x + arm.x, p_body.y + arm.y, 'yellow');
+    game.debug.pixel(arm.x,
+                     arm.y,
+                     'yellow');
     // placing gun in the hand
-    game.debug.pixel(p_body.x + p.x, p_body.y + p.y, 'red');
+    game.debug.pixel(p.x, p.y, 'red');
     // Place bullet
     cannon_x = gun.x + gun.height * Math.cos(arm.rotation + 1.57);
     cannon_y = gun.y + gun.height * Math.sin(arm.rotation + 1.57);
-    game.debug.pixel(p_body.x + cannon_x, p_body.y + cannon_y, 'white');
+    game.debug.pixel(cannon_x, cannon_y, 'white');
 
     x = gun.x + 2 * (gun.height / 3) * Math.cos(arm.rotation + 1.57);
     y = gun.y + 2 * (gun.height / 3) * Math.sin(arm.rotation + 1.57);
-    game.debug.pixel(p_body.x + x, p_body.y + y, 'gray');
-    /* ** DEBUG ** */
+    game.debug.pixel(x, y, 'gray');
 }
 
 function get_hand_anchor() {
@@ -146,8 +151,8 @@ function fire() {
             bullet = bullets.getFirstExists(false);
 
             // Place bullet
-            x = p_body.x + gun.x + 2 * (gun.height / 3) * Math.cos(arm.rotation + 1.57);
-            y = p_body.y + gun.y + 2 * (gun.height / 3) * Math.sin(arm.rotation + 1.57);
+            x = gun.x + 2 * (gun.height / 3) * Math.cos(arm.rotation + 1.57);
+            y = gun.y + 2 * (gun.height / 3) * Math.sin(arm.rotation + 1.57);
 
             // Set the bullet position to the gun position
             bullet.reset(x , y);

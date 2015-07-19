@@ -1,11 +1,14 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
 
+var PI = 3.14159265359;
+
 function preload() {
     game.load.image('star', '../assets/images/starGold.png');
 }
 
 function create() {
+    game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = 0x2c3e50;
 
     g = game.add.group();
@@ -35,10 +38,17 @@ function update() {
     line1.setTo(arm.x, arm.y, pointer.x, pointer.y);
     game.debug.geom(line1);
 
+    /* Phaser way */
+    mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/PI));
+    arm.angle = mouse_angle - 90;
+
+    /* Own calculation way */
+    /*
     x = arm.x - pointer.x;
     y = arm.y - pointer.y;
     arm.rotation = Math.atan2(y,x);
     arm.angle += 90;
+    */
 
     g.forEach(function(child){
         // child.x += 0.5;
