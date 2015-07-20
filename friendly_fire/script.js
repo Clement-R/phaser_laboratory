@@ -7,7 +7,7 @@ RESSOURCES :
 http://rotates.org/phaser/xv/
 */
 var PI = 3.14159265359;
-var BULLET_SPEED = 100;
+var BULLET_SPEED = 70;
 
 function preload() {
     game.load.image('body', '../assets/images/friendly_fire/body.png');
@@ -22,10 +22,10 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 0;
 
-    player = game.add.sprite(150, 383, 'body');
+    p_body = game.add.sprite(150, 383, 'body');
 
-    arm = game.add.sprite(player.x + (player.width / 2),
-                          player.y + (player.height / 3),
+    arm = game.add.sprite(p_body.x + (p_body.width / 2),
+                          p_body.y + (p_body.height / 3),
                           'arm');
     arm.anchor.set(0.5, 0);
 
@@ -44,6 +44,7 @@ function create() {
     p.rotate(p.x, p.y, gun.rotation, false, 13);
     gun.x = p.x;
     gun.y = p.y;
+    gun.visible = true;
 }
 
 function update() {
@@ -69,8 +70,22 @@ function update() {
 
     fire();
 
-    x = gun.x + 1 * Math.cos(arm.rotation + 1.57);
-    y = gun.y + 1 * Math.sin(arm.rotation + 1.57);
+    x = gun.x + 0.001 * Math.cos(gun.rotation);
+    y = gun.y + 0.001 * Math.sin(gun.rotation);
+    game.debug.pixel(x, y, "#39FF14");
+
+    x = x + gun.width * Math.cos(gun.rotation);
+    y = y + gun.width * Math.sin(gun.rotation);
+    game.debug.pixel(x, y, "#39FF14");
+
+    /*p_x = 0;
+    p_y = gun.y - gun.height;
+    rad = Math.atan2(p_y, p_x);
+    x = gun.x + gun.height * Math.cos(rad);
+    y = gun.y + gun.height * Math.sin(rad);*/
+
+    x = gun.x + gun.height * Math.cos(gun.rotation);
+    y = gun.y + gun.height * Math.sin(gun.rotation);
     game.debug.pixel(x, y, "#39FF14");
 }
 
@@ -80,8 +95,8 @@ function fire() {
             bullet = bullets.getFirstExists(false);
             // bullet.anchor.setTo(0.5, 0.5);
 
-            next_x = gun.x + gun.width * Math.cos(gun.rotation);
-            next_y = gun.y + gun.height / 2 * Math.sin(gun.rotation);
+            next_x = gun.x + 1 * Math.cos(gun.rotation);
+            next_y = gun.y + 1 * Math.sin(gun.rotation);
 
             // Set the bullet position to the gun position
             bullet.reset(next_x, next_y);
