@@ -34,10 +34,6 @@ function create() {
                           'gun');
     gun.enableBody = true;
     gun.anchor.set(0, 0.65);
-    // gun.visible = false;
-
-    /*player.addChild(gun);
-    player.addChild(arm);*/
 
     create_controls();
     create_bullets();
@@ -51,15 +47,8 @@ function create() {
 }
 
 function update() {
-    // player.x += 1;
     game.debug.spriteInfo(gun, 32, 32);
     game.debug.pixel(gun.x, gun.y, 'green');
-
-    next_x = gun.x + 14 * Math.cos(gun.rotation);
-    next_y = gun.y + 10 * Math.sin(gun.rotation);
-    game.debug.pixel(next_x, next_y, 'pink');
-
-    // console.log(next_x - gun.x, next_y - gun.y);
 
     // arm rotation
     mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/PI)) - 86;
@@ -79,6 +68,10 @@ function update() {
     }
 
     fire();
+
+    x = gun.x + 1 * Math.cos(arm.rotation + 1.57);
+    y = gun.y + 1 * Math.sin(arm.rotation + 1.57);
+    game.debug.pixel(x, y, "#39FF14");
 }
 
 function fire() {
@@ -87,17 +80,17 @@ function fire() {
             bullet = bullets.getFirstExists(false);
             // bullet.anchor.setTo(0.5, 0.5);
 
-            next_x = gun.x + 16 * Math.cos(gun.rotation);
-            next_y = gun.y + 10 * Math.sin(gun.rotation);
+            next_x = gun.x + gun.width * Math.cos(gun.rotation);
+            next_y = gun.y + gun.height / 2 * Math.sin(gun.rotation);
 
             // Set the bullet position to the gun position
-            // bullet.reset(gun.x + 14, gun.y - 6);
-            bullet.reset(next_x + 5, next_y - 6);
+            bullet.reset(next_x, next_y);
             bullet.rotation = gun.rotation;
 
             // Shoot it in the right direction
-            game.physics.arcade.velocityFromRotation(gun.rotation, BULLET_SPEED, bullet.body.velocity);
-
+            game.physics.arcade.velocityFromRotation(gun.rotation,
+                                                     BULLET_SPEED,
+                                                     bullet.body.velocity);
             is_ready_to_fire = false;
             last_shot = game.time.now;
         }

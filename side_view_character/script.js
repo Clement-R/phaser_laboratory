@@ -102,7 +102,7 @@ function update() {
                      'yellow');
     // placing gun in the hand
     game.debug.pixel(p.x, p.y, 'red');
-    // Place bullet
+
     cannon_x = gun.x + gun.height * Math.cos(arm.rotation + 1.57);
     cannon_y = gun.y + gun.height * Math.sin(arm.rotation + 1.57);
     game.debug.pixel(cannon_x, cannon_y, 'white');
