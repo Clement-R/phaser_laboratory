@@ -70,13 +70,13 @@ function update() {
 
     fire();
 
-    x = gun.x + 0.001 * Math.cos(gun.rotation);
-    y = gun.y + 0.001 * Math.sin(gun.rotation);
+    x = gun.x + 1 * Math.cos(gun.rotation);
+    y = gun.y + 1 * Math.sin(gun.rotation);
     game.debug.pixel(x, y, "#39FF14");
 
-    x = x + gun.width * Math.cos(gun.rotation);
-    y = y + gun.width * Math.sin(gun.rotation);
-    game.debug.pixel(x, y, "#39FF14");
+    x = gun.x + gun.width * Math.cos(gun.rotation);
+    y = gun.y + gun.width * Math.sin(gun.rotation);
+    game.debug.pixel(x, y, "red");
 
     /*p_x = 0;
     p_y = gun.y - gun.height;
@@ -84,9 +84,24 @@ function update() {
     x = gun.x + gun.height * Math.cos(rad);
     y = gun.y + gun.height * Math.sin(rad);*/
 
-    x = gun.x + gun.height * Math.cos(gun.rotation);
+    /*x = gun.x + gun.height * Math.cos(gun.rotation);
     y = gun.y + gun.height * Math.sin(gun.rotation);
-    game.debug.pixel(x, y, "#39FF14");
+    game.debug.pixel(x, y, "#39FF14");*/
+
+    angle = -50;
+    s = Math.sin(angle);
+    c = Math.cos(angle);
+
+    x -= gun.x;
+    y -= gun.y;
+
+    x_new = x * c - y * s;
+    y_new = x * s + y * c;
+
+    x = x_new + gun.x;
+    y = y_new + gun.y;
+
+    game.debug.pixel(x, y, "#fe00f6");
 }
 
 function fire() {
