@@ -25,6 +25,8 @@ function create() {
 
     p_body = game.add.sprite(150, 383, 'body');
 
+    g = game.add.group();
+
     arm = game.add.sprite(p_body.x + (p_body.width / 2),
                           p_body.y + (p_body.height / 3),
                           'arm');
@@ -45,7 +47,10 @@ function create() {
     p.rotate(p.x, p.y, gun.rotation, false, 13);
     gun.x = p.x;
     gun.y = p.y;
-    gun.visible = true;
+
+    g.add(p_body);
+    g.add(gun);
+    g.add(arm);
 }
 
 function update() {
@@ -79,16 +84,6 @@ function update() {
     y = gun.y + gun.width * Math.sin(gun.rotation);
     game.debug.pixel(x, y, "red");
 
-    /*p_x = 0;
-    p_y = gun.y - gun.height;
-    rad = Math.atan2(p_y, p_x);
-    x = gun.x + gun.height * Math.cos(rad);
-    y = gun.y + gun.height * Math.sin(rad);*/
-
-    /*x = gun.x + gun.height * Math.cos(gun.rotation);
-    y = gun.y + gun.height * Math.sin(gun.rotation);
-    game.debug.pixel(x, y, "#39FF14");*/
-
     angle = -1.57;
 
     // Calculate point coordinates
@@ -111,6 +106,8 @@ function update() {
     y = y + (gun.width - 2) * Math.sin(gun.rotation);
 
     game.debug.pixel(x, y, "#fe00f6");
+
+    move();
 }
 
 function fire() {
@@ -185,4 +182,18 @@ function create_controls() {
     left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+}
+
+function move() {
+    if(up.isDown) {
+        console.log('du fun');
+    }
+    if(down.isDown) {
+
+    }
+    if(left.isDown) {
+        g.x -= 2;
+    } else if (right.isDown) {
+        g.x += 2;
+    }
 }
