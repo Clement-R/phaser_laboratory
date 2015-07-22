@@ -5,8 +5,10 @@ var game = new Phaser.Game(1400, 800, Phaser.AUTO, 'phaser-example',
 RESSOURCES :
 
 http://rotates.org/phaser/xv/
+
+http://www.piskelapp.com/p/agxzfnBpc2tlbC1hcHByEwsSBlBpc2tlbBiAgICQ5-jtCAw
 */
-var BULLET_SPEED = 70;
+var BULLET_SPEED = 1500;
 
 function preload() {
     game.load.image('body', '../assets/images/friendly_fire/body.png');
@@ -90,8 +92,8 @@ function update() {
     angle = -1.57;
 
     // Calculate point coordinates
-    x = gun.x + gun.height * 0.66 * Math.cos(gun.rotation);
-    y = gun.y + gun.height * 0.66 * Math.sin(gun.rotation);
+    x = gun.x + gun.height * 0.55 * Math.cos(gun.rotation);
+    y = gun.y + gun.height * 0.55 * Math.sin(gun.rotation);
 
     // Set new point to origin
     x -= gun.x;
@@ -104,6 +106,9 @@ function update() {
     // Set new point to it's original position
     x = x_new + gun.x;
     y = y_new + gun.y;
+
+    x = x + (gun.width - 2) * Math.cos(gun.rotation);
+    y = y + (gun.width - 2) * Math.sin(gun.rotation);
 
     game.debug.pixel(x, y, "#fe00f6");
 }
@@ -132,6 +137,10 @@ function fire() {
             // Set new point to it's original position
             next_x = x_new + gun.x;
             next_y = y_new + gun.y;
+
+            // Set point to end of cannon
+            next_x = next_x + gun.width * Math.cos(gun.rotation);
+            next_y = next_y + gun.width * Math.sin(gun.rotation);
 
             // Set the bullet position to the gun position
             bullet.reset(next_x, next_y);
