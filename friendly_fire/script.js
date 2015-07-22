@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
+var game = new Phaser.Game(1400, 800, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
 
 /*
@@ -6,7 +6,6 @@ RESSOURCES :
 
 http://rotates.org/phaser/xv/
 */
-var PI = 3.14159265359;
 var BULLET_SPEED = 70;
 
 function preload() {
@@ -52,7 +51,7 @@ function update() {
     game.debug.pixel(gun.x, gun.y, 'green');
 
     // arm rotation
-    mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/PI)) - 86;
+    mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/Math.PI)) - 86;
     if(mouse_angle < 10 && mouse_angle > -180) {
         arm.angle = mouse_angle;
         var p = new Phaser.Point(arm.x, arm.y);
@@ -88,16 +87,21 @@ function update() {
     y = gun.y + gun.height * Math.sin(gun.rotation);
     game.debug.pixel(x, y, "#39FF14");*/
 
-    angle = -50;
-    s = Math.sin(angle);
-    c = Math.cos(angle);
+    angle = -1.57;
 
+    // Calculate point coordinates
+    x = gun.x + gun.height * 0.66 * Math.cos(gun.rotation);
+    y = gun.y + gun.height * 0.66 * Math.sin(gun.rotation);
+
+    // Set new point to origin
     x -= gun.x;
     y -= gun.y;
 
-    x_new = x * c - y * s;
-    y_new = x * s + y * c;
+    // Get coordinates after rotation
+    x_new = x * Math.cos(angle) - y * Math.sin(angle);
+    y_new = x * Math.sin(angle) + y * Math.cos(angle);
 
+    // Set new point to it's original position
     x = x_new + gun.x;
     y = y_new + gun.y;
 
@@ -110,8 +114,24 @@ function fire() {
             bullet = bullets.getFirstExists(false);
             // bullet.anchor.setTo(0.5, 0.5);
 
-            next_x = gun.x + 1 * Math.cos(gun.rotation);
-            next_y = gun.y + 1 * Math.sin(gun.rotation);
+            // next_x = gun.x + 1 * Math.cos(gun.rotation);
+            // next_y = gun.y + 1 * Math.sin(gun.rotation);
+
+            // Calculate point coordinates
+            x = gun.x + gun.height * 0.66 * Math.cos(gun.rotation);
+            y = gun.y + gun.height * 0.66 * Math.sin(gun.rotation);
+
+            // Set new point to origin
+            x -= gun.x;
+            y -= gun.y;
+
+            // Get coordinates after rotation
+            x_new = x * Math.cos(angle) - y * Math.sin(angle);
+            y_new = x * Math.sin(angle) + y * Math.cos(angle);
+
+            // Set new point to it's original position
+            next_x = x_new + gun.x;
+            next_y = y_new + gun.y;
 
             // Set the bullet position to the gun position
             bullet.reset(next_x, next_y);
