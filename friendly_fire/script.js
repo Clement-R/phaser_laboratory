@@ -182,18 +182,27 @@ function create_controls() {
     left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    up_k = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+    down_k = game.input.keyboard.addKey(Phaser.Keyboard.S);
+    right_k = game.input.keyboard.addKey(Phaser.Keyboard.D);
+    left_k = game.input.keyboard.addKey(Phaser.Keyboard.Q);
 }
 
 function move() {
-    if(up.isDown) {
+    if(up_k.isDown) {
         console.log('du fun');
     }
-    if(down.isDown) {
+    if(down_k.isDown) {
 
     }
-    if(left.isDown) {
-        g.x -= 2;
-    } else if (right.isDown) {
-        g.x += 2;
+    if(left_k.isDown) {
+        g.forEach(function(sprite){
+            sprite.x -= 2;
+        });
+    } else if (right_k.isDown) {
+        g.forEach(function(sprite){
+            sprite.x += 2;
+        });
     }
 }
