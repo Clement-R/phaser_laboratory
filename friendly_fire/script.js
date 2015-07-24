@@ -5,7 +5,6 @@ var game = new Phaser.Game(1400, 800, Phaser.AUTO, 'phaser-example',
 RESSOURCES :
 
 http://rotates.org/phaser/xv/
-
 http://www.piskelapp.com/p/agxzfnBpc2tlbC1hcHByEwsSBlBpc2tlbBiAgICQ5-jtCAw
 */
 var BULLET_SPEED = 1500;
@@ -57,9 +56,6 @@ function create() {
 }
 
 function update() {
-    game.debug.spriteInfo(gun, 32, 32);
-    game.debug.pixel(gun.x, gun.y, 'green');
-
     // arm rotation
     mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/Math.PI)) - 88;
     if(mouse_angle < 10 && mouse_angle > -180) {
@@ -78,38 +74,6 @@ function update() {
     }
 
     fire();
-
-    x = gun.x + 1 * Math.cos(gun.rotation);
-    y = gun.y + 1 * Math.sin(gun.rotation);
-    game.debug.pixel(x, y, "#39FF14");
-
-    x = gun.x + gun.width * Math.cos(gun.rotation);
-    y = gun.y + gun.width * Math.sin(gun.rotation);
-    game.debug.pixel(x, y, "red");
-
-    angle = -1.57;
-
-    // Calculate point coordinates
-    x = gun.x + gun.height * 0.55 * Math.cos(gun.rotation);
-    y = gun.y + gun.height * 0.55 * Math.sin(gun.rotation);
-
-    // Set new point to origin
-    x -= gun.x;
-    y -= gun.y;
-
-    // Get coordinates after rotation
-    x_new = x * Math.cos(angle) - y * Math.sin(angle);
-    y_new = x * Math.sin(angle) + y * Math.cos(angle);
-
-    // Set new point to it's original position
-    x = x_new + gun.x;
-    y = y_new + gun.y;
-
-    x = x + (gun.width - 2) * Math.cos(gun.rotation);
-    y = y + (gun.width - 2) * Math.sin(gun.rotation);
-
-    game.debug.pixel(x, y, "#fe00f6");
-
     move();
 }
 
@@ -117,10 +81,6 @@ function fire() {
     if(game.input.activePointer.isDown && is_ready_to_fire) {
         if(bullets.getFirstExists(false)) {
             bullet = bullets.getFirstExists(false);
-            // bullet.anchor.setTo(0.5, 0.5);
-
-            // next_x = gun.x + 1 * Math.cos(gun.rotation);
-            // next_y = gun.y + 1 * Math.sin(gun.rotation);
 
             // Calculate point coordinates
             x = gun.x + gun.height * 0.66 * Math.cos(gun.rotation);
@@ -131,6 +91,7 @@ function fire() {
             y -= gun.y;
 
             // Get coordinates after rotation
+            angle = -1.57; // We make a rotation of -90°
             x_new = x * Math.cos(angle) - y * Math.sin(angle);
             y_new = x * Math.sin(angle) + y * Math.cos(angle);
 
