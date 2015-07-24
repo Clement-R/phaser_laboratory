@@ -36,7 +36,6 @@ function create() {
     gun = game.add.sprite(arm.x,
                           arm.y + arm.height,
                           'gun');
-    gun.enableBody = true;
     gun.anchor.set(0, 0.65);
     gun.enableBody = true;
 
@@ -108,9 +107,10 @@ function fire() {
             bullet.rotation = gun.rotation;
 
             // Shoot it in the right direction
-            game.physics.arcade.velocityFromAngle(gun.angle + game.rnd.integerInRange(-1, 1),
-                                                     BULLET_SPEED,
-                                                     bullet.body.velocity);
+            gun_precision_angle = 1.5;
+            game.physics.arcade.velocityFromAngle(gun.angle + game.rnd.integerInRange(-gun_precision_angle, gun_precision_angle),
+                                                  BULLET_SPEED,
+                                                  bullet.body.velocity);
             is_ready_to_fire = false;
             last_shot = game.time.now;
         }
@@ -154,16 +154,20 @@ function create_controls() {
 }
 
 function move() {
-    if(up_k.isDown) {
+    if(up_k.isDown || up.isDown) {
+        g.forEach(function(sprite) {
+            console.log(sprite);
+            sprite.body.velocity.y = -500;
+        });
     }
-    if(down_k.isDown) {
+    if(down_k.isDown || down.isDown) {
 
     }
-    if(left_k.isDown) {
+    if(left_k.isDown || left.isDown) {
         g.forEach(function(sprite){
             sprite.x -= 2;
         });
-    } else if (right_k.isDown) {
+    } else if (right_k.isDown || right.isDown) {
         g.forEach(function(sprite){
             sprite.x += 2;
         });
