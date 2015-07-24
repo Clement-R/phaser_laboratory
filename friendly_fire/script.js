@@ -24,6 +24,7 @@ function create() {
     game.physics.arcade.gravity.y = 0;
 
     p_body = game.add.sprite(150, 383, 'body');
+    p_body.enableBody = true;
 
     g = game.add.group();
 
@@ -31,12 +32,14 @@ function create() {
                           p_body.y + (p_body.height / 3),
                           'arm');
     arm.anchor.set(0.5, 0);
+    arm.enableBody = true;
 
     gun = game.add.sprite(arm.x,
                           arm.y + arm.height,
                           'gun');
     gun.enableBody = true;
     gun.anchor.set(0, 0.65);
+    gun.enableBody = true;
 
     create_controls();
     create_bullets();
@@ -58,7 +61,7 @@ function update() {
     game.debug.pixel(gun.x, gun.y, 'green');
 
     // arm rotation
-    mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/Math.PI)) - 86;
+    mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/Math.PI)) - 88;
     if(mouse_angle < 10 && mouse_angle > -180) {
         arm.angle = mouse_angle;
         var p = new Phaser.Point(arm.x, arm.y);
@@ -144,7 +147,7 @@ function fire() {
             bullet.rotation = gun.rotation;
 
             // Shoot it in the right direction
-            game.physics.arcade.velocityFromRotation(gun.rotation,
+            game.physics.arcade.velocityFromAngle(gun.angle + game.rnd.integerInRange(-1, 1),
                                                      BULLET_SPEED,
                                                      bullet.body.velocity);
             is_ready_to_fire = false;
@@ -191,7 +194,6 @@ function create_controls() {
 
 function move() {
     if(up_k.isDown) {
-        console.log('du fun');
     }
     if(down_k.isDown) {
 
