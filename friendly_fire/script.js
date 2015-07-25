@@ -22,36 +22,7 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 0;
 
-    p_body = game.add.sprite(150, 383, 'body');
-    p_body.enableBody = true;
-
-    g = game.add.group();
-
-    arm = game.add.sprite(p_body.x + (p_body.width / 2),
-                          p_body.y + (p_body.height / 3),
-                          'arm');
-    arm.anchor.set(0.5, 0);
-    arm.enableBody = true;
-
-    gun = game.add.sprite(arm.x,
-                          arm.y + arm.height,
-                          'gun');
-    gun.anchor.set(0, 0.65);
-    gun.enableBody = true;
-
-    create_controls();
-    create_bullets();
-
-    arm.angle = -90;
-    gun.angle = arm.angle + 88.5;
-    var p = new Phaser.Point(arm.x, arm.y);
-    p.rotate(p.x, p.y, gun.rotation, false, 13);
-    gun.x = p.x;
-    gun.y = p.y;
-
-    g.add(p_body);
-    g.add(gun);
-    g.add(arm);
+    create_player();
 }
 
 function update() {
@@ -172,4 +143,37 @@ function move() {
             sprite.x += 2;
         });
     }
+}
+
+function create_player() {
+    p_body = game.add.sprite(150, 383, 'body');
+    p_body.enableBody = true;
+
+    g = game.add.group();
+
+    arm = game.add.sprite(p_body.x + (p_body.width / 2),
+                          p_body.y + (p_body.height / 3),
+                          'arm');
+    arm.anchor.set(0.5, 0);
+    arm.enableBody = true;
+
+    gun = game.add.sprite(arm.x,
+                          arm.y + arm.height,
+                          'gun');
+    gun.anchor.set(0, 0.65);
+    gun.enableBody = true;
+
+    create_controls();
+    create_bullets();
+
+    arm.angle = -90;
+    gun.angle = arm.angle + 88.5;
+    var p = new Phaser.Point(arm.x, arm.y);
+    p.rotate(p.x, p.y, gun.rotation, false, 13);
+    gun.x = p.x;
+    gun.y = p.y;
+
+    g.add(p_body);
+    g.add(gun);
+    g.add(arm);
 }
