@@ -6,6 +6,27 @@ RESSOURCES :
 
 http://rotates.org/phaser/xv/
 http://www.piskelapp.com/p/agxzfnBpc2tlbC1hcHByEwsSBlBpc2tlbBiAgICQ5-jtCAw
+
+{"character":
+    {
+        "head":
+        {
+            "x": body.x + body.width / 2,
+            "y": body.y
+        }
+        "arm":
+        {
+            "x": body.x + body.width / 2,
+            "y": body.y + body.height / 3
+        }
+        "legs":
+        {
+            "x": body.x + body.width / 2,
+            "y": body.y + body.height
+        }
+    }
+}
+
 */
 var BULLET_SPEED = 1500;
 
@@ -44,6 +65,10 @@ function update() {
     }
 
     fire();
+
+    g.forEach(function(sprite){
+        sprite.body.velocity.x = 0;
+    });
     move();
 }
 
@@ -127,7 +152,6 @@ function create_controls() {
 function move() {
     if(up_k.isDown || up.isDown) {
         g.forEach(function(sprite) {
-            console.log(sprite);
             sprite.body.velocity.y = -500;
         });
     }
@@ -147,7 +171,6 @@ function move() {
 
 function create_player() {
     p_body = game.add.sprite(150, 383, 'body');
-    p_body.enableBody = true;
 
     g = game.add.group();
 
@@ -155,13 +178,11 @@ function create_player() {
                           p_body.y + (p_body.height / 3),
                           'arm');
     arm.anchor.set(0.5, 0);
-    arm.enableBody = true;
 
     gun = game.add.sprite(arm.x,
                           arm.y + arm.height,
                           'gun');
     gun.anchor.set(0, 0.65);
-    gun.enableBody = true;
 
     create_controls();
     create_bullets();
@@ -176,4 +197,12 @@ function create_player() {
     g.add(p_body);
     g.add(gun);
     g.add(arm);
+
+    g.enableBody = true;
+    g.physicsBodyType = Phaser.Physics.ARCADE;
+
+    g.forEach(function(sprite){
+        game.physics.enable(sprite, Phaser.Physics.ARCADE);
+        sprite.body.collideWorldBounds = true;
+    });
 }
