@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="20" tileheight="20" nextobjectid="1">
+ <tileset firstgid="1" name="castleMid" tilewidth="20" tileheight="20">
+  <image source="../../../../../../Gamedev/_ASSETS/Kenney NL/Art/Platformer assets (1330 assets)/Base pack (360 assets)/Tiles/castleMid.png" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="10" name="snowCenter" tilewidth="20" tileheight="20">
+  <image source="../../../../../../Gamedev/_ASSETS/Kenney NL/Art/Platformer assets (1330 assets)/Base pack (360 assets)/Tiles/snowCenter.png" width="70" height="70"/>
+ </tileset>
+ <layer name="Calque de Tile 1" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJzt2UEOwiAURdFPK7RMNLrCLq1LcWk+QpugIyba2H8HNxhnj6MjstkzO2xWk0pOi+pSW4Ma9dlZi+5h2fdfzeymvJyDtsdm/13fPZSXM9Ttbv0/f/9He/z69P7/xx9//PHHH3/88T/aA3/88ccff/zxxx9//PHHH3/88f+ef9T2waH//v6Z6tt3uYNyJ39fz45gb++fVtJdWDpBPTvavdPWrPIJ6tnR7n0BEtVIFg==
+  </data>
+ </layer>
+</map>

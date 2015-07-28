@@ -6,6 +6,7 @@ RESSOURCES :
 
 http://rotates.org/phaser/xv/
 http://www.piskelapp.com/p/agxzfnBpc2tlbC1hcHByEwsSBlBpc2tlbBiAgICQ5-jtCAw
+http://www.gamedevacademy.org/html5-phaser-tutorial-top-down-games-with-tiled/
 
 {"character":
     {
@@ -28,20 +29,44 @@ http://www.piskelapp.com/p/agxzfnBpc2tlbC1hcHByEwsSBlBpc2tlbBiAgICQ5-jtCAw
 }
 
 */
-var BULLET_SPEED = 1500;
+var BULLET_SPEED = 2000;
 
 function preload() {
+    /* Character parts */
     game.load.image('body', '../assets/images/friendly_fire/body.png');
     game.load.image('arm', '../assets/images/friendly_fire/arm.png');
+
+    /* Gun parts */
     game.load.image('gun', '../assets/images/friendly_fire/gun.png');
+
+    /* Ammunitions */
     game.load.image('bullet', '../assets/images/friendly_fire/bullet.png');
+
+    /* Maps */
+    game.load.tilemap('level1', 'maps/map_01.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('castleMid', '../assets/images/castleMid.png');
+    game.load.image('snowCenter', '../assets/images/snowCenter.png');
 }
 
 function create() {
+    // Scaling options
+    /*game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+    game.scale.pageAlignHorizontally = true;
+    game.scale.pageAlignVertically = true;
+
+    game.scale.setScreenSize(true);*/
+
     game.stage.backgroundColor = 0x2c3e50;
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 0;
+
+    map = game.add.tilemap('level1');
+    map.addTilesetImage('castleMid', 'castleMid');
+    map.addTilesetImage('snowCenter', 'snowCenter');
+
+    backgroundLayer = map.createLayer("Calque de Tile 1");
 
     create_player();
 }
