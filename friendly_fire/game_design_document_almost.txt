@@ -1,3 +1,5 @@
 Map size : 1280 x 720 (because HD, yo!)
 
 Tile size : 20 x 20 (because math, yo!)
+
+Player size : 60H, 20W

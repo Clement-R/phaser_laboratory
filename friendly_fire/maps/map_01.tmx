@@ -6,9 +6,15 @@
  <tileset firstgid="10" name="snowCenter" tilewidth="20" tileheight="20">
   <image source="../../../../../../Gamedev/_ASSETS/Kenney NL/Art/Platformer assets (1330 assets)/Base pack (360 assets)/Tiles/snowCenter.png" width="70" height="70"/>
  </tileset>
+ <tileset firstgid="19" name="boxEmpty" tilewidth="20" tileheight="20">
+  <image source="../../../../../../Gamedev/_ASSETS/Kenney NL/Art/Platformer assets (1330 assets)/Base pack (360 assets)/Tiles/boxEmpty.png" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="28" name="side_view_sprite" tilewidth="20" tileheight="20">
+  <image source="../../assets/images/side_view_sprite.png" width="20" height="60"/>
+ </tileset>
  <layer name="Calque 1" width="64" height="36">
   <data encoding="base64" compression="zlib">
-   eJztmkEKgDAQxEZoXf3/B3yqLV4WoT0pChkhsHgohE0vYkiKxtbYoXORjk59mTLgiTNmjM6K5C/YU+D+ef8V6L/C9+/+2f7un+3v/tn+7p/t7/7Z/u6f7e/+2f7un+3v/tn+7p/tn/snfv91/2x/98/ev/tn+9/7p5H7X653/U70LkSZI/GH/1C+mE/YvH8f
+   eJztWtEKhCAQ3AP37P7/B+5Ts16S43YlWy2YGRgSk2Umh7Qwi0guXAo/oO0k8t2og5kMRtTwaNXKlX8BQwL3X8+/Avp/g8+/lX+t+K9Pnb4ZiNJnvf/052q1rfujEaXPyn/r+Vl9sxClz8t/r6YZiNLXyv9oTb2I0tfK/2hNvYjSx/z769+Z2nesf1fHe/ufs/VnI0Kft/9H8O99/yH4Z/6x/TP/2P6Zf2z/zD+2f+bf/v+L4J/5x/bP/GPPP/OP7Z/5P/y/ZD8nsI8tuRCUdq74hHMod7RXDthbuw==
   </data>
  </layer>
 </map>

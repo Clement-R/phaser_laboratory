@@ -211,7 +211,9 @@ function move() {
 
     if(up_k.isDown || up.isDown) {
         g.forEach(function(sprite) {
-            sprite.body.velocity.y = -500;
+            if(sprite.body.onFloor()) {
+                sprite.body.velocity.y = -100;
+            }
         });
     }
     if(down_k.isDown || down.isDown) {

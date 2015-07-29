@@ -30,6 +30,7 @@ function create() {
 function update() {
     game.physics.arcade.collide(player, layer);
 
+    /* Player movement */
     if (cursors.up.isDown) {
         player.body.velocity.y = -200;
     } else if (cursors.down.isDown) {
