@@ -8,6 +8,10 @@ http://rotates.org/phaser/xv/
 http://www.piskelapp.com/p/agxzfnBpc2tlbC1hcHByEwsSBlBpc2tlbBiAgICQ5-jtCAw
 http://www.gamedevacademy.org/html5-phaser-tutorial-top-down-games-with-tiled/
 
+Tilemap collision :
+http://www.gamedevacademy.org/html5-phaser-tutorial-top-down-games-with-tiled/
+http://phaser.io/examples/v2/tilemaps/map-collide
+
 {"character":
     {
         "head":
@@ -50,24 +54,30 @@ function preload() {
 
 function create() {
     // Scaling options
-    /*game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    /*
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
     game.scale.pageAlignHorizontally = true;
     game.scale.pageAlignVertically = true;
 
-    game.scale.setScreenSize(true);*/
+    game.scale.setScreenSize(true);
+    */
 
     game.stage.backgroundColor = 0x2c3e50;
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 0;
+    game.physics.arcade.gravity.y = 200;
 
+    /* Map creation */
     map = game.add.tilemap('level1');
-    map.addTilesetImage('castleMid', 'castleMid');
-    map.addTilesetImage('snowCenter', 'snowCenter');
+    map.addTilesetImage('castleMid');
+    map.setCollisionBetween(4, 9);
+    map.setCollisionBetween(2684354564, 2684354566);
 
-    backgroundLayer = map.createLayer("Calque de Tile 1");
+    collisionLayer = map.createLayer("Calque 1");
+    collisionLayer.debug = true;
 
+    /* Player creation */
     create_player();
 }
 
@@ -90,6 +100,26 @@ function update() {
     }
 
     fire();
+
+    game.physics.arcade.collide(p_body, collisionLayer, function(){
+        console.log("Collision");
+    });
+
+    /* QUICK FIX */
+    arm.x = p_body.x + (p_body.width / 2);
+    arm.y = p_body.y + (p_body.height / 3);
+
+    /*
+    var player;
+
+    // Then to detect the sides all around the player.
+    player.body.blocked.up
+    player.body.blocked.left
+    player.body.blocked.right
+    player.body.blocked.bottom
+    */
+
+    game.debug.body(p_body);
 
     g.forEach(function(sprite){
         sprite.body.velocity.x = 0;
@@ -175,6 +205,10 @@ function create_controls() {
 }
 
 function move() {
+    g.forEach(function(sprite) {
+        sprite.body.velocity.x = 0;
+    });
+
     if(up_k.isDown || up.isDown) {
         g.forEach(function(sprite) {
             sprite.body.velocity.y = -500;
@@ -185,11 +219,11 @@ function move() {
     }
     if(left_k.isDown || left.isDown) {
         g.forEach(function(sprite){
-            sprite.x -= 2;
+            sprite.body.velocity.x = -100;
         });
     } else if (right_k.isDown || right.isDown) {
         g.forEach(function(sprite){
-            sprite.x += 2;
+            sprite.body.velocity.x = 100;
         });
     }
 }
@@ -230,4 +264,7 @@ function create_player() {
         game.physics.enable(sprite, Phaser.Physics.ARCADE);
         sprite.body.collideWorldBounds = true;
     });
+
+    arm.body.gravity = 0;
+    gun.body.gravity = 0;
 }
