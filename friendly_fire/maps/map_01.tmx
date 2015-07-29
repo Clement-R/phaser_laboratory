@@ -6,9 +6,9 @@
  <tileset firstgid="10" name="snowCenter" tilewidth="20" tileheight="20">
   <image source="../../../../../../Gamedev/_ASSETS/Kenney NL/Art/Platformer assets (1330 assets)/Base pack (360 assets)/Tiles/snowCenter.png" width="70" height="70"/>
  </tileset>
- <layer name="Calque de Tile 1" width="64" height="36">
+ <layer name="Calque 1" width="64" height="36">
   <data encoding="base64" compression="zlib">
-   eJzt2UEOwiAURdFPK7RMNLrCLq1LcWk+QpugIyba2H8HNxhnj6MjstkzO2xWk0pOi+pSW4Ma9dlZi+5h2fdfzeymvJyDtsdm/13fPZSXM9Ttbv0/f/9He/z69P7/xx9//PHHH3/88T/aA3/88ccff/zxxx9//PHHH3/88f+ef9T2waH//v6Z6tt3uYNyJ39fz45gb++fVtJdWDpBPTvavdPWrPIJ6tnR7n0BEtVIFg==
+   eJztmkEKgDAQxEZoXf3/B3yqLV4WoT0pChkhsHgohE0vYkiKxtbYoXORjk59mTLgiTNmjM6K5C/YU+D+ef8V6L/C9+/+2f7un+3v/tn+7p/t7/7Z/u6f7e/+2f7un+3v/tn+7p/tn/snfv91/2x/98/ev/tn+9/7p5H7X653/U70LkSZI/GH/1C+mE/YvH8f
   </data>
  </layer>
 </map>
