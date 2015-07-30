@@ -79,6 +79,10 @@ function create() {
 
     /* Player creation */
     create_player();
+
+    /* Debug sight line */
+    pointer = game.input.position;
+    line1 = new Phaser.Line(arm.x, arm.y, pointer.x, pointer.y);
 }
 
 function update() {
@@ -101,9 +105,45 @@ function update() {
 
     fire();
 
-    game.physics.arcade.collide(p_body, collisionLayer, function(){
-        console.log("Collision");
+    game.physics.arcade.collide(p_body, collisionLayer);
+
+    bullets.forEach(function(bullet){
+        game.physics.arcade.collide(bullet, collisionLayer, function(){
+            bullet.kill();
+        });
+
+        /*if(bullet.alive) {
+            game.physics.arcade.overlap(bullet, collisionLayer, function(){
+                bullet.kill();
+            });
+        }*/
     });
+
+    // Debug sight line
+    // Calculate point coordinates
+    x = gun.x + gun.height * 0.66 * Math.cos(gun.rotation);
+    y = gun.y + gun.height * 0.66 * Math.sin(gun.rotation);
+
+    // Set new point to origin
+    x -= gun.x;
+    y -= gun.y;
+
+    // Get coordinates after rotation
+    angle = -1.57; // We make a rotation of -90°
+    x_new = x * Math.cos(angle) - y * Math.sin(angle);
+    y_new = x * Math.sin(angle) + y * Math.cos(angle);
+
+    // Set new point to it's original position
+    next_x = x_new + gun.x;
+    next_y = y_new + gun.y;
+
+    // Set point to end of cannon
+    next_x = next_x + gun.width * Math.cos(gun.rotation);
+    next_y = next_y + gun.width * Math.sin(gun.rotation);
+
+    line1.setTo(next_x, next_y, pointer.x, pointer.y);
+
+    game.debug.geom(line1);
 
     /* QUICK FIX */
     arm.x = p_body.x + (p_body.width / 2);
@@ -132,6 +172,7 @@ function fire() {
         if(bullets.getFirstExists(false)) {
             bullet = bullets.getFirstExists(false);
 
+            bullet.body.allowGravity = false;
             // Calculate point coordinates
             x = gun.x + gun.height * 0.66 * Math.cos(gun.rotation);
             y = gun.y + gun.height * 0.66 * Math.sin(gun.rotation);
@@ -185,7 +226,7 @@ function create_bullets() {
 
     bullets.forEach(function(bullet){
         bullet.damage = bullet_DAMAGE;
-        bullet.body.gravity.allowGravity = false;
+        // bullet.body.gravity.y = 0;
         bullet.checkWorldBounds = true;
         bullet.outOfBoundsKill = true;
     }, this);
