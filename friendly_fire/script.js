@@ -108,15 +108,18 @@ function update() {
     game.physics.arcade.collide(p_body, collisionLayer);
 
     bullets.forEach(function(bullet){
-        game.physics.arcade.collide(bullet, collisionLayer, function(){
+        /*game.physics.arcade.collide(bullet, collisionLayer, function(){
             bullet.kill();
-        });
+        });*/
 
-        /*if(bullet.alive) {
+
+
+        if(bullet.alive) {
             game.physics.arcade.overlap(bullet, collisionLayer, function(){
                 bullet.kill();
+                console.log('kill');
             });
-        }*/
+        }
     });
 
     // Debug sight line
