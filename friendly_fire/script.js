@@ -69,13 +69,35 @@ function create() {
     game.physics.arcade.gravity.y = 200;
 
     /* Map creation */
-    map = game.add.tilemap('level1');
+    /*map = game.add.tilemap('level1');
     map.addTilesetImage('castleMid');
     map.setCollisionBetween(4, 9);
     map.setCollisionBetween(2684354564, 2684354566);
 
     collisionLayer = map.createLayer("Calque 1");
-    collisionLayer.debug = true;
+    collisionLayer.debug = true;*/
+
+    walls = game.add.group();
+    /* Walls */
+    for (var i = 13; i >= 0; i--) {
+        for (var j = 9; j >= 0; j--) {
+            if(i == 0 || i == 13) {
+                wall = game.add.sprite(70 * i,
+                                       70 * j,
+                                       "snowCenter");
+            } else {
+                if(j == 0 || j == 9) {
+                    wall = game.add.sprite(70 * i,
+                                           70 * j,
+                                           "snowCenter");
+                }
+            }
+            game.physics.enable(wall, Phaser.Physics.ARCADE);
+            wall.body.immovable = true;
+            wall.body.allowGravity = false;
+            walls.add(wall);
+        };
+    };
 
     /* Player creation */
     create_player();
@@ -105,11 +127,16 @@ function update() {
 
     fire();
 
-    game.physics.arcade.collide(p_body, collisionLayer);
+    // game.physics.arcade.collide(p_body, collisionLayer);
+    game.physics.arcade.collide(p_body, walls);
 
     bullets.forEach(function(bullet){
-        game.physics.arcade.collide(bullet, collisionLayer, function(){
+        /*game.physics.arcade.collide(bullet, collisionLayer, function(){
             bullet.kill();
+        });*/
+        game.physics.arcade.collide(bullet, walls, function(){
+            // bullet.kill();
+            bullet.body.velocity = 0;
         });
 
         /* Try to catch collision with intersect */
