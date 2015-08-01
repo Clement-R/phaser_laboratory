@@ -35,7 +35,11 @@ function create() {
     player = game.add.sprite(140, 140, 'castleMid');
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
-    player.body.velocity.x = 5000;
+    timer = game.time.create(false);
+    timer.loop(2000, function(){
+        player.body.velocity.x = 5000;
+    }, this);
+    timer.start();
 }
 
 function update() {
