@@ -7,25 +7,38 @@ function preload() {
 }
 
 function create() {
+    game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = 0x2c3e50;
     walls = game.add.group();
-}
 
-function update() {
+    /* Walls */
     for (var i = 9; i >= 0; i--) {
         for (var j = 9; j >= 0; j--) {
             if(i == 0 || i == 9) {
-                walls.add(game.add.sprite(70 * i,
-                                          70 * j,
-                                          "snowCenter"));
+                wall = game.add.sprite(70 * i,
+                                       70 * j,
+                                       "snowCenter");
             } else {
                 if(j == 0 || j == 9) {
-                    walls.add(game.add.sprite(70 * i,
-                                              70 * j,
-                                              "snowCenter"));
+                    wall = game.add.sprite(70 * i,
+                                           70 * j,
+                                           "snowCenter");
                 }
             }
-
+            game.physics.enable(wall, Phaser.Physics.ARCADE);
+            wall.body.immovable = true;
+            walls.add(wall);
         };
     };
+
+    /* Player */
+    player = game.add.sprite(140, 140, 'castleMid');
+    game.physics.enable(player, Phaser.Physics.ARCADE);
+
+    player.body.velocity.x = 5000;
+}
+
+function update() {
+    game.physics.arcade.collide(player, walls);
+
 }
