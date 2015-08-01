@@ -33,7 +33,7 @@ http://phaser.io/examples/v2/tilemaps/map-collide
 }
 
 */
-var BULLET_SPEED = 2000;
+var BULLET_SPEED = 3000;
 
 function preload() {
     /* Character parts */
@@ -108,18 +108,20 @@ function update() {
     game.physics.arcade.collide(p_body, collisionLayer);
 
     bullets.forEach(function(bullet){
-        /*game.physics.arcade.collide(bullet, collisionLayer, function(){
+        game.physics.arcade.collide(bullet, collisionLayer, function(){
             bullet.kill();
-        });*/
+        });
 
+        /* Try to catch collision with intersect */
 
+        /*****************************************/
 
-        if(bullet.alive) {
+        /*if(bullet.alive) {
             game.physics.arcade.overlap(bullet, collisionLayer, function(){
                 bullet.kill();
                 console.log('kill');
             });
-        }
+        }*/
     });
 
     // Debug sight line
