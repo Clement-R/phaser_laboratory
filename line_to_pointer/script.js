@@ -25,8 +25,6 @@ function create() {
                           arm_texture);
     arm.anchor.set(0.5, 0);
 
-    // arm.angle = -90;
-
     g.add(sprite);
     g.add(arm);
 
@@ -41,14 +39,6 @@ function update() {
     /* Phaser way */
     mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/PI));
     arm.angle = mouse_angle - 90;
-
-    /* Own calculation way */
-    /*
-    x = arm.x - pointer.x;
-    y = arm.y - pointer.y;
-    arm.rotation = Math.atan2(y,x);
-    arm.angle += 90;
-    */
 
     g.forEach(function(child){
         // child.x += 0.5;
