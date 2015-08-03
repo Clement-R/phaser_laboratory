@@ -33,7 +33,7 @@ http://phaser.io/examples/v2/tilemaps/map-collide
 }
 
 */
-var BULLET_SPEED = 3000;
+var BULLET_SPEED = 1600;
 
 function preload() {
     /* Character parts */
@@ -48,8 +48,8 @@ function preload() {
 
     /* Maps */
     game.load.tilemap('level1', 'maps/map_01.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('castleMid', '../assets/images/castleMid.png');
-    game.load.image('snowCenter', '../assets/images/snowCenter.png');
+    game.load.image('castleMid', '../assets/images/castleMid_10.png');
+    game.load.image('snowCenter', '../assets/images/snowCenter_10.png');
 }
 
 function create() {
@@ -79,22 +79,23 @@ function create() {
 
     walls = game.add.group();
     /* Walls */
-    for (var i = 13; i >= 0; i--) {
-        for (var j = 9; j >= 0; j--) {
-            if(i == 0 || i == 13) {
-                wall = game.add.sprite(70 * i,
-                                       70 * j,
+    for (var i = 104; i >= 0; i--) {
+        for (var j = 54; j >= 0; j--) {
+            if(i == 0 || i == 104) {
+                wall = game.add.sprite(10 * i,
+                                       10 * j,
                                        "snowCenter");
             } else {
-                if(j == 0 || j == 9) {
-                    wall = game.add.sprite(70 * i,
-                                           70 * j,
+                if(j == 0 || j == 54) {
+                    wall = game.add.sprite(10 * i,
+                                           10 * j,
                                            "snowCenter");
                 }
             }
             game.physics.enable(wall, Phaser.Physics.ARCADE);
             wall.body.immovable = true;
             wall.body.allowGravity = false;
+
             walls.add(wall);
         };
     };
@@ -131,19 +132,12 @@ function update() {
     game.physics.arcade.collide(p_body, walls);
 
     bullets.forEach(function(bullet){
-        /*game.physics.arcade.collide(bullet, collisionLayer, function(){
-            bullet.kill();
-        });*/
         game.physics.arcade.collide(bullet, walls, function(){
             bullet.kill();
         });
 
-        /* Try to catch collision with intersect */
-
-        /*****************************************/
-
         /*if(bullet.alive) {
-            game.physics.arcade.overlap(bullet, collisionLayer, function(){
+            game.physics.arcade.overlap(bullet, walls, function(){
                 bullet.kill();
                 console.log('kill');
             });
