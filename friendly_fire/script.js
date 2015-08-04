@@ -132,6 +132,7 @@ function update() {
     game.physics.arcade.collide(p_body, walls);
 
     bullets.forEach(function(bullet){
+        game.debug.body(bullet);
         game.physics.arcade.collide(bullet, walls, function(){
             bullet.kill();
         });

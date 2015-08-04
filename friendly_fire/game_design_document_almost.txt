@@ -3,3 +3,17 @@ Map size : 1280 x 720 (because HD, yo!)
 Tile size : 20 x 20 (because math, yo!)
 
 Player size : 60H, 20W
+
+-----------------------------------------------------------
+Devblog 04/08 :
+Still reading about collision detection for high velocity objects like
+the bullets in Friendly Fire.
+
+Sometimes the collision between the map and the bullets didn't work.
+
+Found this response about similar problem
+(https://github.com/tobiasmuecksch/OBB-for-Phaser)
+(http://www.html5gamedevs.com/topic/15367-oriented-bounding-box-obb-collision-detection-for-phaser/)
+
+First step will be to test collision with P2 physic engine,
+and box2D if it's not working.
