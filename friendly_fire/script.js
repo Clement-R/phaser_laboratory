@@ -34,6 +34,8 @@ http://phaser.io/examples/v2/tilemaps/map-collide
 
 */
 var BULLET_SPEED = 1600;
+var PLAYER_SPEED = 100;
+var JUMP_VELOCITY = 200;
 
 function preload() {
     /* Character parts */
@@ -65,40 +67,18 @@ function create() {
 
     game.stage.backgroundColor = 0x2c3e50;
 
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 200;
+    game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.p2.gravity.y = 200;
 
     /* Map creation */
-    /*map = game.add.tilemap('level1');
+    map = game.add.tilemap('level1');
     map.addTilesetImage('castleMid');
     map.setCollisionBetween(4, 9);
     map.setCollisionBetween(2684354564, 2684354566);
 
     collisionLayer = map.createLayer("Calque 1");
-    collisionLayer.debug = true;*/
-
-    walls = game.add.group();
-    /* Walls */
-    for (var i = 104; i >= 0; i--) {
-        for (var j = 54; j >= 0; j--) {
-            if(i == 0 || i == 104) {
-                wall = game.add.sprite(10 * i,
-                                       10 * j,
-                                       "snowCenter");
-            } else {
-                if(j == 0 || j == 54) {
-                    wall = game.add.sprite(10 * i,
-                                           10 * j,
-                                           "snowCenter");
-                }
-            }
-            game.physics.enable(wall, Phaser.Physics.ARCADE);
-            wall.body.immovable = true;
-            wall.body.allowGravity = false;
-
-            walls.add(wall);
-        };
-    };
+    game.physics.p2.convertTilemap(map, collisionLayer);
+    collisionLayer.debug = true;
 
     /* Player creation */
     create_player();
@@ -128,22 +108,10 @@ function update() {
 
     fire();
 
-    // game.physics.arcade.collide(p_body, collisionLayer);
-    game.physics.arcade.collide(p_body, walls);
-
-    bullets.forEach(function(bullet){
-        game.debug.body(bullet);
-        game.physics.arcade.collide(bullet, walls, function(){
-            bullet.kill();
-        });
-
-        /*if(bullet.alive) {
-            game.physics.arcade.overlap(bullet, walls, function(){
-                bullet.kill();
-                console.log('kill');
-            });
-        }*/
-    });
+    // game.physics.arcade.collide(g, collisionLayer);
+    // game.physics.arcade.collide(bullets, collisionLayer, function(bullet){
+    //     bullet.kill();
+    // });
 
     // Debug sight line
     // Calculate point coordinates
@@ -176,8 +144,6 @@ function update() {
     arm.y = p_body.y + (p_body.height / 3);
 
     /*
-    var player;
-
     // Then to detect the sides all around the player.
     player.body.blocked.up
     player.body.blocked.left
@@ -252,9 +218,9 @@ function create_bullets() {
 
     bullets.forEach(function(bullet){
         bullet.damage = bullet_DAMAGE;
-        // bullet.body.gravity.y = 0;
         bullet.checkWorldBounds = true;
         bullet.outOfBoundsKill = true;
+        game.physics.p2.enable(bullet);
     }, this);
 }
 
@@ -278,19 +244,23 @@ function move() {
 
     if(up_k.isDown || up.isDown) {
         g.forEach(function(sprite) {
-            sprite.body.velocity.y = -100;
+            // sprite.body.velocity.y = -JUMP_VELOCITY;
+            sprite.body.moveUp(JUMP_VELOCITY);
         });
     }
     if(down_k.isDown || down.isDown) {
-
+        // Crouch possible ?
     }
+
     if(left_k.isDown || left.isDown) {
         g.forEach(function(sprite){
-            sprite.body.velocity.x = -100;
+            // sprite.body.velocity.x = -PLAYER_SPEED;
+            sprite.body.moveLeft(PLAYER_SPEED);
         });
     } else if (right_k.isDown || right.isDown) {
         g.forEach(function(sprite){
-            sprite.body.velocity.x = 100;
+            // sprite.body.velocity.x = PLAYER_SPEED;
+            sprite.body.moveRight(PLAYER_SPEED);
         });
     }
 }
@@ -324,12 +294,13 @@ function create_player() {
     g.add(gun);
     g.add(arm);
 
-    g.enableBody = true;
-    g.physicsBodyType = Phaser.Physics.ARCADE;
+    // g.enableBody = true;
+    // g.physicsBodyType = Phaser.Physics.ARCADE;
 
     g.forEach(function(sprite){
-        game.physics.enable(sprite, Phaser.Physics.ARCADE);
+        game.physics.p2.enable(sprite);
         sprite.body.collideWorldBounds = true;
+        sprite.body.fixedRotation = true;
     });
 
     arm.body.gravity = 0;
