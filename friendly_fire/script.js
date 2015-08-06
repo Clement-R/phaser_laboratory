@@ -33,7 +33,7 @@ http://phaser.io/examples/v2/tilemaps/map-collide
 }
 
 */
-var BULLET_SPEED = 1600;
+var BULLET_SPEED = 2000;
 var PLAYER_SPEED = 100;
 var JUMP_VELOCITY = 200;
 
@@ -68,17 +68,39 @@ function create() {
     game.stage.backgroundColor = 0x2c3e50;
 
     game.physics.startSystem(Phaser.Physics.P2JS);
-    game.physics.p2.gravity.y = 200;
+    game.physics.p2.gravity.y = 0;
 
     /* Map creation */
     map = game.add.tilemap('level1');
     map.addTilesetImage('castleMid');
+    collisionLayer = map.createLayer("Calque 1");
+
     map.setCollisionBetween(4, 9);
     map.setCollisionBetween(2684354564, 2684354566);
 
-    collisionLayer = map.createLayer("Calque 1");
     game.physics.p2.convertTilemap(map, collisionLayer);
+    game.physics.p2.restitution = 0;
     collisionLayer.debug = true;
+
+    /* Map creation with sprites */
+    // walls = game.add.group();
+    // for (var i = 104; i >= 0; i--) {
+    //      for (var j = 54; j >= 0; j--) {
+    //          if(i == 0 || i == 104) {
+    //              wall = game.add.sprite(10 * i,
+    //                                     10 * j,
+    //                                     "snowCenter");
+    //          } else {
+    //              if(j == 0 || j == 54) {
+    //                  wall = game.add.sprite(10 * i,
+    //                                         10 * j,
+    //                                         "snowCenter");
+    //              }
+    //          }
+    //          game.physics.p2.enable(wall);
+    //          walls.add(wall);
+    //      };
+    //  };
 
     /* Player creation */
     create_player();
@@ -90,7 +112,8 @@ function create() {
 
 function update() {
     // arm rotation
-    mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/Math.PI)) - 88;
+    // mouse_angle = (game.physics.arcade.angleToPointer(arm) * (180/Math.PI)) - 88;
+    mouse_angle = 90;
     if(mouse_angle < 10 && mouse_angle > -180) {
         arm.angle = mouse_angle;
         var p = new Phaser.Point(arm.x, arm.y);
@@ -164,7 +187,7 @@ function fire() {
         if(bullets.getFirstExists(false)) {
             bullet = bullets.getFirstExists(false);
 
-            bullet.body.allowGravity = false;
+            // bullet.body.allowGravity = false;
             // Calculate point coordinates
             x = gun.x + gun.height * 0.66 * Math.cos(gun.rotation);
             y = gun.y + gun.height * 0.66 * Math.sin(gun.rotation);
@@ -192,9 +215,12 @@ function fire() {
 
             // Shoot it in the right direction
             gun_precision_angle = 1.5;
-            game.physics.arcade.velocityFromAngle(gun.angle + game.rnd.integerInRange(-gun_precision_angle, gun_precision_angle),
-                                                  BULLET_SPEED,
-                                                  bullet.body.velocity);
+            // game.physics.arcade.velocityFromAngle(gun.angle + game.rnd.integerInRange(-gun_precision_angle, gun_precision_angle),
+            //                                       BULLET_SPEED,
+            //                                       bullet.body.velocity);
+            bullet.body.velocity.x = Math.cos(bullet.rotation) * BULLET_SPEED;
+            bullet.body.velocity.y = Math.sin(bullet.rotation) * BULLET_SPEED;
+            
             is_ready_to_fire = false;
             last_shot = game.time.now;
         }
@@ -207,21 +233,26 @@ function fire() {
 
 function create_bullets() {
     FIRERATE = 400;
-    bullet_DAMAGE = 10;
+    BULLET_DAMAGE = 10;
     is_ready_to_fire = true;
     last_shot = 0;
 
     bullets = game.add.group()
-    bullets.enableBody = true;
-    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    // bullets.enableBody = true;
+    // bullets.physicsBodyType = Phaser.Physics.ARCADE;
     bullets.createMultiple(100, 'bullet');
 
     bullets.forEach(function(bullet){
-        bullet.damage = bullet_DAMAGE;
+        bullet.damage = BULLET_DAMAGE;
         bullet.checkWorldBounds = true;
         bullet.outOfBoundsKill = true;
         game.physics.p2.enable(bullet);
+        bullet.body.ccdSpeedThreshold = 0;
+
     }, this);
+
+    // bullets.enableBody = true;
+    // bullets.physicsBodyType = Phaser.Physics.P2JS;
 }
 
 function create_controls() {
@@ -303,6 +334,6 @@ function create_player() {
         sprite.body.fixedRotation = true;
     });
 
-    arm.body.gravity = 0;
-    gun.body.gravity = 0;
+    // arm.body.gravity = 0;
+    // gun.body.gravity = 0;
 }
