@@ -14,6 +14,7 @@ Sometimes the collision between the map and the bullets didn't work.
 Found this response about similar problem
 (https://github.com/tobiasmuecksch/OBB-for-Phaser)
 (http://www.html5gamedevs.com/topic/15367-oriented-bounding-box-obb-collision-detection-for-phaser/)
+(https://gist.github.com/shamansir/3007244)
 
 First step will be to test collision with P2 physic engine,
 and box2D if it's not working.

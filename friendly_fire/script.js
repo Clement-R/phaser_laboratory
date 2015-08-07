@@ -220,7 +220,7 @@ function fire() {
             //                                       bullet.body.velocity);
             bullet.body.velocity.x = Math.cos(bullet.rotation) * BULLET_SPEED;
             bullet.body.velocity.y = Math.sin(bullet.rotation) * BULLET_SPEED;
-            
+
             is_ready_to_fire = false;
             last_shot = game.time.now;
         }
@@ -248,11 +248,7 @@ function create_bullets() {
         bullet.outOfBoundsKill = true;
         game.physics.p2.enable(bullet);
         bullet.body.ccdSpeedThreshold = 0;
-
     }, this);
-
-    // bullets.enableBody = true;
-    // bullets.physicsBodyType = Phaser.Physics.P2JS;
 }
 
 function create_controls() {
@@ -275,7 +271,6 @@ function move() {
 
     if(up_k.isDown || up.isDown) {
         g.forEach(function(sprite) {
-            // sprite.body.velocity.y = -JUMP_VELOCITY;
             sprite.body.moveUp(JUMP_VELOCITY);
         });
     }
@@ -285,12 +280,10 @@ function move() {
 
     if(left_k.isDown || left.isDown) {
         g.forEach(function(sprite){
-            // sprite.body.velocity.x = -PLAYER_SPEED;
             sprite.body.moveLeft(PLAYER_SPEED);
         });
     } else if (right_k.isDown || right.isDown) {
         g.forEach(function(sprite){
-            // sprite.body.velocity.x = PLAYER_SPEED;
             sprite.body.moveRight(PLAYER_SPEED);
         });
     }
@@ -325,15 +318,9 @@ function create_player() {
     g.add(gun);
     g.add(arm);
 
-    // g.enableBody = true;
-    // g.physicsBodyType = Phaser.Physics.ARCADE;
-
     g.forEach(function(sprite){
         game.physics.p2.enable(sprite);
         sprite.body.collideWorldBounds = true;
         sprite.body.fixedRotation = true;
     });
-
-    // arm.body.gravity = 0;
-    // gun.body.gravity = 0;
 }
