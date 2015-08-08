@@ -71,7 +71,7 @@ function create() {
     game.physics.p2.gravity.y = 0;
 
     /* Map creation */
-    map = game.add.tilemap('level1');
+    /*map = game.add.tilemap('level1');
     map.addTilesetImage('castleMid');
     collisionLayer = map.createLayer("Calque 1");
 
@@ -80,27 +80,27 @@ function create() {
 
     game.physics.p2.convertTilemap(map, collisionLayer);
     game.physics.p2.restitution = 0;
-    collisionLayer.debug = true;
+    collisionLayer.debug = true;*/
 
     /* Map creation with sprites */
-    // walls = game.add.group();
-    // for (var i = 104; i >= 0; i--) {
-    //      for (var j = 54; j >= 0; j--) {
-    //          if(i == 0 || i == 104) {
-    //              wall = game.add.sprite(10 * i,
-    //                                     10 * j,
-    //                                     "snowCenter");
-    //          } else {
-    //              if(j == 0 || j == 54) {
-    //                  wall = game.add.sprite(10 * i,
-    //                                         10 * j,
-    //                                         "snowCenter");
-    //              }
-    //          }
-    //          game.physics.p2.enable(wall);
-    //          walls.add(wall);
-    //      };
-    //  };
+    walls = game.add.group();
+    for (var i = 104; i >= 0; i--) {
+         for (var j = 54; j >= 0; j--) {
+             if(i == 0 || i == 104) {
+                 wall = game.add.sprite(10 * i,
+                                        10 * j,
+                                        "snowCenter");
+             } else {
+                 if(j == 0 || j == 54) {
+                     wall = game.add.sprite(10 * i,
+                                            10 * j,
+                                            "snowCenter");
+                 }
+             }
+             game.physics.p2.enable(wall);
+             walls.add(wall);
+         };
+     };
 
     /* Player creation */
     create_player();
@@ -247,7 +247,7 @@ function create_bullets() {
         bullet.checkWorldBounds = true;
         bullet.outOfBoundsKill = true;
         game.physics.p2.enable(bullet);
-        bullet.body.ccdSpeedThreshold = 0;
+        bullet.body.ccdSpeedThreshold = 1;
     }, this);
 }
 
