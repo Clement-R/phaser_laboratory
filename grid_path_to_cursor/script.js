@@ -22,8 +22,11 @@ function create() {
     end_tile_tex.ctx.fill();
 
     pos = coord_to_pos(new Phaser.Point(8, 8));
+    pos_end = coord_to_pos(new Phaser.Point(12, 6));
     start_tile = game.add.sprite(pos.x, pos.y, start_tile_tex);
-    end_tile = game.add.sprite(pos.x, pos.y, end_tile_tex);
+    end_tile = game.add.sprite(pos_end.x, pos_end.y, end_tile_tex);
+
+    draw_path(start_tile.position, end_tile.position);
 }
 
 function draw_path(pos_1, pos_2) {
@@ -33,19 +36,41 @@ function draw_path(pos_1, pos_2) {
     path_tile_tex.ctx.fillStyle = '#ff5a00';
     path_tile_tex.ctx.fill();
 
-    while(pos_2.y != pos_2.x && pos_2.y != pos_1.y)
-    if(pos_2.x > pos_1.x) {
+    coord_1 = pos_to_coord(pos_1);
+    coord_2 = pos_to_coord(pos_2);
+    x = coord_1.x;
+    y = coord_1.y;
 
-    } else {
+    while(x != coord_2.x || y != coord_2.y) {
+        modification = false;
 
+        if(x > coord_2.x) {
+            x -= 1;
+            modification = true;
+        } else if (x < coord_2.x) {
+            x += 1;
+            modification = true;
+        }
+
+        if(!modification) {
+            if(y > coord_2.y) {
+                y -= 1;
+            } else if(y < coord_2.y) {
+                y += 1;
+            }
+        }
+
+        if(x != coord_2.x || y != coord_2.y){
+            tile_pos = coord_to_pos(new Phaser.Point(x, y));
+            console.log(x, y);
+            console.log(coord_2);
+            game.add.sprite(tile_pos.x, tile_pos.y, path_tile_tex);
+        }
     }
 }
 
 function update() {
     draw_grid();
-    pointer = game.input.position;
-    pointer_pos = round_pos(new Phaser.Point(pointer.x, pointer.y));
-    end_tile.position = pointer_pos;
 }
 
 function round_pos(position) {
@@ -70,6 +95,14 @@ function setup_grid_size() {
     GRID_SIZE = 40;
     GRID_WIDTH = game.world.width / GRID_SIZE;
     GRID_HEIGHT = game.world.height / GRID_SIZE;
+}
+
+function draw_tiles() {
+    for (var i = 0; i < GRID_HEIGHT; i++) {
+        for (var j = 0; j < GRID_HEIGHT; i++) {
+
+        }
+    }
 }
 
 function draw_grid() {
