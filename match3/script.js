@@ -66,6 +66,10 @@ function create_tiles() {
                     // Other rows
                     /* Check neighbors cells on top, bottom and right */
                     var texture = game.rnd.pick(tiles_textures);
+
+                    // top = tiles[i][j - 1]
+                    // bottom = tiles[i][j + 1]
+                    // right = tiles[i + 1][j]
                 }
             // Last colum of the board
             } else if(i == (COLUMN_COUNT - 1)) {
