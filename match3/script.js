@@ -11,6 +11,7 @@ var DRAG_DIRECTION     = '';
 
 var tiles_textures     = [];
 var tiles              = [];
+var texts              = [];
 var temp_tile;
 
 
@@ -27,7 +28,14 @@ function create() {
 }
 
 function update() {
-
+    for (var i = 0; i < COLUMN_COUNT; i++) {
+        for (var j = 0; j < ROW_COUNT; j++) {
+            text = texts[i][j];
+            sprite = tiles[i][j];
+            text.x = Math.floor(sprite.x + sprite.width / 2);
+            text.y = Math.floor(sprite.y + sprite.height / 2);
+        }
+    }
 }
 
 function create_tiles() {
@@ -45,9 +53,15 @@ function create_tiles() {
     //     };
     // };
 
-    // Populate one cell at a time and check there is no match
     for (var i = 0; i < COLUMN_COUNT; i++) {
         tiles[i] = [];
+        for (var j = 0; j < ROW_COUNT; j++) {
+            tiles[i][j] = 0;
+        };
+    };
+
+    // Populate one cell at a time and check there is no match
+    for (var i = 0; i < COLUMN_COUNT; i++) {
         for (var j = 0; j < ROW_COUNT; j++) {
 
             var texture = "";
@@ -61,39 +75,54 @@ function create_tiles() {
                 } else if (j == (ROW_COUNT - 1)) {
                     // Last row of the board
                     /* Check neighbors cells on top and right */
-                    var texture = game.rnd.pick(tiles_textures);
+                    // var texture = game.rnd.pick(tiles_textures);
+                    // top = tiles[i][j - 1]['tile_id']
+                    // right = tiles[i + 1][j]['tile_id']
+
                 } else {
                     // Other rows
                     /* Check neighbors cells on top, bottom and right */
-                    var texture = game.rnd.pick(tiles_textures);
+                    // var texture = game.rnd.pick(tiles_textures);
 
-                    // top = tiles[i][j - 1]
+                    // console.log(tiles)
+
+                    // top = tiles[i][j - 1]['tile_id']
+                    // console.log(top);
                     // bottom = tiles[i][j + 1]
                     // right = tiles[i + 1][j]
+
+                    // values = [top, bottom, right];
+
+
+                    // var texture = game.rnd.pick(tiles_textures);
+                    // while (values.indexOf(texture) != -1) {
+                    //     console.log("Search value");
+                    // }
                 }
             // Last colum of the board
             } else if(i == (COLUMN_COUNT - 1)) {
                 // First row on the board
                 if(j == 0) {
                     /* Check neighbors cells on left and bottom */
-                    var texture = game.rnd.pick(tiles_textures);
+                    // var texture = game.rnd.pick(tiles_textures);
                 } else if (j == (ROW_COUNT -1)) {
                     /* Check neighbors cells on top and left */
-                    var texture = game.rnd.pick(tiles_textures);
+                    // var texture = game.rnd.pick(tiles_textures);
                 } else {
                     /* Check neighbors cells on top, left and bottom */
-                    var texture = game.rnd.pick(tiles_textures);
+                    // var texture = game.rnd.pick(tiles_textures);
                 }
             } else {
                 // First row on the board
                 if(j == 0) {
                     /* Check neighbors on left, right and bottom */
-                    var texture = game.rnd.pick(tiles_textures);
+                    // var texture = game.rnd.pick(tiles_textures);
                 } else if (j == (ROW_COUNT -1)) {
                     /* Check neighbors on top, left and right */
-                    var texture = game.rnd.pick(tiles_textures);
+                    // var texture = game.rnd.pick(tiles_textures);
                 } else {
                     /* Check neighbors on all sides */
+                    // var texture = game.rnd.pick(tiles_textures);
                 }
             }
 
@@ -103,8 +132,18 @@ function create_tiles() {
                                               j * CELL_SIZE_SPACED,
                                               texture);
             }
-        };
-    };
+        }
+    }
+
+    for (var i = 0; i < COLUMN_COUNT; i++) {
+        texts[i] = [];
+        for (var j = 0; j < ROW_COUNT; j++) {
+            var sprite = tiles[i][j];
+            var style = { font: "32px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: sprite.width, align: "center" };
+            texts[i][j] = game.add.text(0, 0, sprite['tile_id'], style);
+            texts[i][j].anchor.set(0.5);
+        }
+    }
 
     // game.input.onDown.add(pick_tile, this);
 }
