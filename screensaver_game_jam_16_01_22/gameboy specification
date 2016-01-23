@@ -1,0 +1,3 @@
+gameboy specification
+
+The screen of the both the GB and GBC are 160x144 pixels, segmented into 20 x 18 8x8 characters/tiles.
