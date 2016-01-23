@@ -25,7 +25,7 @@ function get_pointer_pos_to_grid() {
 }
 
 function setup_grid_size() {
-    GRID_SIZE = 40
+    GRID_SIZE = 40;
     GRID_WIDTH = game.world.width / GRID_SIZE;
     GRID_HEIGHT = game.world.height / GRID_SIZE;
 }
