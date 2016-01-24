@@ -18,8 +18,8 @@ Screensaver.Game.prototype = {
         this.COLORS = ['red', 'yellow', 'green', 'blue'];
 
         // TODO : Calculate those values
-        this.COLUMN = 1;
-        this.ROW = 5;
+        this.COLUMN = 10;
+        this.ROW = 10;
         this.TILE_SIZE = 64;
         this.GUTTER = 7;
 
@@ -30,17 +30,6 @@ Screensaver.Game.prototype = {
         this.blocks = [];
         this.blocksSprites = [];
         this.createBoard();
-
-        // DEBUG : Test if emptyCell choose tiles
-        //         from previous lines if needed
-        // this.blocks[4][0] = 1;
-        // this.blocks[4][1] = 1;
-        // this.blocks[4][2] = 1;
-        // this.blocks[4][3] = 1;
-
-        //var emptyCell = this.findEmptyCell();
-        // DEBUG
-        //console.log(emptyCell['x'] + " : " + emptyCell['y']);
 
         this.sendBlock();
     },
@@ -78,11 +67,13 @@ Screensaver.Game.prototype = {
             var block = this.add.sprite(x, -128, color);
             block.scale.setTo(0.5, 0.5);
 
+            var duration = (100 * emptyCell['y']) + 100;
+            console.log(duration);
             this.tweenFall = this.add.tween(block).to({y: y},
-                                                      1000,
+                                                      duration,
                                                       Phaser.Easing.Cubic.In);
             this.tweenUh = this.add.tween(block).to({y: gutter},
-                                                    500,
+                                                    250,
                                                     Phaser.Easing.Linear.In);
             if(!lastLine){
                 this.tweenFall.chain(this.tweenUh);
