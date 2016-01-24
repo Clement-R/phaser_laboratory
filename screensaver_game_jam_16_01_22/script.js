@@ -38,10 +38,6 @@ Screensaver.Game.prototype = {
         // this.blocks[4][2] = 1;
         // this.blocks[4][3] = 1;
 
-        // DEBUG
-        this.debugArray();
-        console.log("--------------------------------");
-
         //var emptyCell = this.findEmptyCell();
         // DEBUG
         //console.log(emptyCell['x'] + " : " + emptyCell['y']);
@@ -55,8 +51,8 @@ Screensaver.Game.prototype = {
 
     sendBlock: function() {
         var emptyCell = this.findEmptyCell();
-        if(emptyCell) {
 
+        if(emptyCell) {
             var color = Phaser.ArrayUtils.getRandomItem(this.COLORS);
             var value = this.COLORS.indexOf(color) + 1;
             var lastLine = false;
@@ -70,10 +66,11 @@ Screensaver.Game.prototype = {
 
             var x = emptyCell['x'] * this.TILE_SIZE;
 
-            if(this.previousY) {
-                var y = this.previousY - 64;
-            } else {
-                var y = emptyCell['y'] * this.TILE_SIZE;
+            var y = emptyCell['y'] * this.TILE_SIZE;
+            y += ((this.ROW - 1) - emptyCell['y']) * this.GUTTER;
+
+            if(emptyCell['y'] != (this.ROW - 1)) {
+                y -= this.GUTTER;
             }
 
             var gutter = y + this.GUTTER;
@@ -91,24 +88,15 @@ Screensaver.Game.prototype = {
                 this.tweenFall.chain(this.tweenUh);
             } else {
                 this.tweenFall.onComplete.add(function(){
-                    this.previousY = block.y;
                     this.checkNeighbors();
                 }, this);
             }
 
             this.tweenUh.onComplete.add(function(){
-                this.previousY = block.y;
                 this.checkNeighbors();
             }, this);
 
-            // this.tweenFall.onComplete.add(this.checkNeighbors, this);
-
             this.tweenFall.start();
-
-            // this.physics.enable(block, Phaser.Physics.ARCADE);
-            // block.body.collideWorldBounds = true;
-
-            // blocks.add(block);
         } else {
             // this.debugArray();
         }
@@ -157,6 +145,7 @@ Screensaver.Game.prototype = {
             };
             console.log(currentLine);
         };
+        console.log("-----------------------------------------------");
     },
 
     findEmptyCell: function() {
