@@ -8,5 +8,15 @@
     </head>
     <body>
         <div id="phaser-example"></div>
+
+        <script type="text/javascript">
+            window.onload = function() {
+                var game = new Phaser.Game(800, 600,
+                                           Phaser.AUTO, 'phaser-example');
+
+                game.state.add('Game', Screensaver.Game);
+                game.state.start('Game');
+            };
+        </script>
     </body>
 </html>

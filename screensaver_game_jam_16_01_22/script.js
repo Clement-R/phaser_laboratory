@@ -1,50 +1,113 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
-                           {preload: preload, create: create, update: update});
+var Screensaver = {};
 
-function preload() {
-    game.load.image('red', 'red.png');
-    game.load.image('yellow', 'yellow.png');
-    game.load.image('green', 'green.png');
-    game.load.image('blue', 'blue.png');
-}
+Screensaver.Game = function (game) {
 
-function create() {
-    game.stage.backgroundColor = 0x2c3e50;
+};
 
-    createBoard();
+Screensaver.Game.prototype = {
+    preload: function() {
+        this.load.image('red', 'red.png');
+        this.load.image('yellow', 'yellow.png');
+        this.load.image('green', 'green.png');
+        this.load.image('blue', 'blue.png');
+    },
 
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 50;
+    create: function() {
+        this.stage.backgroundColor = 0x2c3e50;
 
-    blocks = game.add.group();
+        this.COLUMN = 4;
+        this.ROW = 5;
 
-    sendBlock();
-}
+        this.blockFalling = false;
 
-function update() {
-    // game.physics.arcade.collide(blocks.children[blocks.children.length - 1], blocks, function(){
-    //     sendBlock();
-    // });
+        // Accessible via this.blocks[Y][X];
+        this.blocks = [];
+        this.blocksSprites = [];
+        this.createBoard();
+        this.debugArray();
+        // this.sendBlock();
+        console.log("--------------------------------");
+        var emptyCell = this.findEmptyCell();
+        console.log(emptyCell['x'] + " : " + emptyCell['y']);
+    },
 
-    // if(blocks.children[blocks.children.length - 1].body.blocked['down']) {
-    //     sendBlock();
-    // }
+    update: function() {
 
-}
+    },
 
-function sendBlock() {
-    console.log("Hello block");
+    sendBlock: function() {
+        // console.log("Hello block");
+        // this.blockFalling = true;
 
-    block = game.add.sprite(0, 0, 'red');
-    block.scale.setTo(0.5, 0.5);
+        // block = this.add.sprite(0, 0, 'red');
+        // block.scale.setTo(0.5, 0.5);
 
-    // game.physics.enable(block, Phaser.Physics.ARCADE);
-    // block.body.collideWorldBounds = true;
+        // this.physics.enable(block, Phaser.Physics.ARCADE);
+        // block.body.collideWorldBounds = true;
 
-    blocks.add(block);
+        // blocks.add(block);
 
-}
+    },
 
-function createBoard() {
+    createBoard: function() {
+        var counter = 1;
+        // Y
+        for (var i = 0; i < this.ROW; i++) {
+            this.blocks[i] = [];
+            this.blocksSprites[i] = [];
+            // X
+            for (var j = 0; j < this.COLUMN; j++) {
+                this.blocks[i][j] = counter;
+                this.blocksSprites[i][j] = null;
+                counter ++;
+            };
+        };
+    },
 
+    debugArray: function() {
+        // Y
+        for (var i = 0; i < this.ROW; i++) {
+            var currentLine = "";
+            // X
+            for (var j = 0; j < this.COLUMN; j++) {
+                if(this.blocks[i][j] <= 9 ) {
+                    currentLine += "  " + this.blocks[i][j];
+                } else {
+                    currentLine += " " + this.blocks[i][j];
+                }
+            };
+            console.log(currentLine);
+        };
+    },
+
+    findEmptyCell: function() {
+        // Check for every empty cell on last line
+        // If there is no empty cell, go on previous line and search
+        // ad vitam eternam
+
+        var emptyCells = [];
+        var emptyCell = {'x': null, 'y': null};
+        var cellFound = false;
+
+        var y = (this.ROW - 1);
+        var randX = [];
+        for (var i = 0; i < this.COLUMN; i++) {
+            randX[i] = i;
+        };
+
+        while(!cellFound) {
+
+            if(emptyCells.length == 0) {
+
+                if(this.blocks[y][x] == 0) {
+                    // add this to possible cells
+                }
+            } else {
+                cellFound = true;
+            }
+
+        }
+
+
+    }
 }
