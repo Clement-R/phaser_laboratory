@@ -10,10 +10,24 @@ Screensaver.Game.prototype = {
         this.load.image('yellow', 'yellow.png');
         this.load.image('green', 'green.png');
         this.load.image('blue', 'blue.png');
+        this.load.image('background', 'uncolored_hills_mod.png');
     },
 
     create: function() {
         this.stage.backgroundColor = 0x2c3e50;
+        background = this.add.tileSprite(0,
+        								 0,
+        								 1024,
+                                         1024,
+                                         "background");
+        background.tileScale.x = 1;
+        background.tileScale.y = 0.75;
+
+        // Keep original size
+    	this.input.onDown.add(function(){
+    		this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    		this.scale.startFullScreen(false);
+    	}.bind(this));
 
         this.COLORS = ['red', 'yellow', 'green', 'blue'];
 
@@ -35,7 +49,7 @@ Screensaver.Game.prototype = {
     },
 
     update: function() {
-
+    	background.tilePosition.x -= 0.25;
     },
 
     sendBlock: function() {
@@ -67,10 +81,8 @@ Screensaver.Game.prototype = {
             var block = this.add.sprite(x, -128, color);
             block.scale.setTo(0.5, 0.5);
 
-            var duration = (100 * emptyCell['y']) + 100;
-            console.log(duration);
             this.tweenFall = this.add.tween(block).to({y: y},
-                                                      duration,
+                                                      750,
                                                       Phaser.Easing.Cubic.In);
             this.tweenUh = this.add.tween(block).to({y: gutter},
                                                     250,
@@ -89,7 +101,7 @@ Screensaver.Game.prototype = {
 
             this.tweenFall.start();
         } else {
-            // this.debugArray();
+            this.state.start('Game');
         }
 
     },
