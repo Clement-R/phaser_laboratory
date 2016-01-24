@@ -18,8 +18,8 @@ Screensaver.Game.prototype = {
         this.COLORS = ['red', 'yellow', 'green', 'blue'];
 
         // TODO : Calculate those values
-        this.COLUMN = 1;
-        this.ROW = 5;
+        this.COLUMN = 10;
+        this.ROW = 10;
         this.TILE_SIZE = 64;
         this.GUTTER = 7;
 
@@ -31,21 +31,6 @@ Screensaver.Game.prototype = {
         this.blocksSprites = [];
         this.createBoard();
 
-        // DEBUG : Test if emptyCell choose tiles
-        //         from previous lines if needed
-        // this.blocks[4][0] = 1;
-        // this.blocks[4][1] = 1;
-        // this.blocks[4][2] = 1;
-        // this.blocks[4][3] = 1;
-
-        // DEBUG
-        this.debugArray();
-        console.log("--------------------------------");
-
-        //var emptyCell = this.findEmptyCell();
-        // DEBUG
-        //console.log(emptyCell['x'] + " : " + emptyCell['y']);
-
         this.sendBlock();
     },
 
@@ -55,8 +40,8 @@ Screensaver.Game.prototype = {
 
     sendBlock: function() {
         var emptyCell = this.findEmptyCell();
-        if(emptyCell) {
 
+        if(emptyCell) {
             var color = Phaser.ArrayUtils.getRandomItem(this.COLORS);
             var value = this.COLORS.indexOf(color) + 1;
             var lastLine = false;
@@ -70,10 +55,11 @@ Screensaver.Game.prototype = {
 
             var x = emptyCell['x'] * this.TILE_SIZE;
 
-            if(this.previousY) {
-                var y = this.previousY - 64;
-            } else {
-                var y = emptyCell['y'] * this.TILE_SIZE;
+            var y = emptyCell['y'] * this.TILE_SIZE;
+            y += ((this.ROW - 1) - emptyCell['y']) * this.GUTTER;
+
+            if(emptyCell['y'] != (this.ROW - 1)) {
+                y -= this.GUTTER;
             }
 
             var gutter = y + this.GUTTER;
@@ -81,34 +67,27 @@ Screensaver.Game.prototype = {
             var block = this.add.sprite(x, -128, color);
             block.scale.setTo(0.5, 0.5);
 
+            var duration = (100 * emptyCell['y']) + 100;
+            console.log(duration);
             this.tweenFall = this.add.tween(block).to({y: y},
-                                                      1000,
+                                                      duration,
                                                       Phaser.Easing.Cubic.In);
             this.tweenUh = this.add.tween(block).to({y: gutter},
-                                                    500,
+                                                    250,
                                                     Phaser.Easing.Linear.In);
             if(!lastLine){
                 this.tweenFall.chain(this.tweenUh);
             } else {
                 this.tweenFall.onComplete.add(function(){
-                    this.previousY = block.y;
                     this.checkNeighbors();
                 }, this);
             }
 
             this.tweenUh.onComplete.add(function(){
-                this.previousY = block.y;
                 this.checkNeighbors();
             }, this);
 
-            // this.tweenFall.onComplete.add(this.checkNeighbors, this);
-
             this.tweenFall.start();
-
-            // this.physics.enable(block, Phaser.Physics.ARCADE);
-            // block.body.collideWorldBounds = true;
-
-            // blocks.add(block);
         } else {
             // this.debugArray();
         }
@@ -157,6 +136,7 @@ Screensaver.Game.prototype = {
             };
             console.log(currentLine);
         };
+        console.log("-----------------------------------------------");
     },
 
     findEmptyCell: function() {
