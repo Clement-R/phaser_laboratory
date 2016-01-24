@@ -1,0 +1,16 @@
+I've used a little trick: I've placed, at the highest Z level of the canvas, an image that cover all the game area (is a blue semi-transparent png).
+
+The default alpha value of this image is zero.
+
+Using a timer, the alpha value increase. So I simulate the incoming night (it's like the blue filter used at cinema). The day arrive when the alpha value decrease to zero.
+
+I hope my trick could be useful for you.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+155 188  15	Untitled
+139 172  15	Untitled
+ 48  98  48	Untitled
+ 15  56  15	Untitled
+

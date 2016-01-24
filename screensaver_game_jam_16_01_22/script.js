@@ -2,20 +2,49 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
                            {preload: preload, create: create, update: update});
 
 function preload() {
+    game.load.image('red', 'red.png');
+    game.load.image('yellow', 'yellow.png');
+    game.load.image('green', 'green.png');
+    game.load.image('blue', 'blue.png');
 }
 
 function create() {
     game.stage.backgroundColor = 0x2c3e50;
+
+    createBoard();
+
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.arcade.gravity.y = 50;
+
+    blocks = game.add.group();
+
+    sendBlock();
 }
 
 function update() {
+    // game.physics.arcade.collide(blocks.children[blocks.children.length - 1], blocks, function(){
+    //     sendBlock();
+    // });
+
+    // if(blocks.children[blocks.children.length - 1].body.blocked['down']) {
+    //     sendBlock();
+    // }
+
 }
 
-// gameboy palette :
-// 9CBD0F
-// 8CAD0F
-// 306230
-// 0F380F
-// http://www.colourlovers.com/palette/1459399/Game_Boy_DMG-01
+function sendBlock() {
+    console.log("Hello block");
 
-// http://www.colourlovers.com/palette/2928242/DMG_COLOR_COLORS_P3
+    block = game.add.sprite(0, 0, 'red');
+    block.scale.setTo(0.5, 0.5);
+
+    // game.physics.enable(block, Phaser.Physics.ARCADE);
+    // block.body.collideWorldBounds = true;
+
+    blocks.add(block);
+
+}
+
+function createBoard() {
+
+}
