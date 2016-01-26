@@ -11,8 +11,6 @@ function create() {
     var sprite = game.add.sprite(100, 100, 'img');
     sprite.inputEnabled = true;
     sprite.events.onInputDown.add(launch, this);
-
-    
 }
 
 function update() {
