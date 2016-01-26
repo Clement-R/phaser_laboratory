@@ -8,6 +8,8 @@ function preload() {
 function create() {
     game.stage.backgroundColor = 0x337799;
     game.add.sprite(0, 0, 'tree');
+    game.add.sprite(130, 0, 'tree');
+    game.add.sprite(65, 32, 'tree');
 }
 
 function update() {
