@@ -32,9 +32,10 @@ Screensaver.Game.prototype = {
         this.COLORS = ['red', 'yellow', 'green', 'blue'];
 
         // TODO : Calculate those values
-        this.COLUMN = 10;
-        this.ROW = 10;
+        this.COLUMN = 3;
+        this.ROW = 5;
         this.TILE_SIZE = 64;
+        this.NO_GUTTER_TILE_SIZE = 57;
         this.GUTTER = 7;
 
         this.blockFalling = false;
@@ -56,47 +57,51 @@ Screensaver.Game.prototype = {
         var emptyCell = this.findEmptyCell();
 
         if(emptyCell) {
+            // Choose a random, get its logical value and update
+            // the logical board with it
             var color = Phaser.ArrayUtils.getRandomItem(this.COLORS);
             var value = this.COLORS.indexOf(color) + 1;
-            var lastLine = false;
+            this.blocks[emptyCell['y']][emptyCell['x']] = value;
 
+            // Check if we are on last line
+            var lastLine = false;
             if(emptyCell['y'] == (this.ROW - 1)) {
                 lastLine = true;
             }
 
-            this.blocks[emptyCell['y']][emptyCell['x']] = value;
-
-
+            // Calculate x position
             var x = emptyCell['x'] * this.TILE_SIZE;
 
-            var y = emptyCell['y'] * this.TILE_SIZE;
-            y += ((this.ROW - 1) - emptyCell['y']) * this.GUTTER;
-
-            if(emptyCell['y'] != (this.ROW - 1)) {
-                y -= this.GUTTER;
+            // Calculate y position of fall and final position after uuuh effect
+            var position = (emptyCell['y'] - 1) * this.NO_GUTTER_TILE_SIZE
+            if(lastLine) {
+                var lockedPosition = position + 64;
+            } else {
+                // Take gutter of last piece in count
+                var lockedPosition = position + 57;
             }
+            var y = lockedPosition - this.GUTTER;
 
-            var gutter = y + this.GUTTER;
-
+            // Create sprite
             var block = this.add.sprite(x, -128, color);
             block.scale.setTo(0.5, 0.5);
 
             this.tweenFall = this.add.tween(block).to({y: y},
                                                       750,
                                                       Phaser.Easing.Cubic.In);
-            this.tweenUh = this.add.tween(block).to({y: gutter},
+            this.tweenUh = this.add.tween(block).to({y: lockedPosition},
                                                     250,
                                                     Phaser.Easing.Linear.In);
             if(!lastLine){
                 this.tweenFall.chain(this.tweenUh);
             } else {
                 this.tweenFall.onComplete.add(function(){
-                    this.checkNeighbors();
+                    this.updateLogic(emptyCell['x'], emptyCell['y']);
                 }, this);
             }
 
             this.tweenUh.onComplete.add(function(){
-                this.checkNeighbors();
+                this.updateLogic(emptyCell['x'], emptyCell['y']);
             }, this);
 
             this.tweenFall.start();
@@ -106,14 +111,25 @@ Screensaver.Game.prototype = {
 
     },
 
-    checkNeighbors: function() {
+    updateLogic: function(x, y) {
         // Check for match
+        this.checkMatch(x, y);
         // Delete matching blocks
+        //
+        // Make blocks fall
+        //
         // Send new block
         this.sendBlock();
     },
 
-    deleteBlock: function() {
+    checkMatch: function(x, y) {
+        // this.blocks;
+    },
+
+    checkNeighbors: function(x, y, direction) {
+    },
+
+    deleteBlock: function(x, y) {
 
     },
 
