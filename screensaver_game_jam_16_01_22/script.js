@@ -86,6 +86,7 @@ Screensaver.Game.prototype = {
             // Create sprite
             var block = this.add.sprite(x, -128, color);
             block.scale.setTo(0.5, 0.5);
+            this.blocksSprites[emptyCell['y']][emptyCell['x']] = block;
 
             // Create tweens for fall and uuuh effects
             this.tweenFall = this.add.tween(block).to({y: y},
@@ -131,7 +132,31 @@ Screensaver.Game.prototype = {
         // this.blocks;
     },
 
-    checkNeighbors: function(x, y, direction) {
+    checkNeighborsY: function(x, y, counter) {
+        var value = this.blocks[y - 1][x];
+
+        if(value == this.blocks[y][x]) {
+            var matching = this.checkNeighborsY(x, y + 1, counter + 1);
+        } else {
+            return counter;
+        }
+
+        return matching;
+    },
+
+    /*
+    *
+    *   Direction : 1 or -1
+    */
+    checkNeighborsX: function(x, y, counter, direction) {
+        var value = this.blocks[y][x + (1 * direction)]
+
+        if(value == this.blocks[y][x]) {
+            var matching = this.checkNeighborsX(x,
+                                                y, counter + 1, direction);
+        } else {
+            return counter;
+        }
     },
 
     deleteBlock: function(x, y) {
