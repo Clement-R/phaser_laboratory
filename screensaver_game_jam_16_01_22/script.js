@@ -32,8 +32,9 @@ Screensaver.Game.prototype = {
         this.COLORS = ['red', 'yellow', 'green', 'blue'];
 
         // TODO : Calculate those values
-        this.COLUMN = 3;
-        this.ROW = 5;
+        this.COLUMN = 10;
+        this.ROW = 10;
+
         this.TILE_SIZE = 64;
         this.NO_GUTTER_TILE_SIZE = 57;
         this.GUTTER = 7;
@@ -86,12 +87,15 @@ Screensaver.Game.prototype = {
             var block = this.add.sprite(x, -128, color);
             block.scale.setTo(0.5, 0.5);
 
+            // Create tweens for fall and uuuh effects
             this.tweenFall = this.add.tween(block).to({y: y},
                                                       750,
                                                       Phaser.Easing.Cubic.In);
             this.tweenUh = this.add.tween(block).to({y: lockedPosition},
                                                     250,
                                                     Phaser.Easing.Linear.In);
+
+            // If it's not the first piece to fall we add the famous uuuh effect
             if(!lastLine){
                 this.tweenFall.chain(this.tweenUh);
             } else {
@@ -106,6 +110,7 @@ Screensaver.Game.prototype = {
 
             this.tweenFall.start();
         } else {
+            // If the board is complete we just restart the screensaver
             this.state.start('Game');
         }
 
