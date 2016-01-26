@@ -11,12 +11,17 @@ function create() {
 
     game.stage.backgroundColor = 0x337799;
 
-    emitter = game.add.emitter(0, 0, 100);
+    score_text = game.add.text(game.width / 2, game.height / 2, 'Click !',
+                               { font: '26px Arial', fill: '#fff' });
+    score_text.anchor.setTo(0.5, 0.5);
 
+    // emitter(x, y, maxNumberParticles)
+    emitter = game.add.emitter(0, 0, 500);
     emitter.makeParticles('star');
     emitter.gravity = 200;
 
     game.input.onDown.add(particleBurst, this);
+
 }
 
 function update() {
@@ -32,6 +37,5 @@ function particleBurst(pointer) {
     //  The second gives each particle a 2000ms lifespan
     //  The third is ignored when using burst/explode mode
     //  The final parameter (10) is how many particles will be emitted in this single burst
-    emitter.start(true, 2000, null, 10);
-
+    emitter.start(true, 2000, null, 50);
 }
