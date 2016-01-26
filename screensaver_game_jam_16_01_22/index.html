@@ -4,19 +4,22 @@
         <meta charset="UTF-8" />
         <title>Phaser Basic Project Template</title>
         <script src="../phaser.min.js"></script>
-        <script src="script.js"></script>
+        <!-- <script src="script.js"></script> -->
+        <script src="test.js"></script>
     </head>
     <body>
         <div id="phaser-example"></div>
 
         <script type="text/javascript">
-            window.onload = function() {
+            /*window.onload = function() {
                 var game = new Phaser.Game(640, 577,
                                            Phaser.AUTO, 'phaser-example');
 
                 game.state.add('Game', Screensaver.Game);
                 game.state.start('Game');
-            };
+            };*/
+            var test = new TestClass();
+            test.debugArray();
         </script>
     </body>
 </html>
