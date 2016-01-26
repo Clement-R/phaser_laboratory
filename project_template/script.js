@@ -1,12 +1,17 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example',
-                           {preload: preload, create: create, update: update});
+var GameTemplate = {};
 
-function preload() {
-}
+GameTemplate.Game = function (game) {
 
-function create() {
-    game.stage.backgroundColor = 0x2c3e50;
-}
+};
 
-function update() {
+GameTemplate.Game.prototype = {
+    preload: function() {
+    },
+
+    create: function() {
+        this.stage.backgroundColor = 0x2c3e50;
+    },
+
+    update: function() {
+    },
 }
